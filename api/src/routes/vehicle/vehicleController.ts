@@ -12,6 +12,7 @@ export async function getVehicles(req: Request, res: Response) {
   res.status(500).json({ error: 'Internal Server Error' });
  }
 }
+
 // Get vehicle by ID
 export function getVehicleById(req: Request, res: Response) {
 try {
@@ -133,7 +134,6 @@ export async function updateVehicle(req: Request, res: Response) {
   }
 }
 
-
 export function deleteVehicle(req: Request, res: Response) {
   const { id } = req.params;
   
@@ -151,15 +151,15 @@ export function deleteVehicle(req: Request, res: Response) {
     });
 }   
 // Get vehicle by license plate
-export async function  getVehicleByLicense(req: Request, res: Response) {
-  const { licensePlate } = req.params;
-
+export async function getVehicleByLicense(req: Request, res: Response) {
   try {
-    const vehicle = await db
+    const { licensePlate } = req.params;
+
+    // Query the vehicle
+    const [vehicle] = await db
       .select()
       .from(vehiclesTable)
-      .where(eq(vehiclesTable.licensePlate, licensePlate))
-      
+      .where(eq(vehiclesTable.licensePlate, licensePlate));
 
     if (!vehicle) {
       return res.status(404).json({ error: "Vehicle not found" });
