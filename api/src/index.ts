@@ -1,11 +1,11 @@
 
 import express,{json,urlencoded} from 'express';
 import vehicleRouter from './routes/vehicle/index';
-const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(json());
+const app = express();
 app.use(urlencoded({ extended: true }));
+app.use(json());
 
 app.get('/', (req, res) => {
   res.send('Hello World!');

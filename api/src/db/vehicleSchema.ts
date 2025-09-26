@@ -2,7 +2,7 @@
 import { pgTable, text, uuid, integer, varchar } from "drizzle-orm/pg-core";
 
 
-export const vehicles = pgTable("vehicles", {
+export const vehicles = pgTable("vehiclesTable", {
   id: uuid("id").defaultRandom().primaryKey(), 
   make: varchar( { length: 255 }).notNull(),
   model: varchar( { length: 255 }).notNull(),
