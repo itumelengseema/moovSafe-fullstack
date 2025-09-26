@@ -3,7 +3,7 @@ import { db } from '../../db/index';
 import { vehicles as vehiclesTable } from '../../db/vehicleSchema';
 import { eq } from 'drizzle-orm';
 
-
+// Get all vehicles
 export async function getVehicles(req: Request, res: Response) {
  try{
   const vehicles = await db.select().from(vehiclesTable);
@@ -12,11 +12,27 @@ export async function getVehicles(req: Request, res: Response) {
   res.status(500).json({ error: 'Internal Server Error' });
  }
 }
-
+// Get vehicle by ID
 export function getVehicleById(req: Request, res: Response) {
-try {}catch{}
-}
+try {
+  const { id } = req.params;
+  if (!id) {
+    return res.status(400).json({ error: "Vehicle ID is required" });
+  }
 
+  // Fetch vehicle by ID
+  const vehicle = db.select().from(vehiclesTable).where(eq(vehiclesTable.id, id));
+  if (!vehicle) {
+    return res.status(404).json({ error: "Vehicle not found" });
+  }
+
+  res.status(200).json(vehicle);
+}catch(error){
+  console.error(error);
+  res.status(500).json({ error: "Internal Server Error" });
+}
+}
+// Add a new vehicle
 export async function addVehicle(req: Request, res: Response) {
   try {
     const {
@@ -53,7 +69,7 @@ export async function addVehicle(req: Request, res: Response) {
   }
 }
 
-
+// Update vehicle details
 export async function updateVehicle(req: Request, res: Response) {
   try {
     const { id } = req.params; // UUID of the vehicle to update
@@ -120,9 +136,21 @@ export async function updateVehicle(req: Request, res: Response) {
 
 export function deleteVehicle(req: Request, res: Response) {
   const { id } = req.params;
-  res.send(`Delete vehicle with ID: ${id}`);
+  
+  db.delete(vehiclesTable)
+    .where(eq(vehiclesTable.id, id))
+    .then((result) => {
+      if (result.rowCount === 0) {
+        return res.status(404).json({ error: "Vehicle not found" });
+      }
+      res.status(200).json({ message: "Vehicle deleted successfully" });
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).json({ error: "Internal Server Error" });
+    });
 }   
-
+// Get vehicle by license plate
 export async function  getVehicleByLicense(req: Request, res: Response) {
   const { licensePlate } = req.params;
 
