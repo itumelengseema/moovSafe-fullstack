@@ -134,6 +134,7 @@ export async function updateVehicle(req: Request, res: Response) {
   }
 }
 
+// Delete a vehicle
 export function deleteVehicle(req: Request, res: Response) {
   const { id } = req.params;
   
