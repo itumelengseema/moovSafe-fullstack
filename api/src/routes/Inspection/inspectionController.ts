@@ -4,6 +4,8 @@ import {inspections as inspectionsTable} from "../../db/inspectionSchema";
 import { v2 as cloudinary } from "cloudinary";
 import  { upload } from "../../middleware/upload";
 import { buffer } from "stream/consumers";
+import { eq } from "drizzle-orm";
+import { validate as isUUID } from "uuid";
 
 
 
@@ -19,8 +21,27 @@ export const getInspectionByDate = (req: Request, res: Response) => {
 };
 
 //get inspection by id
-export const getInspectionById = (req: Request, res: Response) => {
-    res.send("Get inspection by ID");
+export async function getInspectionById  (req: Request, res: Response)  {
+    try {
+
+
+        const {id}  = req.params;
+
+        if (!isUUID(id)) {
+  return res.status(400).json({ error: "Invalid inspection ID" });
+}
+
+        const [inspectionData] = await db.select()
+        .from(inspectionsTable)
+        .where(eq(inspectionsTable.id, id));
+        if (!inspectionData) {
+            return res.status(404).json({ error: "Inspection not found" });
+        }
+        res.json(inspectionData);
+    }catch (error) {
+        console.error("Error fetching inspection by ID:", error);
+        res.status(500).json({ error: "Smothing went Wrong While trying to retrive inspection" });
+    }
 };
 
 //create new inspection
