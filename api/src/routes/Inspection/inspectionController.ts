@@ -2,8 +2,7 @@ import { Request,Response } from "express";
 import { db } from "../../db/index";
 import {inspections as inspectionsTable} from "../../db/inspectionSchema";
 import { v2 as cloudinary } from "cloudinary";
-import  { upload } from "../../middleware/upload";
-import { buffer } from "stream/consumers";
+
 import { eq } from "drizzle-orm";
 import { validate as isUUID } from "uuid";
 
@@ -152,11 +151,44 @@ export async function createInspection(req: Request, res: Response) {
 }
 
 
-//update inspection
-export const updateInspection = (req: Request, res: Response) => {
-  res.send("Inspection updated");
-};
+
 //delete inspection
-export const deleteInspection = (req: Request, res: Response) => {
-  res.send("Inspection deleted");
+export const deleteInspection = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    // Fetch the inspection first
+    const [inspection] = await db
+      .select()
+      .from(inspectionsTable)
+      .where(eq(inspectionsTable.id, id));
+
+    if (!inspection) {
+      return res.status(404).json({ error: "Inspection not found" });
+    }
+
+    // Delete odometer image
+    if (inspection.odometerImageUrl) {
+      const publicId = inspection.odometerImageUrl.split("/").pop()?.split(".")[0];
+      if (publicId) {
+        await cloudinary.uploader.destroy(`moovsafe/inspections/odometer/${publicId}`);
+      }
+    }
+
+    // Delete fault images
+    if (inspection.faultsImagesUrl?.length) {
+      const publicIds = inspection.faultsImagesUrl.map(
+        url => `moovsafe/inspections/faults/${url.split("/").pop()?.split(".")[0]}`
+      );
+      await cloudinary.api.delete_resources(publicIds);
+    }
+
+    // Delete the DB record
+    await db.delete(inspectionsTable).where(eq(inspectionsTable.id, id));
+
+    res.status(200).json({ message: "Inspection record and images deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting inspection:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 };

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-  getbyVehicle,
+  getByVehicle,
   getMaintenanceById,
   getMaintenanceHistory,
   createMaintenance,
@@ -12,7 +12,7 @@ import { upload } from "../../middleware/upload";
 const router = Router();
 
 //Routes
-router.get("vehicle/:licensePlate", getbyVehicle);
+router.get("vehicle/:licensePlate", getByVehicle);
 
 router.get("/", getMaintenanceHistory);
 router.get("/:id", getMaintenanceById);
