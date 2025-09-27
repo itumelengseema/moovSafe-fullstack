@@ -15,6 +15,13 @@
       "when": 1758925893986,
       "tag": "0001_puzzling_agent_zero",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1758932016193,
+      "tag": "0002_supreme_morbius",
+      "breakpoints": true
     }
   ]
 }
