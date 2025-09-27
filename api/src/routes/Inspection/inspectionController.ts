@@ -10,14 +10,56 @@ import { validate as isUUID } from "uuid";
 
 
 //get all inspections
-export const getInspections = (req: Request, res: Response) => {
-    res.send("Get all inspections");
+export async function getInspections  (req: Request, res: Response) {
+   try{
+       
+        const inspectionData = await db.select().from(inspectionsTable);
+        res.json(inspectionData);
+
+        if(!inspectionData){
+            return res.status(404).json({error: "No inspections found"});
+        }
+
+    }
+    catch (error) {
+        console.error("Error fetching inspections:", error);
+        res.status(500).json({ error: "Smothing went Wrong While trying to retrive inspections" });
+    }
 
 };
 
 //get inspectionByDate
-export const getInspectionByDate = (req: Request, res: Response) => {
-    res.send("Get inspection by date");
+export async function getInspectionByDate  (req: Request, res: Response) {
+    try{
+        const {date } = req.query;
+        
+        if (!date || typeof date !== "string") {
+            return res.status(400).json({ error: "Invalid or missing date parameter" });
+        }
+
+        const startDate = new Date(`${date}T00:00:00Z`);
+        const endDate = new Date(`${date}T23:59:59Z`);
+        
+        const { gte, lte, and } = require("drizzle-orm/expressions");
+        const inspections = await db
+      .select()
+      .from(inspectionsTable)
+      .where(
+        and(
+          gte(inspectionsTable.date, startDate),
+          lte(inspectionsTable.date, endDate)
+        )
+      );
+
+      if (!inspections.length) {
+        return res.status(404).json({ error: "No inspections found for the given date" });
+      }
+      
+     res.status(200).json(inspections);
+    }catch (error) {
+        console.error("Error fetching inspection by date:", error);
+        res.status(500).json({ error: "Smothing went Wrong While trying to retrive inspection by date" });
+    }
 };
 
 //get inspection by id
