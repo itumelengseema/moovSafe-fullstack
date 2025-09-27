@@ -4,7 +4,6 @@ import { db } from "../../db/index";
 import  { maintenanceHistory } from "../../db/maintenance_historySchema";
 import { vehicles as vehiclesTable } from "../../db/vehicleSchema";
 import { eq } from "drizzle-orm";
-import { upload } from "../../middleware/upload";
 
 
 export async function createMaintenance(req: Request, res: Response) {

@@ -56,49 +56,32 @@ export async function addVehicle(req: Request, res: Response) {
 export async function updateVehicle(req: Request, res: Response) {
   try {
     const { id } = req.params; // UUID of the vehicle to update
-    const {
-      make,
-      model,
-      year,
-      vin,
-      engineNumber,
-      licensePlate,
-      fuelType,
-      transmission,
-      currentMileage,
-      colour,
-    } = req.body;
+    const vehicleData = req.body;
 
     // Check if at least one field is provided to update
-    if (
-      !make &&
-      !model &&
-      !year &&
-      !vin &&
-      !engineNumber &&
-      !licensePlate &&
-      !fuelType &&
-      !transmission &&
-      !currentMileage &&
-      !colour
-    ) {
-      return res.status(400).json({ error: "At least one field must be provided to update" });
+    if (!Object.keys(vehicleData).length) {
+      return res
+        .status(400)
+        .json({ error: "At least one field must be provided to update" });
     }
 
     // Build the update object dynamically
     const updateData: any = {};
-    if (make) updateData.make = make;
-    if (model) updateData.model = model;
-    if (year) updateData.year = Number(year);
-    if (vin) updateData.vin = vin;
-    if (engineNumber) updateData.engineNumber = engineNumber;
-    if (licensePlate) updateData.licensePlate = licensePlate;
-    if (fuelType) updateData.fuelType = fuelType;
-    if (transmission) updateData.transmission = transmission;
-    if (currentMileage) updateData.currentMileage = Number(currentMileage);
-    if (colour) updateData.colour = colour;
+    for (const key in vehicleData) {
+      if (vehicleData[key] !== undefined && vehicleData[key] !== null) {
+        updateData[key] = vehicleData[key];
+      }
+    }
 
-    // Update vehicle
+    // Type conversions / validations
+    if (updateData.currentMileage) {
+      updateData.currentMileage = Number(updateData.currentMileage);
+    }
+    if (updateData.year) {
+      updateData.year = Number(updateData.year);
+    }
+
+    // Update vehicle in DB
     const [updatedVehicle] = await db
       .update(vehiclesTable)
       .set(updateData)
@@ -111,7 +94,7 @@ export async function updateVehicle(req: Request, res: Response) {
 
     res.status(200).json(updatedVehicle);
   } catch (error) {
-    console.error(error);
+    console.error("Error updating vehicle:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 }
