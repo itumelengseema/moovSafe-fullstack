@@ -66,7 +66,7 @@ export async function createMaintenance(req: Request, res: Response) {
               new Promise<string>((resolve, reject) => {
                 const stream = cloudinary.uploader.upload_stream(
                   { folder: "moovsafe/maintenance/photos" },
-                  (error: any, result: any) => {
+                  (error, result) => {
                     if (error) return reject(error);
                     resolve(result?.secure_url || "");
                   }
@@ -78,18 +78,28 @@ export async function createMaintenance(req: Request, res: Response) {
       }
     }
 
+    // Prepare record with safe type conversions
+    const recordToInsert = {
+      ...maintenanceData,
+      date: maintenanceData.date ? new Date(maintenanceData.date) : new Date(), // fallback to now
+      nextServiceDate: maintenanceData.nextServiceDate
+        ? new Date(maintenanceData.nextServiceDate)
+        : null,
+      odometerImageUrl,
+      invoicesUrl,
+      photosUrl,
+    };
+
     // Insert into DB
     const [newMaintenanceRecord] = await db
       .insert(maintenanceHistory)
-      .values({
-        ...maintenanceData,
-        odometerImageUrl,
-        invoicesUrl,
-        photosUrl,
-      })
+      .values(recordToInsert)
       .returning();
 
-    res.status(201).json({ message: "Maintenance record created", newMaintenanceRecord });
+    res.status(201).json({
+      message: "Maintenance record created",
+      newMaintenanceRecord,
+    });
   } catch (error) {
     console.error("Error creating maintenance record:", error);
     res.status(500).json({ error: "Internal Server Error" });
