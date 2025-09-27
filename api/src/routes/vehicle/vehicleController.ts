@@ -20,7 +20,7 @@ try {
   if (!id) {
     return res.status(400).json({ error: "Vehicle ID is required" });
   }
-
+  
   // Fetch vehicle by ID
   const vehicle = db.select().from(vehiclesTable).where(eq(vehiclesTable.id, id));
   if (!vehicle) {

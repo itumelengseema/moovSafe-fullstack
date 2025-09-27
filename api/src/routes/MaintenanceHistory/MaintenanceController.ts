@@ -2,11 +2,24 @@ import { Request, Response } from "express";
 import { v2 as cloudinary } from "cloudinary";
 import { db } from "../../db/index";
 import  { maintenanceHistory } from "../../db/maintenance_historySchema";
+import { vehicles as vehiclesTable } from "../../db/vehicleSchema";
+import { eq } from "drizzle-orm";
+import { upload } from "../../middleware/upload";
 
 
 export async function createMaintenance(req: Request, res: Response) {
   try {
-    const { ...maintenanceData } = req.body;
+    const { vehicleId, ...maintenanceData } = req.body;
+
+  
+    // Check if vehicle exists
+    const [vehicle] = await db.select().from(vehiclesTable).where(eq(vehiclesTable.id, vehicleId));
+    if (!vehicle) {
+        console.log("Vehicle ID received:", vehicleId);
+console.log("All vehicle IDs in DB:", await db.select({ id: vehiclesTable.id }).from(vehiclesTable));
+
+      return res.status(404).json({ error: "Vehicle not found" });
+    }
 
     // Validate required fields
     if (!Object.keys(maintenanceData).length) {
@@ -80,6 +93,7 @@ export async function createMaintenance(req: Request, res: Response) {
 
     // Prepare record with safe type conversions
     const recordToInsert = {
+      vehicleId,
       ...maintenanceData,
       date: maintenanceData.date ? new Date(maintenanceData.date) : new Date(), // fallback to now
       nextServiceDate: maintenanceData.nextServiceDate
