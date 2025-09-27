@@ -20,7 +20,7 @@ try {
   if (!id) {
     return res.status(400).json({ error: "Vehicle ID is required" });
   }
-  
+
   // Fetch vehicle by ID
   const vehicle = db.select().from(vehiclesTable).where(eq(vehiclesTable.id, id));
   if (!vehicle) {
@@ -37,32 +37,14 @@ try {
 export async function addVehicle(req: Request, res: Response) {
   try {
     const {
-      make,
-      model,
-      year,
-      vin,
-      engineNumber,
-      licensePlate,
-      fuelType,
-      transmission,
-      currentMileage,
-      colour,
+      ...VehicleData
     } = req.body;
 
-    if (!make || !model || !year || !vin || !engineNumber || !licensePlate || !fuelType || !transmission || !currentMileage || !colour) {
+    if (!Object.keys(VehicleData)) {
       return res.status(400).json({ error: 'All fields are required' });
     }
     const [newVehicle] = await db.insert(vehiclesTable).values({
-      make,
-      model,
-      year : Number(year),
-      vin,
-      engineNumber,
-      licensePlate,
-      fuelType,
-      transmission,
-      currentMileage : Number(currentMileage),
-      colour,
+      ...VehicleData
     }).returning();
     res.status(201).json(newVehicle);
   } catch (error) {
