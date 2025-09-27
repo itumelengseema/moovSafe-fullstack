@@ -1,4 +1,4 @@
-// drizzle/schema/vehicle.ts
+
 import { pgTable, text, uuid, integer, varchar } from "drizzle-orm/pg-core";
 
 

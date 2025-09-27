@@ -1,20 +1,32 @@
 import { Router } from "express";
-import { getMaintenanceById, getMaintenanceHistory,createMaintenanceRecord,updateMaintenanceRecord,deleteMaintenanceRecord} from "./MaintenanceController";    
+import {
+  getbyVehicle,
+  getMaintenanceById,
+  getMaintenanceHistory,
+  createMaintenance,
+  updateMaintenance,
+  deleteMaintenance,
+} from "./MaintenanceController";
 import { upload } from "../../middleware/upload";
+
 const router = Router();
 
 //Routes
+router.get("vehicle/:licensePlate", getbyVehicle);
+
 router.get("/", getMaintenanceHistory);
 router.get("/:id", getMaintenanceById);
-router.post("/", 
-    upload.fields([
-        { name: "faultsImages", maxCount: 5 },
-        { name: "odometerImage", maxCount: 1 },
-    ]),
-    createMaintenanceRecord);
-router.put("/:id", updateMaintenanceRecord);
-router.delete("/:id", deleteMaintenanceRecord);
 
-
+router.post(
+  "/",
+  upload.fields([
+    { name: "odometerImage", maxCount: 1 },
+    { name: "invoices", maxCount: 5 },
+    { name: "photos", maxCount: 5 },
+  ]),
+  createMaintenance
+);
+router.put("/:id", updateMaintenance);
+router.delete("/:id", deleteMaintenance);
 
 export default router;

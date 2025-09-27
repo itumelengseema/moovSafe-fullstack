@@ -6,8 +6,8 @@ import maintenanceRouter from './routes/MaintenanceHistory/index';
 const port = process.env.PORT || 3000;
 
 const app = express();
-app.use(urlencoded({ extended: true }));
 app.use(json());
+app.use(urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
@@ -15,9 +15,14 @@ app.get('/', (req, res) => {
 
 // Routes 
 app.use("/api/vehicles", vehicleRouter);
-app.use("/api/inspections", inspectionRouter); 
-app.use('api/maintenance', maintenanceRouter);
+app.use("/api/inspections", inspectionRouter);
+app.use("/api/maintenance", maintenanceRouter);
 
+
+app.use((req, res,next) => {
+  console.log(`${req.method} ${req.path} - 404 Not Found`);
+  next()
+})
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
