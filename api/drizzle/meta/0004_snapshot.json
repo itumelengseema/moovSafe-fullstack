@@ -1,6 +1,6 @@
 {
-  "id": "fa41f401-93f2-4a72-a0cc-5644fa7bb2cd",
-  "prevId": "ec59ac0b-418e-45f0-9aa6-2ae8280ba84e",
+  "id": "c21695c4-d832-4b6d-a51b-59599ecc8003",
+  "prevId": "fa41f401-93f2-4a72-a0cc-5644fa7bb2cd",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -63,9 +63,9 @@
           "primaryKey": false,
           "notNull": true
         },
-        "current_mileage": {
-          "name": "current_mileage",
-          "type": "integer",
+        "currentMileage": {
+          "name": "currentMileage",
+          "type": "double precision",
           "primaryKey": false,
           "notNull": true
         },
@@ -83,12 +83,16 @@
         "vehiclesTable_vin_unique": {
           "name": "vehiclesTable_vin_unique",
           "nullsNotDistinct": false,
-          "columns": ["vin"]
+          "columns": [
+            "vin"
+          ]
         },
         "vehiclesTable_licensePlate_unique": {
           "name": "vehiclesTable_licensePlate_unique",
           "nullsNotDistinct": false,
-          "columns": ["licensePlate"]
+          "columns": [
+            "licensePlate"
+          ]
         }
       },
       "policies": {},

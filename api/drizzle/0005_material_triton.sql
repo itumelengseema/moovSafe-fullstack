@@ -1,0 +1,1 @@
+ALTER TABLE "vehiclesTable" ALTER COLUMN "currentMileage" SET DATA TYPE integer;
