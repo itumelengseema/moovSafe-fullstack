@@ -29,6 +29,27 @@
       "when": 1758967829428,
       "tag": "0003_known_terror",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1759048979300,
+      "tag": "0004_naive_the_anarchist",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1759049859507,
+      "tag": "0005_material_triton",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1759063307928,
+      "tag": "0006_chief_valeria_richards",
+      "breakpoints": true
     }
   ]
 }

@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router } from 'express';
 import {
   getByVehicle,
   getMaintenanceById,
@@ -6,27 +6,31 @@ import {
   createMaintenance,
   updateMaintenance,
   deleteMaintenance,
-} from "./MaintenanceController";
-import { upload } from "../../middleware/upload";
+} from './MaintenanceController';
+import { upload } from '../../middleware/upload';
+import { validateData } from '../../middleware/validationMiddleware';
+import { createMaintenanceSchema ,updateMaintenanceSchema } from '../../db/maintenance_historySchema';
+
 
 const router = Router();
 
 //Routes
-router.get("vehicle/:licensePlate", getByVehicle);
+router.get('vehicle/:licensePlate', getByVehicle);
 
-router.get("/", getMaintenanceHistory);
-router.get("/:id", getMaintenanceById);
+router.get('/', getMaintenanceHistory);
+router.get('/:id', getMaintenanceById);
 
 router.post(
-  "/",
+  '/',
+  validateData(createMaintenanceSchema),
   upload.fields([
-    { name: "odometerImage", maxCount: 1 },
-    { name: "invoices", maxCount: 5 },
-    { name: "photos", maxCount: 5 },
+    { name: 'odometerImage', maxCount: 1 },
+    { name: 'invoices', maxCount: 5 },
+    { name: 'photos', maxCount: 5 },
   ]),
-  createMaintenance
+  createMaintenance,
 );
-router.put("/:id", updateMaintenance);
-router.delete("/:id", deleteMaintenance);
+router.put('/:id', validateData(updateMaintenanceSchema), updateMaintenance);
+router.delete('/:id', deleteMaintenance);
 
 export default router;

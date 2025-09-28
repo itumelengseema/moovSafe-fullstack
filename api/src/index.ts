@@ -1,5 +1,4 @@
-
-import express,{json,urlencoded} from 'express';
+import express, { json, urlencoded } from 'express';
 import vehicleRouter from './routes/vehicle/index';
 import inspectionRouter from './routes/Inspection/index';
 import maintenanceRouter from './routes/MaintenanceHistory/index';
@@ -13,16 +12,15 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-// Routes 
-app.use("/api/vehicles", vehicleRouter);
-app.use("/api/inspections", inspectionRouter);
-app.use("/api/maintenance", maintenanceRouter);
+// Routes
+app.use('/api/vehicles', vehicleRouter);
+app.use('/api/inspections', inspectionRouter);
+app.use('/api/maintenance', maintenanceRouter);
 
-
-app.use((req, res,next) => {
+app.use((req, res, next) => {
   console.log(`${req.method} ${req.path} - 404 Not Found`);
-  next()
-})
+  next();
+});
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });

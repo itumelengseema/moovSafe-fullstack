@@ -83,16 +83,12 @@
         "vehiclesTable_vin_unique": {
           "name": "vehiclesTable_vin_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "vin"
-          ]
+          "columns": ["vin"]
         },
         "vehiclesTable_licensePlate_unique": {
           "name": "vehiclesTable_licensePlate_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "licensePlate"
-          ]
+          "columns": ["licensePlate"]
         }
       },
       "policies": {},
