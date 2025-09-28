@@ -7,6 +7,7 @@ import {
   text,
   timestamp,
 } from 'drizzle-orm/pg-core';
+import { createInsertSchema } from 'drizzle-zod';
 
 export const inspections = pgTable('inspectionTable', {
   id: uuid('id').defaultRandom().primaryKey(),
@@ -57,3 +58,12 @@ export const inspections = pgTable('inspectionTable', {
   faultsImagesUrl: text('faults_images_url').array(), // Array of URLs to fault images
   odometerImageUrl: varchar('odometer_image_url', { length: 255 }), // URL to odometer image
 });
+
+
+export const createInspectionSchema = createInsertSchema(inspections).omit({
+  id: true, // Omit id for creation as it is auto-generated
+});
+
+export const updateInspectionSchema = createInsertSchema(inspections).omit({
+  id: true, // Omit id for updates as it should not be changed
+}).partial(); // Make all fields optional for updates
