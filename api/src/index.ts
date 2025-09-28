@@ -1,7 +1,7 @@
 import express, { json, urlencoded } from 'express';
-import vehicleRouter from './routes/vehicle/index';
-import inspectionRouter from './routes/Inspection/index';
-import maintenanceRouter from './routes/MaintenanceHistory/index';
+import vehicleRouter from './routes/vehicle/index.js';
+import inspectionRouter from './routes/Inspection/index.js';
+import maintenanceRouter from './routes/MaintenanceHistory/index.js';
 const port = process.env.PORT || 3000;
 
 const app = express();

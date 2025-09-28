@@ -1,9 +1,8 @@
 import e, { Request, Response } from 'express';
-import { db } from '../../db/index';
-import { vehicles as vehiclesTable } from '../../db/vehicleSchema';
+import { db } from '../../db/index.js';
+import { vehicles as vehiclesTable } from '../../db/vehicleSchema.js';
 import { eq, and } from 'drizzle-orm';
 import _ from 'lodash';
-import { createVehicleSchema } from '../../db/vehicleSchema';
 
 // Get all vehicles
 export async function getVehicles(req: Request, res: Response) {
@@ -41,9 +40,7 @@ export async function getVehicleById(req: Request, res: Response) {
 // Add a new vehicle
 export async function addVehicle(req: Request, res: Response) {
   try {
-
-
-      //check if unique fields already exist
+    //check if unique fields already exist
     const { licensePlate, vin, engineNumber } = req.cleanBody; // Use
 
     // Check for existing vehicle with same unique fields
@@ -54,25 +51,25 @@ export async function addVehicle(req: Request, res: Response) {
         and(
           eq(vehiclesTable.licensePlate, licensePlate),
           eq(vehiclesTable.vin, vin),
-          eq(vehiclesTable.engineNumber, engineNumber)
-        )
+          eq(vehiclesTable.engineNumber, engineNumber),
+        ),
       );
 
-      if( conflicts.length > 0) {
-        const errors: string[]= [];
-        conflicts.forEach(conflict => {
-          if(conflict.licensePlate === licensePlate) {
-            errors.push('License plate already exists');
-          }
-          if(conflict.vin === vin) {
-            errors.push('VIN already exists');
-          }
-          if(conflict.engineNumber === engineNumber) {
-            errors.push('Engine number already exists');
-          }
-        });
-        return res.status(409).json({ error: errors.join(', ') });
-      }
+    if (conflicts.length > 0) {
+      const errors: string[] = [];
+      conflicts.forEach((conflict) => {
+        if (conflict.licensePlate === licensePlate) {
+          errors.push('License plate already exists');
+        }
+        if (conflict.vin === vin) {
+          errors.push('VIN already exists');
+        }
+        if (conflict.engineNumber === engineNumber) {
+          errors.push('Engine number already exists');
+        }
+      });
+      return res.status(409).json({ error: errors.join(', ') });
+    }
 
     // Insert new vehicle into DB
     const [newVehicle] = await db

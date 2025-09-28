@@ -6,14 +6,12 @@ import {
   deleteVehicle,
   getVehicleById,
   getVehicleByLicense,
-} from './vehicleController';
-import { validateData } from '../../middleware/validationMiddleware';
-import { createVehicleSchema,updateVehicleSchema } from '../../db/vehicleSchema';
-
-
-
-
-
+} from './vehicleController.js';
+import { validateData } from '../../middleware/validationMiddleware.js';
+import {
+  createVehicleSchema,
+  updateVehicleSchema,
+} from '../../db/vehicleSchema.js';
 
 const vehicleRouter = Router();
 
