@@ -1,0 +1,46 @@
+name: MoovSafe CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  deploy-backend:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Checkout code
+      - uses: actions/checkout@v4
+
+      # Step 2: Setup Node.js
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20 # or your Node version
+
+      # Step 3: Setup Genezio
+      - uses: Genez-io/genezio-github-action@v3
+        with:
+          token: ${{ secrets.GENEZIO_TOKEN }}
+
+      # Step 4: Install backend dependencies
+      - name: Install backend dependencies
+        working-directory: ./api
+        run: npm install
+
+      # Step 5: Build backend (if needed)
+      - name: Build backend
+        working-directory: ./api
+        run: npm run build
+        env:
+          CI: false   # avoid treating warnings as errors
+
+      # Step 6: Deploy backend
+      - name: Deploy backend to Genezio
+        working-directory: ./api
+        run: genezio deploy
+        env:
+          CI: false
+

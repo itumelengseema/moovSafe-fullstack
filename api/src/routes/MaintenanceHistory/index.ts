@@ -6,11 +6,13 @@ import {
   createMaintenance,
   updateMaintenance,
   deleteMaintenance,
-} from './MaintenanceController';
-import { upload } from '../../middleware/upload';
-import { validateData } from '../../middleware/validationMiddleware';
-import { createMaintenanceSchema ,updateMaintenanceSchema } from '../../db/maintenance_historySchema';
-
+} from './MaintenanceController.js';
+import { upload } from '../../middleware/upload.js';
+import { validateData } from '../../middleware/validationMiddleware.js';
+import {
+  createMaintenanceSchema,
+  updateMaintenanceSchema,
+} from '../../db/maintenance_historySchema.js';
 
 const router = Router();
 
