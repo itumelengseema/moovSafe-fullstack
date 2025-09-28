@@ -1,28 +1,33 @@
-import { Request, Response } from "express";
-import { v2 as cloudinary } from "cloudinary";
-import { db } from "../../db/index";
-import  { maintenanceHistory } from "../../db/maintenance_historySchema";
-import { vehicles as vehiclesTable } from "../../db/vehicleSchema";
-import { eq, desc } from "drizzle-orm";
+import { Request, Response } from 'express';
+import { v2 as cloudinary } from 'cloudinary';
+import { db } from '../../db/index';
+import { maintenanceHistory } from '../../db/maintenance_historySchema';
+import { vehicles as vehiclesTable } from '../../db/vehicleSchema';
+import { eq, desc } from 'drizzle-orm';
 
 // Create a new maintenance record
 export async function createMaintenance(req: Request, res: Response) {
   try {
     const { vehicleId, ...maintenanceData } = req.body;
 
-  
     // Check if vehicle exists
-    const [vehicle] = await db.select().from(vehiclesTable).where(eq(vehiclesTable.id, vehicleId));
+    const [vehicle] = await db
+      .select()
+      .from(vehiclesTable)
+      .where(eq(vehiclesTable.id, vehicleId));
     if (!vehicle) {
-        console.log("Vehicle ID received:", vehicleId);
-console.log("All vehicle IDs in DB:", await db.select({ id: vehiclesTable.id }).from(vehiclesTable));
+      console.log('Vehicle ID received:', vehicleId);
+      console.log(
+        'All vehicle IDs in DB:',
+        await db.select({ id: vehiclesTable.id }).from(vehiclesTable),
+      );
 
-      return res.status(404).json({ error: "Vehicle not found" });
+      return res.status(404).json({ error: 'Vehicle not found' });
     }
 
     // Validate required fields
     if (!Object.keys(maintenanceData).length) {
-      return res.status(400).json({ error: "All fields are required" });
+      return res.status(400).json({ error: 'All fields are required' });
     }
 
     // Handle file uploads
@@ -37,11 +42,11 @@ console.log("All vehicle IDs in DB:", await db.select({ id: vehiclesTable.id }).
         const file = (req.files as any).odometerImage[0];
         odometerImageUrl = await new Promise<string>((resolve, reject) => {
           const stream = cloudinary.uploader.upload_stream(
-            { folder: "moovsafe/maintenance/odometer" },
+            { folder: 'moovsafe/maintenance/odometer' },
             (error: any, result: any) => {
               if (error) return reject(error);
-              resolve(result?.secure_url || "");
-            }
+              resolve(result?.secure_url || '');
+            },
           );
           stream.end(file.buffer);
         });
@@ -56,15 +61,15 @@ console.log("All vehicle IDs in DB:", await db.select({ id: vehiclesTable.id }).
             (file: Express.Multer.File) =>
               new Promise<string>((resolve, reject) => {
                 const stream = cloudinary.uploader.upload_stream(
-                  { folder: "moovsafe/maintenance/invoices" },
+                  { folder: 'moovsafe/maintenance/invoices' },
                   (error: any, result: any) => {
                     if (error) return reject(error);
-                    resolve(result?.secure_url || "");
-                  }
+                    resolve(result?.secure_url || '');
+                  },
                 );
                 stream.end(file.buffer);
-              })
-          )
+              }),
+          ),
         );
       }
 
@@ -77,15 +82,15 @@ console.log("All vehicle IDs in DB:", await db.select({ id: vehiclesTable.id }).
             (file: Express.Multer.File) =>
               new Promise<string>((resolve, reject) => {
                 const stream = cloudinary.uploader.upload_stream(
-                  { folder: "moovsafe/maintenance/photos" },
+                  { folder: 'moovsafe/maintenance/photos' },
                   (error, result) => {
                     if (error) return reject(error);
-                    resolve(result?.secure_url || "");
-                  }
+                    resolve(result?.secure_url || '');
+                  },
                 );
                 stream.end(file.buffer);
-              })
-          )
+              }),
+          ),
         );
       }
     }
@@ -110,16 +115,16 @@ console.log("All vehicle IDs in DB:", await db.select({ id: vehiclesTable.id }).
       .returning();
 
     res.status(201).json({
-      message: "Maintenance record created",
+      message: 'Maintenance record created',
       newMaintenanceRecord,
     });
   } catch (error) {
-    console.error("Error creating maintenance record:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error('Error creating maintenance record:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 }
 
-// Update an existing maintenance record        
+// Update an existing maintenance record
 export async function updateMaintenance(req: Request, res: Response) {
   try {
     const { id } = req.params;
@@ -127,7 +132,11 @@ export async function updateMaintenance(req: Request, res: Response) {
 
     // Validate at least one field
     if (!Object.keys(updateData).length && !req.files) {
-      return res.status(400).json({ error: "At least one field or file must be provided to update" });
+      return res
+        .status(400)
+        .json({
+          error: 'At least one field or file must be provided to update',
+        });
     }
 
     // Handle file uploads
@@ -136,16 +145,18 @@ export async function updateMaintenance(req: Request, res: Response) {
       // @ts-ignore
       if ((req.files as any).odometerImage?.[0]) {
         const file = (req.files as any).odometerImage[0];
-        updateData.odometerImageUrl = await new Promise<string>((resolve, reject) => {
-          const stream = cloudinary.uploader.upload_stream(
-            { folder: "moovsafe/maintenance/odometer" },
-            (error: any, result: any) => {
-              if (error) return reject(error);
-              resolve(result?.secure_url || "");
-            }
-          );
-          stream.end(file.buffer);
-        });
+        updateData.odometerImageUrl = await new Promise<string>(
+          (resolve, reject) => {
+            const stream = cloudinary.uploader.upload_stream(
+              { folder: 'moovsafe/maintenance/odometer' },
+              (error: any, result: any) => {
+                if (error) return reject(error);
+                resolve(result?.secure_url || '');
+              },
+            );
+            stream.end(file.buffer);
+          },
+        );
       }
 
       // Invoices
@@ -157,15 +168,15 @@ export async function updateMaintenance(req: Request, res: Response) {
             (file: Express.Multer.File) =>
               new Promise<string>((resolve, reject) => {
                 const stream = cloudinary.uploader.upload_stream(
-                  { folder: "moovsafe/maintenance/invoices" },
+                  { folder: 'moovsafe/maintenance/invoices' },
                   (error: any, result: any) => {
                     if (error) return reject(error);
-                    resolve(result?.secure_url || "");
-                  }
+                    resolve(result?.secure_url || '');
+                  },
                 );
                 stream.end(file.buffer);
-              })
-          )
+              }),
+          ),
         );
       }
 
@@ -178,22 +189,23 @@ export async function updateMaintenance(req: Request, res: Response) {
             (file: Express.Multer.File) =>
               new Promise<string>((resolve, reject) => {
                 const stream = cloudinary.uploader.upload_stream(
-                  { folder: "moovsafe/maintenance/photos" },
+                  { folder: 'moovsafe/maintenance/photos' },
                   (error, result) => {
                     if (error) return reject(error);
-                    resolve(result?.secure_url || "");
-                  }
+                    resolve(result?.secure_url || '');
+                  },
                 );
                 stream.end(file.buffer);
-              })
-          )
+              }),
+          ),
         );
       }
     }
 
     // Convert dates if provided
     if (updateData.date) updateData.date = new Date(updateData.date);
-    if (updateData.nextServiceDate) updateData.nextServiceDate = new Date(updateData.nextServiceDate);
+    if (updateData.nextServiceDate)
+      updateData.nextServiceDate = new Date(updateData.nextServiceDate);
 
     // Update record
     const [updatedRecord] = await db
@@ -203,16 +215,17 @@ export async function updateMaintenance(req: Request, res: Response) {
       .returning();
 
     if (!updatedRecord) {
-      return res.status(404).json({ error: "Maintenance record not found" });
+      return res.status(404).json({ error: 'Maintenance record not found' });
     }
 
-    res.status(200).json({ message: "Maintenance record updated", updatedRecord });
+    res
+      .status(200)
+      .json({ message: 'Maintenance record updated', updatedRecord });
   } catch (error) {
-    console.error("Error updating maintenance record:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error('Error updating maintenance record:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 }
-
 
 export async function getByVehicle(req: Request, res: Response) {
   try {
@@ -225,7 +238,7 @@ export async function getByVehicle(req: Request, res: Response) {
       .where(eq(vehiclesTable.licensePlate, licensePlate));
 
     if (!vehicle) {
-      return res.status(404).json({ error: "Vehicle not found" });
+      return res.status(404).json({ error: 'Vehicle not found' });
     }
 
     // Get all maintenance records for this vehicle
@@ -244,8 +257,8 @@ export async function getByVehicle(req: Request, res: Response) {
       maintenanceRecords: records,
     });
   } catch (error) {
-    console.error("Error fetching maintenance records:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error('Error fetching maintenance records:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 }
 
@@ -262,8 +275,8 @@ export async function getMaintenanceHistory(req: Request, res: Response) {
       maintenanceRecords: records,
     });
   } catch (error) {
-    console.error("Error fetching maintenance history:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error('Error fetching maintenance history:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 }
 
@@ -278,16 +291,15 @@ export async function getMaintenanceById(req: Request, res: Response) {
       .where(eq(maintenanceHistory.id, id));
 
     if (!record) {
-      return res.status(404).json({ error: "Maintenance record not found" });
+      return res.status(404).json({ error: 'Maintenance record not found' });
     }
 
     res.status(200).json(record);
   } catch (error) {
-    console.error("Error fetching maintenance record by ID:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error('Error fetching maintenance record by ID:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 }
-
 
 export const deleteMaintenance = async (req: Request, res: Response) => {
   try {
@@ -300,33 +312,44 @@ export const deleteMaintenance = async (req: Request, res: Response) => {
       .where(eq(maintenanceHistory.id, id));
 
     if (!record) {
-      return res.status(404).json({ error: "Maintenance record not found" });
+      return res.status(404).json({ error: 'Maintenance record not found' });
     }
 
     // Delete odometer image
     if (record.odometerImageUrl) {
-      const publicId = record.odometerImageUrl.split("/").pop()?.split(".")[0];
-      if (publicId) await cloudinary.uploader.destroy(`moovsafe/maintenance/odometer/${publicId}`);
+      const publicId = record.odometerImageUrl.split('/').pop()?.split('.')[0];
+      if (publicId)
+        await cloudinary.uploader.destroy(
+          `moovsafe/maintenance/odometer/${publicId}`,
+        );
     }
 
     // Delete invoices
     if (record.invoicesUrl?.length) {
-      const publicIds = record.invoicesUrl.map(url => `moovsafe/maintenance/invoices/${url.split("/").pop()?.split(".")[0]}`);
+      const publicIds = record.invoicesUrl.map(
+        (url) =>
+          `moovsafe/maintenance/invoices/${url.split('/').pop()?.split('.')[0]}`,
+      );
       await cloudinary.api.delete_resources(publicIds);
     }
 
     // Delete photos
     if (record.photosUrl?.length) {
-      const publicIds = record.photosUrl.map(url => `moovsafe/maintenance/photos/${url.split("/").pop()?.split(".")[0]}`);
+      const publicIds = record.photosUrl.map(
+        (url) =>
+          `moovsafe/maintenance/photos/${url.split('/').pop()?.split('.')[0]}`,
+      );
       await cloudinary.api.delete_resources(publicIds);
     }
 
     // Delete the DB record
     await db.delete(maintenanceHistory).where(eq(maintenanceHistory.id, id));
 
-    res.status(200).json({ message: "Maintenance record and images deleted successfully" });
+    res
+      .status(200)
+      .json({ message: 'Maintenance record and images deleted successfully' });
   } catch (error) {
-    console.error("Error deleting maintenance record:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error('Error deleting maintenance record:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
