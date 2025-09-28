@@ -8,7 +8,11 @@ import { eq, desc } from 'drizzle-orm';
 // Create a new maintenance record
 export async function createMaintenance(req: Request, res: Response) {
   try {
-    const { vehicleId, ...maintenanceData } = req.body;
+    const { vehicleId, ...maintenanceData } = req.cleanBody;
+
+    if (!vehicleId) {
+      return res.status(400).json({ error: 'vehicleId is required' });
+    }
 
     // Check if vehicle exists
     const [vehicle] = await db
@@ -128,7 +132,7 @@ export async function createMaintenance(req: Request, res: Response) {
 export async function updateMaintenance(req: Request, res: Response) {
   try {
     const { id } = req.params;
-    const updateData = { ...req.body };
+    const updateData = { ...req.cleanBody };
 
     // Validate at least one field
     if (!Object.keys(updateData).length && !req.files) {
@@ -227,6 +231,7 @@ export async function updateMaintenance(req: Request, res: Response) {
   }
 }
 
+// Get maintenance records by vehicle license plate
 export async function getByVehicle(req: Request, res: Response) {
   try {
     const { licensePlate } = req.params;

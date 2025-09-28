@@ -8,6 +8,9 @@ import {
   deleteMaintenance,
 } from './MaintenanceController';
 import { upload } from '../../middleware/upload';
+import { validateData } from '../../middleware/validationMiddleware';
+import { createMaintenanceSchema ,updateMaintenanceSchema } from '../../db/maintenance_historySchema';
+
 
 const router = Router();
 
@@ -19,6 +22,7 @@ router.get('/:id', getMaintenanceById);
 
 router.post(
   '/',
+  validateData(createMaintenanceSchema),
   upload.fields([
     { name: 'odometerImage', maxCount: 1 },
     { name: 'invoices', maxCount: 5 },
@@ -26,7 +30,7 @@ router.post(
   ]),
   createMaintenance,
 );
-router.put('/:id', updateMaintenance);
+router.put('/:id', validateData(updateMaintenanceSchema), updateMaintenance);
 router.delete('/:id', deleteMaintenance);
 
 export default router;
