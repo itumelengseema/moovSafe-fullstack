@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b8dac3aa-110a-4f76-be07-461ad3e60278"
+      }
+    },
+    "owner": "itumelengseema"
   }
 }
