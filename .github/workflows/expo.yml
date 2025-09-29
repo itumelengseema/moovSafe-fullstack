@@ -15,6 +15,8 @@ on:
 jobs:
   expo-build:
     runs-on: ubuntu-latest
+    env:
+      EAS_TOKEN: ${{ secrets.EXPO_TOKEN }}
     steps:
       # Step 1: Checkout code
       - uses: actions/checkout@v4
@@ -24,33 +26,31 @@ jobs:
         with:
           node-version: 20
 
-      # Step 3: Install dependencies for Expo project
+      # Step 3: Cache node_modules for faster builds
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: moovSafe-mobile/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('moovSafe-mobile/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # Step 4: Install dependencies
       - name: Install dependencies
         working-directory: ./moovSafe-mobile
         run: npm install
 
-      # Step 4: Install EAS CLI globally
+      # Step 5: Install EAS CLI globally
       - name: Install EAS CLI
         run: npm install -g eas-cli
 
-      # Step 5: Authenticate using EAS_TOKEN secret
-      - name: Authenticate with Expo
+      # Step 6: Verify authentication
+      - name: Verify Expo login
         working-directory: ./moovSafe-mobile
         run: eas whoami
-        env:
-          EAS_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
-      # Step 6: Prebuild the Expo project (checks for errors)
+      # Step 7: Prebuild Expo project (checks for errors)
       - name: Prebuild Expo project
         working-directory: ./moovSafe-mobile
         run: eas prebuild --non-interactive
-        env:
-          EAS_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
-      # Optional Step 7: Build Expo app using EAS
-      # Uncomment if you want to actually build the app in CI
-      # - name: Build Expo app
-      #   working-directory: ./moovSafe-mobile
-      #   run: eas build --platform all --non-interactive
-      #   env:
-      #     EAS_TOKEN: ${{ secrets.EXPO_TOKEN }}
