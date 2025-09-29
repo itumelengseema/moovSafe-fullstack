@@ -24,26 +24,33 @@ jobs:
         with:
           node-version: 20
 
-      # Step 3: Install dependencies for the Expo project
+      # Step 3: Install dependencies for Expo project
       - name: Install dependencies
         working-directory: ./moovSafe-mobile
         run: npm install
 
-      # Step 4: Install EAS CLI
+      # Step 4: Install EAS CLI globally
       - name: Install EAS CLI
         run: npm install -g eas-cli
 
-      # Step 5: Authenticate with Expo
-      - name: Login to Expo
-        run: eas login --token ${{ secrets.EXPO_TOKEN }}
+      # Step 5: Authenticate using EAS_TOKEN secret
+      - name: Authenticate with Expo
         working-directory: ./moovSafe-mobile
+        run: eas whoami
+        env:
+          EAS_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
       # Step 6: Prebuild the Expo project (checks for errors)
       - name: Prebuild Expo project
         working-directory: ./moovSafe-mobile
         run: eas prebuild --non-interactive
+        env:
+          EAS_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
-      # Step 7: Optional: Build Expo app with EAS
+      # Optional Step 7: Build Expo app using EAS
+      # Uncomment if you want to actually build the app in CI
       # - name: Build Expo app
       #   working-directory: ./moovSafe-mobile
       #   run: eas build --platform all --non-interactive
+      #   env:
+      #     EAS_TOKEN: ${{ secrets.EXPO_TOKEN }}
