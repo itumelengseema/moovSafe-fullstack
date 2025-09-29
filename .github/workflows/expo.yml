@@ -1,0 +1,46 @@
+name: MoovSafe Mobile CI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "moovSafe-mobile/**"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "moovSafe-mobile/**"
+
+jobs:
+  expo-build:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Checkout code
+      - uses: actions/checkout@v4
+
+      # Step 2: Setup Node.js
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # Step 3: Install Expo CLI
+      - name: Install Expo CLI
+        run: npm install -g expo-cli
+
+      # Step 4: Install dependencies
+      - name: Install dependencies
+        working-directory: ./moovSafe-mobile
+        run: npm install
+
+      # Step 5: Build Expo app (check for errors)
+      - name: Build Expo app
+        working-directory: ./moovSafe-mobile
+        run: npm run build
+        env:
+          CI: false
+
+      # Step 6: Authenticate with Expo (optional, required for EAS builds)
+      - name: Login to Expo
+        run: eas login --token ${{ secrets.EXPO_TOKEN }}
+        working-directory: ./moovSafe-mobile
