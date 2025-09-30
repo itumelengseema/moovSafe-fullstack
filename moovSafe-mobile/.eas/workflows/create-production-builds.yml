@@ -3,7 +3,7 @@ name: EAS Android Development Build
 on:
   push:
     branches:
-      - main
+        - '**'
 
 jobs:
   build-android-development:
