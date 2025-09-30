@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { v2 as cloudinary } from 'cloudinary';
-import { db } from '../../db/index';
-import { maintenanceHistory } from '../../db/maintenance_historySchema';
-import { vehicles as vehiclesTable } from '../../db/vehicleSchema';
+import { db } from '../../db/index.js';
+import { maintenanceHistory } from '../../db/maintenance_historySchema.js';
+import { vehicles as vehiclesTable } from '../../db/vehicleSchema.js';
 import { eq, desc } from 'drizzle-orm';
 
 // Create a new maintenance record
@@ -136,11 +136,9 @@ export async function updateMaintenance(req: Request, res: Response) {
 
     // Validate at least one field
     if (!Object.keys(updateData).length && !req.files) {
-      return res
-        .status(400)
-        .json({
-          error: 'At least one field or file must be provided to update',
-        });
+      return res.status(400).json({
+        error: 'At least one field or file must be provided to update',
+      });
     }
 
     // Handle file uploads

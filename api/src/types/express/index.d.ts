@@ -1,6 +1,4 @@
-
-
-export{};
+export {};
 
 declare global {
   namespace Express {

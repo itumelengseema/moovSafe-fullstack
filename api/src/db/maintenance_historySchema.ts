@@ -5,7 +5,6 @@ import {
   integer,
   varchar,
   timestamp,
-  
 } from 'drizzle-orm/pg-core';
 import { createInsertSchema } from 'drizzle-zod';
 import { z } from 'zod';
@@ -35,24 +34,31 @@ export const maintenanceHistory = pgTable('maintenance_historyTable', {
   nextServiceMileage: integer('next_service_mileage'), // Optional
 });
 
-export const createMaintenanceSchema = createInsertSchema(maintenanceHistory).omit(
-  {id: true}
-) .extend({
-    vehicleId: z.string().uuid("vehicleId must be a valid UUID"),
-    mileage: z.number().min(0, "Mileage must be non-negative"),
-    cost: z.number().min(0, "Cost must be non-negative").optional(),
-    nextServiceMileage: z.number().min(0, "Next service mileage must be non-negative").optional(),
-      nextServiceDate: z.coerce.date().optional(),
-      date: z.coerce.date().optional(),
+export const createMaintenanceSchema = createInsertSchema(maintenanceHistory)
+  .omit({ id: true })
+  .extend({
+    vehicleId: z.string().uuid('vehicleId must be a valid UUID'),
+    mileage: z.number().min(0, 'Mileage must be non-negative'),
+    cost: z.number().min(0, 'Cost must be non-negative').optional(),
+    nextServiceMileage: z
+      .number()
+      .min(0, 'Next service mileage must be non-negative')
+      .optional(),
+    nextServiceDate: z.coerce.date().optional(),
+    date: z.coerce.date().optional(),
   });
 
-  export const updateMaintenanceSchema = createInsertSchema(maintenanceHistory).omit(
-  {id: true}
-) .extend({
-    vehicleId: z.string().uuid("vehicleId must be a valid UUID"),
-    mileage: z.number().min(0, "Mileage must be non-negative"),
-    cost: z.number().min(0, "Cost must be non-negative").optional(),
-    nextServiceMileage: z.number().min(0, "Next service mileage must be non-negative").optional(),
-      nextServiceDate: z.coerce.date().optional(),
-      date: z.coerce.date().optional(),
-  }).partial();
+export const updateMaintenanceSchema = createInsertSchema(maintenanceHistory)
+  .omit({ id: true })
+  .extend({
+    vehicleId: z.string().uuid('vehicleId must be a valid UUID'),
+    mileage: z.number().min(0, 'Mileage must be non-negative'),
+    cost: z.number().min(0, 'Cost must be non-negative').optional(),
+    nextServiceMileage: z
+      .number()
+      .min(0, 'Next service mileage must be non-negative')
+      .optional(),
+    nextServiceDate: z.coerce.date().optional(),
+    date: z.coerce.date().optional(),
+  })
+  .partial();

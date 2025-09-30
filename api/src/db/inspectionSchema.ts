@@ -59,11 +59,12 @@ export const inspections = pgTable('inspectionTable', {
   odometerImageUrl: varchar('odometer_image_url', { length: 255 }), // URL to odometer image
 });
 
-
 export const createInspectionSchema = createInsertSchema(inspections).omit({
   id: true, // Omit id for creation as it is auto-generated
 });
 
-export const updateInspectionSchema = createInsertSchema(inspections).omit({
-  id: true, // Omit id for updates as it should not be changed
-}).partial(); // Make all fields optional for updates
+export const updateInspectionSchema = createInsertSchema(inspections)
+  .omit({
+    id: true, // Omit id for updates as it should not be changed
+  })
+  .partial(); // Make all fields optional for updates

@@ -5,10 +5,10 @@ import {
   getInspectionById,
   createInspection,
   deleteInspection,
-} from './inspectionController';
-import { upload } from '../../middleware/upload';
-import { validateData } from '../../middleware/validationMiddleware';
-import { createInspectionSchema } from '../../db/inspectionSchema';
+} from './inspectionController.js';
+import { upload } from '../../middleware/upload.js';
+import { validateData } from '../../middleware/validationMiddleware.js';
+import { createInspectionSchema } from '../../db/inspectionSchema.js';
 const router = Router();
 
 //Routes
