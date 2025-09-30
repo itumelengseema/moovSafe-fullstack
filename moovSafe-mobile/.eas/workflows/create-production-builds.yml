@@ -3,11 +3,11 @@ name: EAS Android Development Build
 on:
   push:
     branches:
-        - '**'
+        - main
 
 jobs:
   build-android-development:
-    runs-on: ubuntu-latest
+   
 
     steps:
       - name: Checkout repository
