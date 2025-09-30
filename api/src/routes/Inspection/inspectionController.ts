@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { db } from '../../db/index';
-import { inspections as inspectionsTable } from '../../db/inspectionSchema';
+import { db } from '../../db/index.js';
+import { inspections as inspectionsTable } from '../../db/inspectionSchema.js';
 import { v2 as cloudinary } from 'cloudinary';
 
 import { eq } from 'drizzle-orm';
@@ -17,11 +17,9 @@ export async function getInspections(req: Request, res: Response) {
     }
   } catch (error) {
     console.error('Error fetching inspections:', error);
-    res
-      .status(500)
-      .json({
-        error: 'Smothing went Wrong While trying to retrive inspections',
-      });
+    res.status(500).json({
+      error: 'Smothing went Wrong While trying to retrive inspections',
+    });
   }
 }
 
@@ -59,11 +57,9 @@ export async function getInspectionByDate(req: Request, res: Response) {
     res.status(200).json(inspections);
   } catch (error) {
     console.error('Error fetching inspection by date:', error);
-    res
-      .status(500)
-      .json({
-        error: 'Smothing went Wrong While trying to retrive inspection by date',
-      });
+    res.status(500).json({
+      error: 'Smothing went Wrong While trying to retrive inspection by date',
+    });
   }
 }
 
@@ -86,11 +82,9 @@ export async function getInspectionById(req: Request, res: Response) {
     res.json(inspectionData);
   } catch (error) {
     console.error('Error fetching inspection by ID:', error);
-    res
-      .status(500)
-      .json({
-        error: 'Smothing went Wrong While trying to retrive inspection',
-      });
+    res.status(500).json({
+      error: 'Smothing went Wrong While trying to retrive inspection',
+    });
   }
 }
 
