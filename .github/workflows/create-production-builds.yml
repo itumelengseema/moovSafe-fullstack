@@ -45,10 +45,4 @@ jobs:
       - name: Build Android development APK
         run: eas build --platform android --profile development --non-interactive
 
-      # 7️⃣ Upload APK as artifact
-      - name: Upload APK
-        uses: actions/upload-artifact@v3
-        with:
-          name: android-development-apk
-          path: |
-            **/*.apk
+   
