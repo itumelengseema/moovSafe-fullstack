@@ -3,35 +3,49 @@ name: EAS Android Development Build
 on:
   push:
     branches:
-        - main
+      - main   # triggers on all branches
+  pull_request:
+    branches:
+      - main  # triggers on pull requests to the main branch
 
 jobs:
   build-android-development:
-   
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: moovSafe-mobile  # run commands inside your app folder
 
     steps:
+      # 1️⃣ Checkout repo
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # 2️⃣ Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
+      # 3️⃣ Install project dependencies
       - name: Install dependencies
         run: npm install
 
+      # 4️⃣ Install EAS CLI
       - name: Install EAS CLI
         run: npm install -g eas-cli
 
-      - name: Login to Expo
+      # 5️⃣ Login to Expo
+      - name: Expo login
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: eas login --token $EXPO_TOKEN
 
-      - name: Run Android development build
+      # 6️⃣ Build Android development APK
+      - name: Build Android development APK
         run: eas build --platform android --profile development --non-interactive
 
+      # 7️⃣ Upload APK as artifact
       - name: Upload APK
         uses: actions/upload-artifact@v3
         with:
