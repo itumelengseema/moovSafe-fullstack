@@ -1,9 +1,21 @@
-import { View, Text } from 'react-native'
+import { View, Text, FlatList } from 'react-native';
+import Vehicles from '../assets/vehicles.json';
 
-export default function HomeScreen() {
+
+import VehicleListItem from '../components/VehicleListItem';
+
+export default function App() {
   return (
     <View>
-      <Text style={{ fontSize: 30, fontWeight: 'bold' }}>Home Screen</Text>
+      <Text>Vehicle List:</Text>
+      <FlatList
+        data={Vehicles}
+        renderItem={({ item }) => <VehicleListItem vehicle={item} />}
+     
+      />
+
     </View>
-  )
+  );
 }
+          
+   
