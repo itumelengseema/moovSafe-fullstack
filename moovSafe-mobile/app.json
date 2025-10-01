@@ -2,6 +2,7 @@
   "expo": {
     "name": "moovSafe-mobile",
     "slug": "moovSafe-mobile",
+    "scheme":"moovsafe",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -34,6 +35,9 @@
         "projectId": "b8dac3aa-110a-4f76-be07-461ad3e60278"
       }
     },
-    "owner": "itumelengseema"
+    "owner": "itumelengseema",
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
