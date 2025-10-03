@@ -11,6 +11,7 @@
     "transmission": "Automatic",
     "currentMileage": 40000,
     "colour": "Silver"
+    
   },
   {
     "id": "df0c706b-cee4-41ca-9d96-cdd4b367e97a",
@@ -70,7 +71,7 @@
     "model": "Polo Vivo 1.4",
     "year": 2011,
     "vin": "1HGCG823343A224371",
-    "engineNumber": "CLP144496189",
+    "engineNumber": "CYZ144486189",
     "licensePlate": "CYN645GP",
     "fuelType": "petrol",
     "transmission": "manual",
@@ -79,15 +80,15 @@
   },
   {
     "id": "f35877e7-8864-4ac7-ab3a-9e43fef3b8a3",
-    "make": "Toyota",
-    "model": "Yaris",
-    "year": 2010,
+    "make": "Suzuki",
+    "model": "Grand Vitara",
+    "year": 2024,
     "vin": "3HGCD823343A004351",
-    "engineNumber": "2JZ184456189",
-    "licensePlate": "YBJ175GP",
+    "engineNumber": "3JZ666HKO31",
+    "licensePlate": "LC334GP",
     "fuelType": "petrol",
     "transmission": "automatic",
-    "currentMileage": 143562,
+    "currentMileage": 173562,
     "colour": "Silver"
   },
   {
