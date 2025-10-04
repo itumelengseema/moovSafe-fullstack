@@ -5,7 +5,15 @@ export default function RootLayout() {
   return (
     <GluestackUIProvider mode="light">
 
-       <Stack />
+       <Stack >
+          <Stack.Screen name="(tabs)"
+            options={{
+              headerShown: false,
+            }}
+          />
+
+        <Slot />
+        </Stack>
        
     </GluestackUIProvider>
      
