@@ -1,22 +1,19 @@
-import { Slot,Stack,Tabs } from 'expo-router'
-import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
-import '@/global.css';
+import { Slot, Stack } from "expo-router";
+import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
+import "@/global.css";
 export default function RootLayout() {
-  return (
-    <GluestackUIProvider mode="light">
+	return (
+		<GluestackUIProvider mode="light">
+			<Stack>
+				<Stack.Screen
+					name="(tabs)"
+					options={{
+						headerShown: false,
+					}}
+				/>
 
-       <Stack >
-          <Stack.Screen name="(tabs)"
-            options={{
-              headerShown: false,
-            }}
-          />
-
-        <Slot />
-        </Stack>
-       
-    </GluestackUIProvider>
-     
-  
-  )
+				<Slot />
+			</Stack>
+		</GluestackUIProvider>
+	);
 }
