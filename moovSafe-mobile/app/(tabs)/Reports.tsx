@@ -1,21 +1,21 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from 'react-native';
 
 export default function ReportsScreen() {
-	return (
-		<View style={styles.container}>
-			<Text style={styles.text}>Reports screen</Text>
-		</View>
-	);
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>Reports screen</Text>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: "#25292e",
-		justifyContent: "center",
-		alignItems: "center",
-	},
-	text: {
-		color: "#fff",
-	},
+  container: {
+    flex: 1,
+    backgroundColor: '#25292e',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    color: '#fff',
+  },
 });
