@@ -11,8 +11,8 @@ import VehicleListItem from '../../components/VehicleListItem';
 
 export default function HomeScreen() {
   return (
-    <ScrollView className="p-5 flex-1" showsVerticalScrollIndicator={false}>
-      <Heading size="xl">Quick Stats</Heading>
+    <ScrollView className='p-5 flex-1' showsVerticalScrollIndicator={false}>
+      {/* <Heading size="xl">Quick Stats</Heading>
       <FlatList
         horizontal
         data={[
@@ -43,9 +43,9 @@ export default function HomeScreen() {
             type={item.type}
           />
         )}
-      />
-      <VStack space="md">
-        <Heading size="xl">My Vehicles</Heading>
+      /> */}
+      <VStack space='md'>
+        <Heading size='xl'>My Vehicles</Heading>
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -56,7 +56,7 @@ export default function HomeScreen() {
           )}
         />
 
-        <Heading size="xl">Attention Required</Heading>
+        <Heading size='xl'>Attention Required</Heading>
         <FlatList
           data={alerts}
           keyExtractor={(item) => item.id}
@@ -64,8 +64,8 @@ export default function HomeScreen() {
           scrollEnabled={false} // disable inner scroll so ScrollView scrolls
         />
 
-        <Link href="/reports">Go to Reports Screen</Link>
+        <Link href='/reports'>Go to Reports Screen</Link>
       </VStack>
     </ScrollView>
-  );
+  )
 }

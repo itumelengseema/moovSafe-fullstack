@@ -1,17 +1,18 @@
-import { FontAwesome5, Ionicons } from '@expo/vector-icons';
-import React from 'react';
-import { TouchableOpacity } from 'react-native';
-import { Card } from '@/components/ui/card';
-import { Heading } from '@/components/ui/heading';
-import { HStack } from '@/components/ui/hstack';
-import { Image } from '@/components/ui/image';
-import { Text } from '@/components/ui/text';
-import { VStack } from '@/components/ui/vstack';
+import { FontAwesome5, Ionicons } from "@expo/vector-icons"
+
+import { Pressable, TouchableOpacity } from "react-native"
+import { Card } from "@/components/ui/card"
+import { Heading } from "@/components/ui/heading"
+import { HStack } from "@/components/ui/hstack"
+import { Image } from "@/components/ui/image"
+import { Text } from "@/components/ui/text"
+import { VStack } from "@/components/ui/vstack"
+import { Link } from "expo-router"
 
 interface VehicleListItemProps {
-  vehicle: any;
-  vehicleImages: any;
-  onPress?: (vehicle: any) => void;
+  vehicle: any
+  vehicleImages: any
+  onPress?: (vehicle: any) => void
 }
 
 export default function VehicleListItem({
@@ -19,62 +20,70 @@ export default function VehicleListItem({
   vehicleImages,
   onPress,
 }: VehicleListItemProps) {
-  const imageSource = vehicleImages[vehicle.id];
+  const imageSource = vehicleImages[vehicle.id]
 
   return (
-    <TouchableOpacity activeOpacity={0.8} onPress={() => onPress?.(vehicle)}>
-      <Card
-        size="sm"
-        variant="elevated"
-        className="p-6 rounded-xl max-w-[360px] m-3"
-      >
-        {/* Vehicle Image */}
-        <Image
-          source={imageSource}
-          className="mb-6 h-[240px] w-full rounded-md aspect-[4/3]"
-          alt="vehicle image"
-        />
+    <Link href={`/vehicle/${vehicle.id}`} asChild>
+      <Pressable className="flex-1">
+        <Card
+          size="sm"
+          variant="elevated"
+          className="p-6 rounded-xl max-w-[360px] m-3"
+        >
+          {/* Vehicle Image */}
+          <Image
+            source={imageSource}
+            className="mb-6 h-[240px] w-full rounded-md aspect-[2/1]"
+            alt="vehicle image"
+          />
 
-        {/* Make, Model & License Plate */}
-        <HStack className="flex flex-row justify-between items-start mb-2">
-          <Heading size="lg" className="text-xl font-bold text-typography-700">
-            {vehicle.make} | {vehicle.model}
-          </Heading>
-          <Heading size="lg" className="text-xl font-bold text-typography-700">
-            {vehicle.licensePlate}
-          </Heading>
-        </HStack>
+          {/* Make, Model & License Plate */}
+          <HStack className="flex flex-row justify-between items-start mb-2">
+            <Heading
+              size="lg"
+              className="text-xl font-bold text-typography-700"
+            >
+              {vehicle.make} | {vehicle.model}
+            </Heading>
+            <Heading
+              size="lg"
+              className="text-xl font-bold text-typography-700"
+            >
+              {vehicle.licensePlate}
+            </Heading>
+          </HStack>
 
-        {/* Fuel, Mileage & Transmission */}
-        <VStack space="md">
-          <HStack className="flex flex-row justify-between items-center mb-2">
-            <HStack space="sm" className="items-center">
-              <FontAwesome5 name="gas-pump" size={20} color="black" />
-              <Text className="text-sm text-typography-700">
-                {vehicle.fuelType}
-              </Text>
+          {/* Fuel, Mileage & Transmission */}
+          <VStack space="md">
+            <HStack className="flex flex-row justify-between items-center mb-2">
+              <HStack space="sm" className="items-center">
+                <FontAwesome5 name="gas-pump" size={20} color="black" />
+                <Text className="text-sm text-typography-700">
+                  {vehicle.fuelType}
+                </Text>
+              </HStack>
+
+              <HStack space="sm" className="items-center">
+                <Ionicons name="speedometer" size={20} color="black" />
+                <Text className="text-sm text-typography-700">
+                  {vehicle.currentMileage} km
+                </Text>
+              </HStack>
             </HStack>
 
             <HStack space="sm" className="items-center">
-              <Ionicons name="speedometer" size={20} color="black" />
+              <FontAwesome5
+                name={vehicle.transmission === "manual" ? "cog" : "cogs"}
+                size={20}
+                color="black"
+              />
               <Text className="text-sm text-typography-700">
-                {vehicle.currentMileage} km
+                {vehicle.transmission}
               </Text>
             </HStack>
-          </HStack>
-
-          <HStack space="sm" className="items-center">
-            <FontAwesome5
-              name={vehicle.transmission === 'manual' ? 'cog' : 'cogs'}
-              size={20}
-              color="black"
-            />
-            <Text className="text-sm text-typography-700">
-              {vehicle.transmission}
-            </Text>
-          </HStack>
-        </VStack>
-      </Card>
-    </TouchableOpacity>
-  );
+          </VStack>
+        </Card>
+      </Pressable>
+    </Link>
+  )
 }
