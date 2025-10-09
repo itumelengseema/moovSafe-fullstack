@@ -1,18 +1,18 @@
-import { FontAwesome5, Ionicons } from "@expo/vector-icons"
+import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 
-import { Pressable, TouchableOpacity } from "react-native"
-import { Card } from "@/components/ui/card"
-import { Heading } from "@/components/ui/heading"
-import { HStack } from "@/components/ui/hstack"
-import { Image } from "@/components/ui/image"
-import { Text } from "@/components/ui/text"
-import { VStack } from "@/components/ui/vstack"
-import { Link } from "expo-router"
+import { Pressable } from "react-native";
+import { Card } from "@/components/ui/card";
+import { Heading } from "@/components/ui/heading";
+import { HStack } from "@/components/ui/hstack";
+import { Image } from "@/components/ui/image";
+import { Text } from "@/components/ui/text";
+import { VStack } from "@/components/ui/vstack";
+import { Link } from "expo-router";
 
 interface VehicleListItemProps {
-  vehicle: any
-  vehicleImages: any
-  onPress?: (vehicle: any) => void
+  vehicle: any;
+  vehicleImages: any;
+  onPress?: (vehicle: any) => void;
 }
 
 export default function VehicleListItem({
@@ -20,7 +20,7 @@ export default function VehicleListItem({
   vehicleImages,
   onPress,
 }: VehicleListItemProps) {
-  const imageSource = vehicleImages[vehicle.id]
+  const imageSource = vehicleImages[vehicle.id];
 
   return (
     <Link href={`/vehicle/${vehicle.id}`} asChild>
@@ -85,5 +85,5 @@ export default function VehicleListItem({
         </Card>
       </Pressable>
     </Link>
-  )
+  );
 }

@@ -1,21 +1,40 @@
 import { useLocalSearchParams } from "expo-router";
 
-import vehicles from "@/assets/vehicles.json";
 import { Card } from "@/components/ui/card";
 import { Heading } from "@/components/ui/heading";
 import { HStack } from "@/components/ui/hstack";
 import { Image } from "@/components/ui/image";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
-import { View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
+import { useQuery } from "@tanstack/react-query";
+import { fetchVehicleById } from "@/api/vehicles";
+import { A } from "@expo/html-elements";
 export default function VehicleDetailsScreen() {
-  const { id } = useLocalSearchParams();
-  const vehicle = vehicles.find((v) => String(v.id) === String(id));
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const {
+    data: vehicle,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["vehicles", id],
+    queryFn: () => fetchVehicleById(String(id)),
+  });
 
-  if (!vehicle) {
+  if (isLoading) {
+    return <ActivityIndicator size="large" color="#0000ff" />;
+  }
+  if (error || !vehicle) {
     return (
-      <View>
-        <Text>Vehicle not found</Text>
+      <View className="flex-1 justify-center items-center p-5">
+        <Text className="text-red-500 text-lg">
+          {error instanceof Error
+            ? `Error fetching vehicle: ${error.message}`
+            : "Vehicle not found"}
+        </Text>
+        <A href=".." className="mt-4 text-blue-500 underline">
+          Go Back
+        </A>
       </View>
     );
   }
