@@ -20,14 +20,19 @@ export const vehicles = pgTable('vehiclesTable', {
   transmission: varchar({ length: 50 }).notNull(),
   currentMileage: integer('currentMileage').notNull(),
   colour: varchar({ length: 50 }).notNull(),
+  imageUrl: varchar({ length: 500 }),
+  vehicleType: varchar({ length: 50 }).notNull(),
+
 });
 
+
+
 export const createVehicleSchema = createInsertSchema(vehicles).omit({
-  id: true, // Omit id for creation as it is auto-generated
+  id: true,
+  imageUrl: true,
+  // Omit id for creation as it is auto-generated
 });
 
 export const updateVehicleSchema = createInsertSchema(vehicles)
-  .omit({
-    id: true, // Omit id for updates as it should not be changed
-  })
-  .partial(); // Make all fields optional for updates
+  .omit({ id: true })
+  .partial();
