@@ -91,9 +91,16 @@ export async function getInspectionById(req: Request, res: Response) {
 //create new inspection
 export async function createInspection(req: Request, res: Response) {
   try {
+    console.log('=== CREATE INSPECTION REQUEST ===');
+    console.log('req.body:', req.body);
+    console.log('req.cleanBody:', req.cleanBody);
+    console.log('req.files:', req.files);
+    console.log('================================');
+
     const { vehicleId, ...inspectionData } = req.cleanBody;
 
     if (!vehicleId) {
+      console.error('Vehicle ID is missing from request');
       return res.status(400).json({ error: 'Vehicle ID is required' });
     }
 

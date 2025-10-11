@@ -14,6 +14,20 @@ export default function RootLayout() {
               headerShown: false,
             }}
           />
+          <Stack.Screen
+            name="inspection/form"
+            options={{
+              title: "Vehicle Inspection",
+              headerShown: true,
+            }}
+          />
+          <Stack.Screen
+            name="inspection/[id]"
+            options={{
+              title: "Inspection Details",
+              headerShown: true,
+            }}
+          />
 
           <Slot />
         </Stack>

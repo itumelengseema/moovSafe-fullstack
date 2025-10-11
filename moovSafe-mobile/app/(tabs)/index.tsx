@@ -1,10 +1,10 @@
 import { Link } from "expo-router";
 import { ActivityIndicator, FlatList, ScrollView } from "react-native";
-import QuickStatsListItem from "@/components/QuickStatsListItem";
+
 import { Heading } from "@/components/ui/heading";
 import { VStack } from "@/components/ui/vstack";
 import alerts from "../../assets/alerts.json";
-import vehicleImages from "../../assets/Vehicles/vehicleImages.js";
+
 
 import AlertsItem from "../../components/AlertsListItem";
 import VehicleListItem from "../../components/VehicleListItem";
@@ -26,7 +26,6 @@ export default function HomeScreen() {
   if (isLoading) {
     return <ActivityIndicator size="large" color="#0000ff" />;
   }
-
   if (error) {
     return (
       <ScrollView className="p-5 flex-1" showsVerticalScrollIndicator={false}>
@@ -80,7 +79,7 @@ export default function HomeScreen() {
           data={data}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <VehicleListItem vehicle={item} vehicleImages={vehicleImages} />
+            <VehicleListItem vehicle={item} />
           )}
         />
 

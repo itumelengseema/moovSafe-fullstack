@@ -61,6 +61,9 @@ export const inspections = pgTable('inspectionTable', {
 
 export const createInspectionSchema = createInsertSchema(inspections).omit({
   id: true, // Omit id for creation as it is auto-generated
+  date: true, // Omit date as it has a default value
+  faultsImagesUrl: true, // Omit as it's handled by the controller after upload
+  odometerImageUrl: true, // Omit as it's handled by the controller after upload
 });
 
 export const updateInspectionSchema = createInsertSchema(inspections)

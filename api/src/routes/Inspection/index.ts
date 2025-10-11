@@ -17,11 +17,11 @@ router.get('/date', getInspectionByDate);
 router.get('/:id', getInspectionById);
 router.post(
   '/',
-  validateData(createInspectionSchema),
   upload.fields([
     { name: 'faultsImages', maxCount: 5 },
     { name: 'odometerImage', maxCount: 1 },
   ]),
+  validateData(createInspectionSchema),
   createInspection,
 );
 
