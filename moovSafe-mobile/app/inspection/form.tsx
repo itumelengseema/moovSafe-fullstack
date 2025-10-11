@@ -248,9 +248,20 @@ export default function InspectionFormScreen() {
       }
 
       // Add other inspection fields that have values
-      const systemFields = ["vehicleId", "faultsImagesUrl", "odometerImageUrl", "id", "date"];
+      const systemFields = [
+        "vehicleId",
+        "faultsImagesUrl",
+        "odometerImageUrl",
+        "id",
+        "date",
+      ];
       Object.entries(currentInspection).forEach(([key, value]) => {
-        if (!systemFields.includes(key) && value !== null && value !== undefined && value !== "") {
+        if (
+          !systemFields.includes(key) &&
+          value !== null &&
+          value !== undefined &&
+          value !== ""
+        ) {
           console.log(`Adding inspection field: ${key} = ${value}`);
           formData.append(key, String(value));
         }

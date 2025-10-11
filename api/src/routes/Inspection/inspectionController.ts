@@ -92,9 +92,14 @@ export async function getInspectionById(req: Request, res: Response) {
 export async function createInspection(req: Request, res: Response) {
   try {
     console.log('=== CREATE INSPECTION REQUEST ===');
-    console.log('req.body:', req.body);
-    console.log('req.cleanBody:', req.cleanBody);
-    console.log('req.files:', req.files);
+    console.log('req.body type:', typeof req.body);
+    console.log('req.body keys:', Object.keys(req.body || {}));
+    console.log('req.body:', JSON.stringify(req.body, null, 2));
+    console.log('req.cleanBody:', JSON.stringify(req.cleanBody, null, 2));
+    console.log('req.files:', req.files ? Object.keys(req.files) : 'No files');
+    if (req.files) {
+      console.log('Files details:', JSON.stringify(req.files, null, 2));
+    }
     console.log('================================');
 
     const { vehicleId, ...inspectionData } = req.cleanBody;
