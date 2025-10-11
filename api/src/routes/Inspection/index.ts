@@ -8,6 +8,7 @@ import {
 } from './inspectionController.js';
 import { upload } from '../../middleware/upload.js';
 import { validateData } from '../../middleware/validationMiddleware.js';
+import { parseFormData } from '../../middleware/parseFormData.js';
 import { createInspectionSchema } from '../../db/inspectionSchema.js';
 const router = Router();
 
@@ -21,6 +22,7 @@ router.post(
     { name: 'faultsImages', maxCount: 5 },
     { name: 'odometerImage', maxCount: 1 },
   ]),
+  parseFormData(),
   validateData(createInspectionSchema),
   createInspection,
 );

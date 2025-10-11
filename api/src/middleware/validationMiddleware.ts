@@ -5,6 +5,7 @@ import _ from 'lodash';
 export function validateData(schema: z.ZodObject<any, any>) {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
+      console.log('=== VALIDATION ===');
       console.log('Validating request body:', req.body);
       console.log('Available files:', req.files ? Object.keys(req.files) : 'No files');
       
@@ -13,6 +14,7 @@ export function validateData(schema: z.ZodObject<any, any>) {
       req.cleanBody = validatedData;
       
       console.log('Validation successful:', req.cleanBody);
+      console.log('=== VALIDATION COMPLETE ===');
       next();
     } catch (error) {
       console.error('Validation error:', error);
