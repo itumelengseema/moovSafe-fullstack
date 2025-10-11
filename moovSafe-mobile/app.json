@@ -37,7 +37,7 @@
     },
     "owner": "itumelengseema",
     "plugins": [
-      "expo-router", 
+      "expo-router",
       "expo-font",
       [
         "expo-image-picker",

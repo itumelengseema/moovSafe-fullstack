@@ -1,4 +1,10 @@
-import { Text, View, FlatList, ActivityIndicator, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  FlatList,
+  ActivityIndicator,
+  TouchableOpacity,
+} from "react-native";
 import { router } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
 import { useInspectionStore } from "@/store/inspectionStore";
@@ -21,13 +27,14 @@ interface Vehicle {
 }
 
 export default function Inspection() {
-  const {
-    currentInspection,
-    setCurrentInspection,
-    clearCurrentInspection,
-  } = useInspectionStore();
+  const { currentInspection, setCurrentInspection, clearCurrentInspection } =
+    useInspectionStore();
 
-  const { data: vehicles, isLoading, error } = useQuery({
+  const {
+    data: vehicles,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["vehicles"],
     queryFn: vehiclesList,
   });
@@ -39,7 +46,7 @@ export default function Inspection() {
       mileage: 0,
       overallCondition: "",
     });
-    
+
     // Navigate to inspection form
     router.push("/inspection/form");
   };
@@ -53,23 +60,19 @@ export default function Inspection() {
             className="w-16 h-16 rounded-lg"
             alt={`${item.make} ${item.model}`}
           />
-          
+
           <VStack space="xs" className="flex-1">
             <Text className="font-semibold text-lg">
               {item.make} {item.model}
             </Text>
-            <Text className="text-gray-600">
-              {item.licensePlate}
-            </Text>
+            <Text className="text-gray-600">{item.licensePlate}</Text>
             <Text className="text-gray-500 text-sm">
               {item.currentMileage.toLocaleString()} km • {item.fuelType}
             </Text>
           </VStack>
-          
+
           <Button size="sm" className="bg-blue-600">
-            <Text className="text-white text-xs">
-              Inspect
-            </Text>
+            <Text className="text-white text-xs">Inspect</Text>
           </Button>
         </HStack>
       </Card>
@@ -89,7 +92,8 @@ export default function Inspection() {
     return (
       <View className="flex-1 justify-center items-center p-5">
         <Text className="text-red-500 text-center">
-          Error loading vehicles: {error instanceof Error ? error.message : "Unknown error"}
+          Error loading vehicles:{" "}
+          {error instanceof Error ? error.message : "Unknown error"}
         </Text>
       </View>
     );
@@ -115,15 +119,15 @@ export default function Inspection() {
                 Vehicle ID: {currentInspection.vehicleId}
               </Text>
               <HStack space="sm">
-                <Button 
+                <Button
                   onPress={() => router.push("/inspection/form")}
                   size="sm"
                   className="flex-1"
                 >
                   <Text className="text-white">Continue</Text>
                 </Button>
-                <Button 
-                  onPress={clearCurrentInspection} 
+                <Button
+                  onPress={clearCurrentInspection}
                   variant="outline"
                   size="sm"
                   className="flex-1"
