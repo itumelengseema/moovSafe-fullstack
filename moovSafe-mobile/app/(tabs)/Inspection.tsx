@@ -14,7 +14,9 @@ import { HStack } from "@/components/ui/hstack";
 import { Heading } from "@/components/ui/heading";
 import { Card } from "@/components/ui/card";
 import { Image } from "@/components/ui/image";
+import { Box } from "@/components/ui/box";
 import { vehiclesList } from "@/api/vehicles";
+import LogoIcon from "@/assets/icons/logo8.svg";
 
 interface Vehicle {
   id: string;
@@ -81,10 +83,12 @@ export default function Inspection() {
 
   if (isLoading) {
     return (
-      <View className="flex-1 justify-center items-center">
-        <ActivityIndicator size="large" color="#0000ff" />
-        <Text className="mt-2">Loading vehicles...</Text>
-      </View>
+      <VStack className="flex-1 justify-center items-center p-5">
+        <Box className="bg-primary-50 p-6 rounded-full mb-4">
+          <LogoIcon width={40} height={40} />
+        </Box>
+        <Text className="text-typography-600">Loading vehicles...</Text>
+      </VStack>
     );
   }
 

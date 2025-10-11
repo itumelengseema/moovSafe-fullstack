@@ -12,6 +12,8 @@ import { VStack } from "@/components/ui/vstack";
 import { HStack } from "@/components/ui/hstack";
 import { Heading } from "@/components/ui/heading";
 import { Button } from "@/components/ui/button";
+import { Box } from "@/components/ui/box";
+import LogoIcon from "@/assets/icons/logo8.svg";
 import InspectionListItem from "@/components/InspectionListItem";
 import { fetchInspections } from "@/api/inspections";
 
@@ -63,8 +65,10 @@ export default function ReportsScreen() {
   if (isLoading) {
     return (
       <VStack className="flex-1 justify-center items-center p-5">
-        <ActivityIndicator size="large" color="#0000ff" />
-        <Text className="mt-2">Loading inspections...</Text>
+        <Box className="bg-primary-50 p-6 rounded-full mb-4">
+          <LogoIcon width={40} height={40} />
+        </Box>
+        <Text className="text-typography-600">Loading inspections...</Text>
       </VStack>
     );
   }

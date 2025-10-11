@@ -320,6 +320,8 @@ export default function InspectionFormScreen() {
 
       // Update the store and navigate back
       queryClient.invalidateQueries({ queryKey: ["inspections"] });
+      // Invalidate vehicles cache to update mileage from the new inspection
+      queryClient.invalidateQueries({ queryKey: ["vehicles"] });
       Alert.alert("Success", "Inspection created successfully!");
       clearCurrentInspection();
       router.back();

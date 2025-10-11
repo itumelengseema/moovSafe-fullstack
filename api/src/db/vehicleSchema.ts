@@ -22,6 +22,8 @@ export const vehicles = pgTable('vehiclesTable', {
   colour: varchar({ length: 50 }).notNull(),
   imageUrl: varchar({ length: 500 }),
   vehicleType: varchar({ length: 50 }).notNull(),
+  status: varchar({ length: 20 }).notNull().default('active'), // 'active' or 'inactive'
+  lastInspectionDate: varchar({ length: 50 }), // ISO date string
 
 });
 

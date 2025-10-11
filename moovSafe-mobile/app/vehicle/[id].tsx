@@ -7,7 +7,9 @@ import { Image } from "@/components/ui/image";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { Button } from "@/components/ui/button";
+import { Box } from "@/components/ui/box";
 import { ActivityIndicator, View } from "react-native";
+import LogoIcon from "@/assets/icons/logo8.svg";
 import { useQuery } from "@tanstack/react-query";
 import { fetchVehicleById } from "@/api/vehicles";
 import { A } from "@expo/html-elements";
@@ -37,7 +39,14 @@ export default function VehicleDetailsScreen() {
   };
 
   if (isLoading) {
-    return <ActivityIndicator size="large" color="#0000ff" />;
+    return (
+      <VStack className="flex-1 justify-center items-center p-5">
+        <Box className="bg-primary-50 p-6 rounded-full mb-4">
+          <LogoIcon width={40} height={40} />
+        </Box>
+        <Text className="text-typography-600">Loading vehicle details...</Text>
+      </VStack>
+    );
   }
   if (error || !vehicle) {
     return (
