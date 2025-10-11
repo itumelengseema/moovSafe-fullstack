@@ -31,7 +31,7 @@ export const createVehicleSchema = createInsertSchema(vehicles).omit({
   id: true,
   imageUrl: true,
   // Omit id for creation as it is auto-generated
-})
+});
 
 export const updateVehicleSchema = createInsertSchema(vehicles)
   .omit({ id: true })
