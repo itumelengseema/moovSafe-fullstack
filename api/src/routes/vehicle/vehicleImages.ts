@@ -7,7 +7,7 @@ export const vehicleImages: Record<string, string> = {
     suv: 'https://res.cloudinary.com/dm5v9praz/image/upload/v1760046562/3_kl0gid.png',
     pickupTruck: 'https://res.cloudinary.com/dm5v9praz/image/upload/v1760046564/4_z07sna.png',
     stationWagon: 'https://res.cloudinary.com/dm5v9praz/image/upload/v1760046545/1_qgdrxu.png',
-    panalVan: 'https://res.cloudinary.com/dm5v9praz/image/upload/v1760046563/6_bu2oqw.png',
+    panelVan: 'https://res.cloudinary.com/dm5v9praz/image/upload/v1760046563/6_bu2oqw.png',
     coupe: 'https://res.cloudinary.com/dm5v9praz/image/upload/v1760046568/8_qnnrch.png',
     convertible: 'https://res.cloudinary.com/dm5v9praz/image/upload/v1760046545/1_qgdrxu.png',
     sportsCar: 'https://res.cloudinary.com/dm5v9praz/image/upload/v1760046563/7_klrskt.png',
