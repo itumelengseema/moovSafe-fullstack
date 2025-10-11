@@ -2,9 +2,31 @@
   "expo": {
     "name": "moovSafe-mobile",
     "slug": "moovSafe-mobile",
+    "scheme": "moovsafe",
     "version": "1.0.0",
-    "userInterfaceStyle": "automatic",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
     "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.itumelengseema.moovSafe"
+    },
+    "android": {
+      "package": "com.itumelengseema.moovSafe",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false
+    },
     "web": {
       "favicon": "./assets/favicon.png"
     },
@@ -13,6 +35,17 @@
         "projectId": "b8dac3aa-110a-4f76-be07-461ad3e60278"
       }
     },
-    "owner": "itumelengseema"
+    "owner": "itumelengseema",
+    "plugins": [
+      "expo-router", 
+      "expo-font",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos for vehicle inspection documentation.",
+          "cameraPermission": "The app uses the camera to take photos for vehicle inspections."
+        }
+      ]
+    ]
   }
 }

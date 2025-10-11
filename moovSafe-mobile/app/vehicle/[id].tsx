@@ -1,4 +1,4 @@
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, router } from "expo-router";
 
 import { Card } from "@/components/ui/card";
 import { Heading } from "@/components/ui/heading";
@@ -6,12 +6,15 @@ import { HStack } from "@/components/ui/hstack";
 import { Image } from "@/components/ui/image";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
+import { Button } from "@/components/ui/button";
 import { ActivityIndicator, View } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 import { fetchVehicleById } from "@/api/vehicles";
 import { A } from "@expo/html-elements";
+import { useInspectionStore } from "@/store/inspectionStore";
 export default function VehicleDetailsScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
+  const { setCurrentInspection } = useInspectionStore();
   const {
     data: vehicle,
     isLoading,
@@ -20,6 +23,18 @@ export default function VehicleDetailsScreen() {
     queryKey: ["vehicles", id],
     queryFn: () => fetchVehicleById(String(id)),
   });
+
+  const startInspection = () => {
+    // Initialize a new inspection for this vehicle
+    setCurrentInspection({
+      vehicleId: String(id),
+      mileage: 0,
+      overallCondition: "",
+    });
+
+    // Navigate to inspection form
+    router.push("/inspection/form");
+  };
 
   if (isLoading) {
     return <ActivityIndicator size="large" color="#0000ff" />;
@@ -48,7 +63,6 @@ export default function VehicleDetailsScreen() {
       <Image
         source={{ uri: vehicle.imageUrl }}
         className="mb-6 h-[240px] w-full rounded-md aspect-[4/3]"
-        
         alt="vehicle image"
       />
 
@@ -78,7 +92,7 @@ export default function VehicleDetailsScreen() {
           </HStack>
         </HStack>
 
-               <HStack className="flex flex-row justify-between items-center ">
+        <HStack className="flex flex-row justify-between items-center ">
           <HStack space="sm" className="items-center">
             <Text className="text-sm text-typography-700">
               COLOUR: {vehicle.colour}
@@ -87,7 +101,7 @@ export default function VehicleDetailsScreen() {
 
           <HStack space="sm" className="items-center">
             <Text className="text-sm text-typography-700">
-              YEAR MODEL: {vehicle.year} 
+              YEAR MODEL: {vehicle.year}
             </Text>
           </HStack>
         </HStack>
@@ -106,9 +120,16 @@ export default function VehicleDetailsScreen() {
             Engine Number: {vehicle.engineNumber}
           </Text>
         </HStack>
+
+        {/* Inspection Button */}
+        <Button
+          onPress={startInspection}
+          className="mt-6 bg-blue-600 hover:bg-blue-700"
+          size="lg"
+        >
+          <Text className="text-white font-semibold">Start Inspection</Text>
+        </Button>
       </VStack>
     </Card>
-
-
   );
 }
