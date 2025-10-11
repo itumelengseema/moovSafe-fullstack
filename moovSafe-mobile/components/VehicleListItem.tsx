@@ -13,18 +13,14 @@ interface VehicleListItemProps {
   vehicle: any;
 }
 
-export default function VehicleListItem({
-  vehicle,
-}: VehicleListItemProps) {
-  
-
+export default function VehicleListItem({ vehicle }: VehicleListItemProps) {
   return (
     <Link href={`/vehicle/${vehicle.id}`} asChild>
       <Pressable className="flex-1">
         <Card
           size="sm"
           variant="elevated"
-          className="p-6 rounded-xl max-w-[360px] m-3"
+          className="p-6 rounded-xl max-w-[560px] m-3"
         >
           {/* Vehicle Image */}
           {/* <Image
@@ -39,7 +35,7 @@ export default function VehicleListItem({
               size="lg"
               className="text-xl font-bold text-typography-700"
             >
-              {vehicle.make}  {vehicle.model} |
+              {vehicle.make} {vehicle.model} |
             </Heading>
             <Heading
               size="lg"

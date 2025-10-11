@@ -42,7 +42,7 @@ export default function VehicleDetailsScreen() {
     <Card
       size="sm"
       variant="elevated"
-      className="p-2 rounded-xl max-w-[560px] m-2 mx-auto"
+      className="p-8 rounded-xl max-w-[560px] m-3 "
     >
       {/* Vehicle Image */}
       <Image
@@ -109,6 +109,6 @@ export default function VehicleDetailsScreen() {
       </VStack>
     </Card>
 
-    
+
   );
 }

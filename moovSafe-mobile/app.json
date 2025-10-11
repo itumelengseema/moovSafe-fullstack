@@ -36,6 +36,9 @@
       }
     },
     "owner": "itumelengseema",
-    "plugins": ["expo-router"]
+    "plugins": [
+      "expo-router",
+      "expo-font"
+    ]
   }
 }
