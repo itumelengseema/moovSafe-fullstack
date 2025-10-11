@@ -42,12 +42,13 @@ export default function VehicleDetailsScreen() {
     <Card
       size="sm"
       variant="elevated"
-      className="p-6 rounded-xl max-w-[560px] m-3 flex-1"
+      className="p-2 rounded-xl max-w-[560px] m-2 mx-auto"
     >
       {/* Vehicle Image */}
       <Image
-        source={require(`@/assets/Vehicles/1.png`)}
-        className="mb-6 h-[240px] w-full rounded-md aspect-[2/1]"
+        source={{ uri: vehicle.imageUrl }}
+        className="mb-6 h-[240px] w-full rounded-md aspect-[4/3]"
+        
         alt="vehicle image"
       />
 
@@ -72,7 +73,21 @@ export default function VehicleDetailsScreen() {
 
           <HStack space="sm" className="items-center">
             <Text className="text-sm text-typography-700">
-              Current Mileage: {vehicle.currentMileage} km
+              CURRENT MILEAGE: {vehicle.currentMileage} km
+            </Text>
+          </HStack>
+        </HStack>
+
+               <HStack className="flex flex-row justify-between items-center ">
+          <HStack space="sm" className="items-center">
+            <Text className="text-sm text-typography-700">
+              COLOUR: {vehicle.colour}
+            </Text>
+          </HStack>
+
+          <HStack space="sm" className="items-center">
+            <Text className="text-sm text-typography-700">
+              YEAR MODEL: {vehicle.year} 
             </Text>
           </HStack>
         </HStack>
@@ -93,5 +108,7 @@ export default function VehicleDetailsScreen() {
         </HStack>
       </VStack>
     </Card>
+
+    
   );
 }

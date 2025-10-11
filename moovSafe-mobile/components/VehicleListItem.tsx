@@ -11,16 +11,12 @@ import { Link } from "expo-router";
 
 interface VehicleListItemProps {
   vehicle: any;
-  vehicleImages: any;
-  onPress?: (vehicle: any) => void;
 }
 
 export default function VehicleListItem({
   vehicle,
-  vehicleImages,
-  onPress,
 }: VehicleListItemProps) {
-  const imageSource = vehicleImages[vehicle.id];
+  
 
   return (
     <Link href={`/vehicle/${vehicle.id}`} asChild>
@@ -31,11 +27,11 @@ export default function VehicleListItem({
           className="p-6 rounded-xl max-w-[360px] m-3"
         >
           {/* Vehicle Image */}
-          <Image
-            source={imageSource}
+          {/* <Image
+            source={""}
             className="mb-6 h-[240px] w-full rounded-md aspect-[2/1]"
             alt="vehicle image"
-          />
+          /> */}
 
           {/* Make, Model & License Plate */}
           <HStack className="flex flex-row justify-between items-start mb-2">
@@ -43,7 +39,7 @@ export default function VehicleListItem({
               size="lg"
               className="text-xl font-bold text-typography-700"
             >
-              {vehicle.make} | {vehicle.model}
+              {vehicle.make}  {vehicle.model} |
             </Heading>
             <Heading
               size="lg"
