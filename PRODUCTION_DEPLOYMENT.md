@@ -200,5 +200,3 @@ fetch(
   .then((response) => response.json())
   .then((data) => console.log(data));
 ```
-
-Your MoovSafe API is now **production-ready** with comprehensive documentation! 🚀
