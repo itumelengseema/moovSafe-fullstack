@@ -518,16 +518,156 @@ const options = {
 const specs = swaggerJSDoc(options);
 
 export const setupSwagger = (app: Application): void => {
+    const customCss = `
+        /* Custom Topbar with Logo */
+        .swagger-ui .topbar {
+            background: oklch(21% 0.006 286);
+            border-bottom: 2px solid oklch(27.4% 0.005 286);
+            padding: 10px 20px;
+        }
+        
+        /* Hide default topbar content and Swagger logo */
+        .swagger-ui .topbar .download-url-wrapper {
+            display: none !important;
+        }
+        
+        /* Hide all Swagger logos and branding */
+        .swagger-ui .topbar-wrapper .link {
+            display: none !important;
+        }
+        
+        .swagger-ui .topbar-wrapper img {
+            display: none !important;
+        }
+        
+        .swagger-ui .topbar .topbar-wrapper {
+            display: none !important;
+        }
+        
+        .swagger-ui .topbar-wrapper a {
+            display: none !important;
+        }
+        
+        .swagger-ui .topbar-wrapper svg {
+            display: none !important;
+        }
+        
+        /* Hide any remaining Swagger branding */
+        .swagger-ui .info a[href*="swagger"] {
+            display: none !important;
+        }
+        
+        .swagger-ui .topbar::before {
+            content: '';
+            background-image: url('https://res.cloudinary.com/dm5v9praz/image/upload/v1760298688/_Logo_2_xmxymy.png');
+            background-size: 140px auto;
+            background-repeat: no-repeat;
+            background-position: left center;
+            display: block;
+            height: 50px;
+            width: 140px;
+        }
+        
+        /* Custom MoovSafe Brand Colors */
+        .swagger-ui {
+            background: oklch(100% 0 none);
+            color: oklch(14.1% 0.004 286);
+        }
+        
+        .swagger-ui .info .title {
+            color: oklch(21% 0.006 286);
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        
+        /* Primary Colors */
+        .swagger-ui .btn.authorize {
+            background-color: oklch(21% 0.006 286);
+            border-color: oklch(21% 0.006 286);
+        }
+        
+        .swagger-ui .btn.authorize:hover {
+            background-color: oklch(27.4% 0.005 286);
+            border-color: oklch(27.4% 0.005 286);
+        }
+        
+        /* Operation Blocks */
+        .swagger-ui .opblock {
+            background: oklch(96.8% 0.001 286);
+            border: 1px solid oklch(92% 0.004 286);
+        }
+        
+        .swagger-ui .opblock .opblock-summary {
+            border-bottom: 1px solid oklch(92% 0.004 286);
+        }
+        
+        .swagger-ui .opblock.opblock-post {
+            border-color: #49cc90;
+            background: rgba(73, 204, 144, .1);
+        }
+        
+        .swagger-ui .opblock.opblock-get {
+            border-color: #61affe;
+            background: rgba(97, 175, 254, .1);
+        }
+        
+        .swagger-ui .opblock.opblock-put {
+            border-color: #fca130;
+            background: rgba(252, 161, 48, .1);
+        }
+        
+        .swagger-ui .opblock.opblock-delete {
+            border-color: #f93e3e;
+            background: rgba(249, 62, 62, .1);
+        }
+        
+        /* Response Examples */
+        .swagger-ui .responses-inner h4 {
+            color: oklch(21% 0.006 286);
+        }
+        
+        /* Schema Model */
+        .swagger-ui .model {
+            background: oklch(98.5% 0 none);
+            border: 1px solid oklch(92% 0.004 286);
+        }
+        
+        /* Input Fields */
+        .swagger-ui input[type=text], 
+        .swagger-ui textarea {
+            background: oklch(100% 0 none);
+            border: 1px solid oklch(92% 0.004 286);
+            color: oklch(14.1% 0.004 286);
+        }
+        
+        /* Try it out button */
+        .swagger-ui .btn.try-out__btn {
+            background: oklch(21% 0.006 286);
+            color: oklch(98.5% 0 none);
+            border-color: oklch(21% 0.006 286);
+        }
+        
+        .swagger-ui .btn.execute {
+            background: oklch(21% 0.006 286);
+            color: oklch(98.5% 0 none);
+            border-color: oklch(21% 0.006 286);
+        }
+        
+
+    `;
+
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, {
-        customCss: '.swagger-ui .topbar { display: none }',
+        customCss,
         customSiteTitle: 'MoovSafe API Documentation',
+        customfavIcon: 'https://res.cloudinary.com/dm5v9praz/image/upload/v1760305362/logo4_aspc5f.png',
         swaggerOptions: {
             persistAuthorization: true,
             displayRequestDuration: true,
             docExpansion: 'none',
             filter: true,
             showRequestHeaders: true,
-            tryItOutEnabled: true
+            tryItOutEnabled: true,
+            theme: 'light'
         }
     }));
 
