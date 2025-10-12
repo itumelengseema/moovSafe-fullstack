@@ -95,17 +95,23 @@ jobs:
 
       - name: Install backend dependencies
         working-directory: ./api
-        run: pnpm install
+        run: |
+          echo "📦 Installing dependencies..."
+          pnpm install --silent
 
       - name: Build backend
         working-directory: ./api
-        run: pnpm run build
+        run: |
+          echo "🔨 Building backend..."
+          pnpm run build
         env:
           CI: false
 
       - name: Deploy to staging
         working-directory: ./api
-        run: genezio deploy --stage staging || genezio deploy
+        run: |
+          echo "🚀 Deploying to staging..."
+          genezio deploy --stage staging || genezio deploy
         env:
           CI: false
 
@@ -135,16 +141,22 @@ jobs:
 
       - name: Install backend dependencies
         working-directory: ./api
-        run: pnpm install
+        run: |
+          echo "📦 Installing dependencies..."
+          pnpm install --silent
 
       - name: Build backend
         working-directory: ./api
-        run: pnpm run build
+        run: |
+          echo "🔨 Building backend..."
+          pnpm run build
         env:
           CI: false
 
       - name: Deploy to production
         working-directory: ./api
-        run: genezio deploy --stage production || genezio deploy
+        run: |
+          echo "🚀 Deploying to production..."
+          genezio deploy --stage production || genezio deploy
         env:
           CI: false
