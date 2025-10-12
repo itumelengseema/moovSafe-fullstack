@@ -1,0 +1,38 @@
+{
+  "preset": "ts-jest",
+  "testEnvironment": "node",
+  "roots": ["<rootDir>/src"],
+  "testMatch": [
+    "**/__tests__/**/basic.test.ts",
+    "**/__tests__/**/validationMiddleware.test.ts", 
+    "**/__tests__/**/vehicleSchema.test.ts"
+  ],
+  "testPathIgnorePatterns": [
+    "vehicleController.test.ts",
+    "vehicleRoutes.test.ts",
+    "app.test.ts"
+  ],
+  "transform": {
+    "^.+\\.ts$": "ts-jest"
+  },
+  "collectCoverage": true,
+  "coverageDirectory": "coverage",
+  "coverageReporters": ["text", "lcov", "html"],
+  "collectCoverageFrom": [
+    "src/**/*.ts",
+    "!src/**/*.d.ts",
+    "!src/index.ts",
+    "!src/db/index.ts"
+  ],
+  "setupFilesAfterEnv": ["<rootDir>/src/__tests__/setup.ts"],
+  "testTimeout": 10000,
+  "maxWorkers": 1,
+  "forceExit": true,
+  "clearMocks": true,
+  "resetMocks": true,
+  "restoreMocks": true,
+  "extensionsToTreatAsEsm": [".ts"],
+  "moduleNameMapper": {
+    "^(\\.{1,2}/.*)\\.js$": "$1"
+  }
+}

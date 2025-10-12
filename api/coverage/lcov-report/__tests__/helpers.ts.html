@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">70.58% </span>
+                <span class="strong">72.22% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>12/17</span>
+                <span class='fraction'>13/18</span>
             </div>
         
             
@@ -37,9 +37,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">25% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>1/4</span>
             </div>
         
             
@@ -136,15 +136,7 @@
 <a name='L71'></a><a href='#L71'>71</a>
 <a name='L72'></a><a href='#L72'>72</a>
 <a name='L73'></a><a href='#L73'>73</a>
-<a name='L74'></a><a href='#L74'>74</a>
-<a name='L75'></a><a href='#L75'>75</a>
-<a name='L76'></a><a href='#L76'>76</a>
-<a name='L77'></a><a href='#L77'>77</a>
-<a name='L78'></a><a href='#L78'>78</a>
-<a name='L79'></a><a href='#L79'>79</a>
-<a name='L80'></a><a href='#L80'>80</a>
-<a name='L81'></a><a href='#L81'>81</a>
-<a name='L82'></a><a href='#L82'>82</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
+<a name='L74'></a><a href='#L74'>74</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -216,15 +208,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import request from 'supertest';
 import express from 'express';
 &nbsp;
@@ -233,79 +217,71 @@ import express from 'express';
  */
 &nbsp;
 export const createMockApp = <span class="fstat-no" title="function not covered" >() =</span>&gt; {
-  const app = <span class="cstat-no" title="statement not covered" >express();</span>
-<span class="cstat-no" title="statement not covered" >  app.use(express.json());</span>
-<span class="cstat-no" title="statement not covered" >  return app;</span>
+    const app = <span class="cstat-no" title="statement not covered" >express();</span>
+<span class="cstat-no" title="statement not covered" >    app.use(express.json());</span>
+<span class="cstat-no" title="statement not covered" >    return app;</span>
 };
 &nbsp;
 export const mockRequest = <span class="fstat-no" title="function not covered" >(a</span>pp: express.Application) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return request(app);</span>
+<span class="cstat-no" title="statement not covered" >    return request(app);</span>
 };
 &nbsp;
 // Mock vehicle data for testing
 export const mockVehicle = {
-  id: 'test-vehicle-123',
-  make: 'Toyota',
-  model: 'Camry',
-  year: 2023,
-  vin: 'TEST123456789',
-  licensePlate: 'ABC-123',
-  color: 'Blue',
-  mileage: 15000,
-  status: 'active',
-  createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString()
+    id: 'test-vehicle-123',
+    make: 'Toyota',
+    model: 'Camry',
+    year: 2023,
+    vin: 'TEST123456789',
+    licensePlate: 'ABC-123',
+    color: 'Blue',
+    mileage: 15000,
+    status: 'active',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
 };
 &nbsp;
 // Mock inspection data
 export const mockInspection = {
-  id: 'test-inspection-123',
-  vehicleId: 'test-vehicle-123',
-  inspectorName: 'John Doe',
-  inspectionDate: new Date().toISOString(),
-  status: 'completed',
-  notes: 'All systems normal',
-  createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString()
+    id: 'test-inspection-123',
+    vehicleId: 'test-vehicle-123',
+    inspectorName: 'John Doe',
+    inspectionDate: new Date().toISOString(),
+    status: 'completed',
+    notes: 'All systems normal',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
 };
 &nbsp;
 // Mock maintenance history data
 export const mockMaintenanceHistory = {
-  id: 'test-maintenance-123',
-  vehicleId: 'test-vehicle-123',
-  serviceType: 'Oil Change',
-  serviceDate: new Date().toISOString(),
-  cost: 49.99,
-  description: 'Regular oil change service',
-  serviceProvider: 'Quick Lube',
-  createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString()
+    id: 'test-maintenance-123',
+    vehicleId: 'test-vehicle-123',
+    serviceType: 'Oil Change',
+    serviceDate: new Date().toISOString(),
+    cost: 49.99,
+    description: 'Regular oil change service',
+    serviceProvider: 'Quick Lube',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
 };
 &nbsp;
 // Helper to create test database connection mock
 export const createMockDb = <span class="fstat-no" title="function not covered" >() =</span>&gt; (<span class="cstat-no" title="statement not covered" >{</span>
-  query: jest.fn(),
-  select: jest.fn().mockReturnThis(),
-  from: jest.fn().mockReturnThis(),
-  where: jest.fn().mockReturnThis(),
-  insert: jest.fn().mockReturnThis(),
-  values: jest.fn().mockReturnThis(),
-  update: jest.fn().mockReturnThis(),
-  set: jest.fn().mockReturnThis(),
-  delete: jest.fn().mockReturnThis(),
-  returning: jest.fn().mockReturnThis(),
+    query: jest.fn(),
+    select: jest.fn().mockReturnThis(),
+    from: jest.fn().mockReturnThis(),
+    where: jest.fn().mockReturnThis(),
+    insert: jest.fn().mockReturnThis(),
+    values: jest.fn().mockReturnThis(),
+    update: jest.fn().mockReturnThis(),
+    set: jest.fn().mockReturnThis(),
+    delete: jest.fn().mockReturnThis(),
+    returning: jest.fn().mockReturnThis(),
 });
 &nbsp;
-// HTTP status codes for testing
-export const HTTP_STATUS = {
-  OK: 200,
-  CREATED: 201,
-  BAD_REQUEST: 400,
-  UNAUTHORIZED: 401,
-  FORBIDDEN: 403,
-  NOT_FOUND: 404,
-  INTERNAL_SERVER_ERROR: 500
-} as const;
+// HTTP status codes for testing - re-export from shared constants
+export { HTTP_STATUS } from '../utils/constants.js';
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -313,7 +289,7 @@ export const HTTP_STATUS = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-10-12T11:25:48.213Z
+                at 2025-10-12T16:09:27.949Z
             </div>
         <script src="../prettify.js"></script>
         <script>
