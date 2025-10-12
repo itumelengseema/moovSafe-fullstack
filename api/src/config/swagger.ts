@@ -519,7 +519,54 @@ const specs = swaggerJSDoc(options);
 
 export const setupSwagger = (app: Application): void => {
     const customCss = `
-        .swagger-ui .topbar { display: none }
+        /* Custom Topbar with Logo */
+        .swagger-ui .topbar {
+            background: oklch(21% 0.006 286);
+            border-bottom: 2px solid oklch(27.4% 0.005 286);
+            padding: 10px 20px;
+        }
+        
+        /* Hide default topbar content and Swagger logo */
+        .swagger-ui .topbar .download-url-wrapper {
+            display: none !important;
+        }
+        
+        /* Hide all Swagger logos and branding */
+        .swagger-ui .topbar-wrapper .link {
+            display: none !important;
+        }
+        
+        .swagger-ui .topbar-wrapper img {
+            display: none !important;
+        }
+        
+        .swagger-ui .topbar .topbar-wrapper {
+            display: none !important;
+        }
+        
+        .swagger-ui .topbar-wrapper a {
+            display: none !important;
+        }
+        
+        .swagger-ui .topbar-wrapper svg {
+            display: none !important;
+        }
+        
+        /* Hide any remaining Swagger branding */
+        .swagger-ui .info a[href*="swagger"] {
+            display: none !important;
+        }
+        
+        .swagger-ui .topbar::before {
+            content: '';
+            background-image: url('https://res.cloudinary.com/dm5v9praz/image/upload/v1760298688/_Logo_2_xmxymy.png');
+            background-size: 140px auto;
+            background-repeat: no-repeat;
+            background-position: left center;
+            display: block;
+            height: 50px;
+            width: 140px;
+        }
         
         /* Custom MoovSafe Brand Colors */
         .swagger-ui {
@@ -527,22 +574,9 @@ export const setupSwagger = (app: Application): void => {
             color: oklch(14.1% 0.004 286);
         }
         
-        /* Logo Integration */
-        .swagger-ui .info .title::before {
-            content: '';
-            background-image: url('https://res.cloudinary.com/dm5v9praz/image/upload/v1760298688/_Logo_2_xmxymy.png');
-            background-size: 120px auto;
-            background-repeat: no-repeat;
-            background-position: center;
-            display: block;
-            height: 60px;
-            width: 120px;
-            margin: 0 auto 20px auto;
-        }
-        
         .swagger-ui .info .title {
             color: oklch(21% 0.006 286);
-            text-align: center;
+            text-align: left;
             margin-bottom: 20px;
         }
         
@@ -619,24 +653,13 @@ export const setupSwagger = (app: Application): void => {
             border-color: oklch(21% 0.006 286);
         }
         
-        /* Custom Footer */
-        .swagger-ui .info .description::after {
-            content: '🚗 Powered by MoovSafe Fleet Management System';
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            padding: 15px;
-            background: oklch(96.8% 0.001 286);
-            border-radius: 8px;
-            color: oklch(55.2% 0.014 286);
-            font-style: italic;
-        }
+
     `;
 
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, {
         customCss,
         customSiteTitle: 'MoovSafe API Documentation',
-        customfavIcon: 'https://res.cloudinary.com/dm5v9praz/image/upload/v1760298688/_Logo_2_xmxymy.png',
+        customfavIcon: 'https://res.cloudinary.com/dm5v9praz/image/upload/v1760305362/logo4_aspc5f.png',
         swaggerOptions: {
             persistAuthorization: true,
             displayRequestDuration: true,
