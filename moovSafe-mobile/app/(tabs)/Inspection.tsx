@@ -1,16 +1,16 @@
-import { useQuery } from '@tanstack/react-query';
-import { router } from 'expo-router';
-import { FlatList, Text, TouchableOpacity, View } from 'react-native';
-import { vehiclesList } from '@/api/vehicles';
-import LogoIcon from '@/assets/icons/logo8.svg';
-import { Box } from '@/components/ui/box';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Heading } from '@/components/ui/heading';
-import { HStack } from '@/components/ui/hstack';
-import { Image } from '@/components/ui/image';
-import { VStack } from '@/components/ui/vstack';
-import { useInspectionStore } from '@/store/inspectionStore';
+import { useQuery } from "@tanstack/react-query";
+import { router } from "expo-router";
+import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import { vehiclesList } from "@/api/vehicles";
+import LogoIcon from "@/assets/icons/logo8.svg";
+import { Box } from "@/components/ui/box";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Heading } from "@/components/ui/heading";
+import { HStack } from "@/components/ui/hstack";
+import { Image } from "@/components/ui/image";
+import { VStack } from "@/components/ui/vstack";
+import { useInspectionStore } from "@/store/inspectionStore";
 
 interface Vehicle {
   id: string;
@@ -23,14 +23,15 @@ interface Vehicle {
 }
 
 export default function Inspection() {
-  const { currentInspection, setCurrentInspection, clearCurrentInspection } = useInspectionStore();
+  const { currentInspection, setCurrentInspection, clearCurrentInspection } =
+    useInspectionStore();
 
   const {
     data: vehicles,
     isLoading,
     error,
   } = useQuery({
-    queryKey: ['vehicles'],
+    queryKey: ["vehicles"],
     queryFn: vehiclesList,
   });
 
@@ -39,11 +40,11 @@ export default function Inspection() {
     setCurrentInspection({
       vehicleId: vehicle.id,
       mileage: 0,
-      overallCondition: '',
+      overallCondition: "",
     });
 
     // Navigate to inspection form
-    router.push('/inspection/form');
+    router.push("/inspection/form");
   };
 
   const renderVehicleItem = ({ item }: { item: Vehicle }) => (
@@ -89,7 +90,8 @@ export default function Inspection() {
     return (
       <View className="flex-1 justify-center items-center p-5">
         <Text className="text-red-500 text-center">
-          Error loading vehicles: {error instanceof Error ? error.message : 'Unknown error'}
+          Error loading vehicles:{" "}
+          {error instanceof Error ? error.message : "Unknown error"}
         </Text>
       </View>
     );
@@ -100,17 +102,23 @@ export default function Inspection() {
       <VStack space="md" className="flex-1">
         <VStack space="sm">
           <Heading size="xl">Vehicle Inspection</Heading>
-          <Text className="text-gray-600">Select a vehicle to start an inspection</Text>
+          <Text className="text-gray-600">
+            Select a vehicle to start an inspection
+          </Text>
         </VStack>
 
         {currentInspection && (
           <Card className="p-4 bg-blue-50 border-blue-200">
             <VStack space="sm">
-              <Text className="font-semibold text-blue-800">🔄 Inspection in Progress</Text>
-              <Text className="text-blue-700">Vehicle ID: {currentInspection.vehicleId}</Text>
+              <Text className="font-semibold text-blue-800">
+                🔄 Inspection in Progress
+              </Text>
+              <Text className="text-blue-700">
+                Vehicle ID: {currentInspection.vehicleId}
+              </Text>
               <HStack space="sm">
                 <Button
-                  onPress={() => router.push('/inspection/form')}
+                  onPress={() => router.push("/inspection/form")}
                   size="sm"
                   className="flex-1"
                 >
@@ -139,8 +147,12 @@ export default function Inspection() {
           />
         ) : (
           <VStack className="flex-1 justify-center items-center">
-            <Text className="text-gray-500 text-center">No vehicles available for inspection.</Text>
-            <Text className="text-gray-400 text-center mt-2">Please add vehicles first.</Text>
+            <Text className="text-gray-500 text-center">
+              No vehicles available for inspection.
+            </Text>
+            <Text className="text-gray-400 text-center mt-2">
+              Please add vehicles first.
+            </Text>
           </VStack>
         )}
       </VStack>

@@ -1,14 +1,14 @@
-import { Ionicons } from '@expo/vector-icons';
-import type React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { Ionicons } from "@expo/vector-icons";
+import type React from "react";
+import { TouchableOpacity } from "react-native";
 
-import { Badge } from '@/components/ui/badge';
-import { Card } from '@/components/ui/card';
-import { HStack } from '@/components/ui/hstack';
-import { Image } from '@/components/ui/image';
-import { Text } from '@/components/ui/text';
-import { VStack } from '@/components/ui/vstack';
-import type { Vehicle } from '@/types/index';
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { HStack } from "@/components/ui/hstack";
+import { Image } from "@/components/ui/image";
+import { Text } from "@/components/ui/text";
+import { VStack } from "@/components/ui/vstack";
+import type { Vehicle } from "@/types/index";
 
 interface VehicleCardProps extends React.ComponentProps<typeof Card> {
   vehicle: Vehicle;
@@ -16,7 +16,12 @@ interface VehicleCardProps extends React.ComponentProps<typeof Card> {
   onDelete: (vehicle: Vehicle) => void;
 }
 
-export default function VehicleCard({ vehicle, onEdit, onDelete, ...props }: VehicleCardProps) {
+export default function VehicleCard({
+  vehicle,
+  onEdit,
+  onDelete,
+  ...props
+}: VehicleCardProps) {
   return (
     <Card className="p-4 mb-3">
       <HStack space="md" className="items-center">
@@ -40,10 +45,10 @@ export default function VehicleCard({ vehicle, onEdit, onDelete, ...props }: Veh
             <Badge
               size="sm"
               variant="solid"
-              action={vehicle.status === 'active' ? 'success' : 'muted'}
+              action={vehicle.status === "active" ? "success" : "muted"}
             >
               <Text className="text-xs font-medium text-white">
-                {vehicle.status === 'active' ? 'Active' : 'Inactive'}
+                {vehicle.status === "active" ? "Active" : "Inactive"}
               </Text>
             </Badge>
           </HStack>
