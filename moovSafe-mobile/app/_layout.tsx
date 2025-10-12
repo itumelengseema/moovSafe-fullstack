@@ -1,7 +1,7 @@
-import { Slot, Stack } from "expo-router";
-import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
-import "@/global.css";
-import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import { Slot, Stack } from 'expo-router';
+import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
+import '@/global.css';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 export default function RootLayout() {
   const queryClient = new QueryClient();
   return (
@@ -17,14 +17,14 @@ export default function RootLayout() {
           <Stack.Screen
             name="inspection/form"
             options={{
-              title: "Vehicle Inspection",
+              title: 'Vehicle Inspection',
               headerShown: true,
             }}
           />
           <Stack.Screen
             name="inspection/[id]"
             options={{
-              title: "Inspection Details",
+              title: 'Inspection Details',
               headerShown: true,
             }}
           />
