@@ -4,7 +4,7 @@
   "roots": ["<rootDir>/src"],
   "testMatch": [
     "**/__tests__/**/basic.test.ts",
-    "**/__tests__/**/validationMiddleware.test.ts", 
+    "**/__tests__/**/validationMiddleware.test.ts",
     "**/__tests__/**/vehicleSchema.test.ts"
   ],
   "testPathIgnorePatterns": [

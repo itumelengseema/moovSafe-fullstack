@@ -40,7 +40,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./api
-        run: ppnpm install
+        run: pnpm install
 
       - name: Run unit tests
         working-directory: ./api
@@ -65,7 +65,7 @@ jobs:
 
       - name: Build backend
         working-directory: ./api
-        run: ppnpm run build
+        run: pnpm run build
         env:
           CI: false
 
