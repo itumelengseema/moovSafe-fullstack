@@ -1,46 +1,123 @@
-name: MoovSafe CI/CD
+name: Backend API CI/CD
 
 on:
   push:
     branches:
       - main
+      - develop
+    paths:
+      - "api/**"
+      - "!api/README.md"
+      - "!api/*.md"
+      - "!api/.gitignore"
   pull_request:
     branches:
       - main
+      - develop
+    paths:
+      - "api/**"
+      - "!api/README.md"
+      - "!api/*.md"
+      - "!api/.gitignore"
 
 jobs:
-  deploy-backend:
+  # Quality checks and testing
+  quality-check:
     runs-on: ubuntu-latest
     steps:
-      # Step 1: Checkout code
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      # Step 2: Setup Node.js
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 20 # or your Node version
+          node-version: 20
 
-      # Step 3: Setup Genezio
-      - uses: Genez-io/genezio-github-action@v3
-        with:
-          token: ${{ secrets.GENEZIO_TOKEN }}
-
-      # Step 4: Install backend dependencies
-      - name: Install backend dependencies
+      - name: Install dependencies
         working-directory: ./api
         run: npm install
 
-      # Step 5: Build backend (if needed)
+      - name: Type check
+        working-directory: ./api
+        run: npx tsc --noEmit
+
+      - name: Lint check (if available)
+        working-directory: ./api
+        run: npm run lint || echo "No lint script available"
+        continue-on-error: true
+
       - name: Build backend
         working-directory: ./api
         run: npm run build
         env:
-          CI: false   # avoid treating warnings as errors
+          CI: false
 
-      # Step 6: Deploy backend
-      - name: Deploy backend to Genezio
+  # Deploy to staging/development environment
+  deploy-staging:
+    needs: quality-check
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup Genezio
+        uses: Genez-io/genezio-github-action@v3
+        with:
+          token: ${{ secrets.GENEZIO_TOKEN }}
+
+      - name: Install backend dependencies
         working-directory: ./api
-        run: genezio deploy
+        run: npm install
+
+      - name: Build backend
+        working-directory: ./api
+        run: npm run build
         env:
           CI: false
 
+      - name: Deploy to staging
+        working-directory: ./api
+        run: genezio deploy --stage staging || genezio deploy
+        env:
+          CI: false
+
+  # Deploy to production
+  deploy-production:
+    needs: quality-check
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup Genezio
+        uses: Genez-io/genezio-github-action@v3
+        with:
+          token: ${{ secrets.GENEZIO_TOKEN }}
+
+      - name: Install backend dependencies
+        working-directory: ./api
+        run: npm install
+
+      - name: Build backend
+        working-directory: ./api
+        run: npm run build
+        env:
+          CI: false
+
+      - name: Deploy to production
+        working-directory: ./api
+        run: genezio deploy --stage production || genezio deploy
+        env:
+          CI: false

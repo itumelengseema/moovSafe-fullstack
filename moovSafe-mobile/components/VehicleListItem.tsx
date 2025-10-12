@@ -1,13 +1,13 @@
 import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 import { Pressable } from 'react-native';
-import { Badge } from '@/../../components//ui/badge';
-import { Box } from '@/../../components/ui/box';
-import { Card } from '@/../../components/ui/card';
-import { Heading } from '@/../../components/ui/heading';
-import { HStack } from '@/../../components/ui/hstack';
-import { Text } from '@/../../components/ui/text';
-import { VStack } from '@/../../components/ui/vstack';
+import { Badge } from '@/components//ui/badge';
+import { Box } from '@/components/ui/box';
+import { Card } from '@/components/ui/card';
+import { Heading } from '@/components/ui/heading';
+import { HStack } from '@/components/ui/hstack';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
 
 interface VehicleListItemProps {
   vehicle: any;

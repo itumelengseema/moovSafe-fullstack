@@ -1,0 +1,61 @@
+name: Test Path Filtering
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - feature/**
+
+jobs:
+  check-changes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Check for API changes
+        id: api-changes
+        run: |
+          if git diff --name-only HEAD~1 HEAD | grep -q "^api/"; then
+            echo "API files changed"
+            echo "api_changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "No API files changed"
+            echo "api_changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Check for Mobile changes
+        id: mobile-changes
+        run: |
+          if git diff --name-only HEAD~1 HEAD | grep -q "^moovSafe-mobile/"; then
+            echo "Mobile files changed"
+            echo "mobile_changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "No mobile files changed"
+            echo "mobile_changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Display results
+        run: |
+          echo "API Changed: ${{ steps.api-changes.outputs.api_changed }}"
+          echo "Mobile Changed: ${{ steps.mobile-changes.outputs.mobile_changed }}"
+
+          echo "Changed files:"
+          git diff --name-only HEAD~1 HEAD
+
+  should-run-api:
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, 'api') || contains(github.event.head_commit.message, 'backend')
+    steps:
+      - name: API workflow would run
+        run: echo "This simulates the API workflow running"
+
+  should-run-mobile:
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, 'mobile') || contains(github.event.head_commit.message, 'app')
+    steps:
+      - name: Mobile workflow would run
+        run: echo "This simulates the mobile workflow running"

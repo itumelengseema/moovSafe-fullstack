@@ -1,0 +1,214 @@
+name: Full Stack CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - "api/**"
+      - "moovSafe-mobile/**"
+  pull_request:
+    branches:
+      - main
+      - develop
+    paths:
+      - "api/**"
+      - "moovSafe-mobile/**"
+
+jobs:
+  # Detect changes
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      api: ${{ steps.changes.outputs.api }}
+      mobile: ${{ steps.changes.outputs.mobile }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            api:
+              - 'api/**'
+            mobile:
+              - 'moovSafe-mobile/**'
+
+  # API Quality Check
+  api-quality:
+    needs: changes
+    if: ${{ needs.changes.outputs.api == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install API dependencies
+        working-directory: ./api
+        run: npm install
+
+      - name: Type check API
+        working-directory: ./api
+        run: npx tsc --noEmit
+
+      - name: Build API
+        working-directory: ./api
+        run: npm run build
+        env:
+          CI: false
+
+  # Mobile Quality Check
+  mobile-quality:
+    needs: changes
+    if: ${{ needs.changes.outputs.mobile == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
+      - name: Install mobile dependencies
+        working-directory: ./moovSafe-mobile
+        run: pnpm install
+
+      - name: Lint and format check mobile (informational)
+        working-directory: ./moovSafe-mobile
+        continue-on-error: true
+        run: |
+          pnpm run check || echo "⚠️ Code quality issues found (non-blocking)"
+          echo "✅ Mobile quality check completed"
+
+  # Deploy API to production
+  deploy-api:
+    needs: [changes, api-quality]
+    if: ${{ needs.changes.outputs.api == 'true' && github.ref == 'refs/heads/main' && github.event_name == 'push' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup Genezio
+        uses: Genez-io/genezio-github-action@v3
+        with:
+          token: ${{ secrets.GENEZIO_TOKEN }}
+
+      - name: Install dependencies
+        working-directory: ./api
+        run: npm install
+
+      - name: Build API
+        working-directory: ./api
+        run: npm run build
+        env:
+          CI: false
+
+      - name: Deploy API
+        working-directory: ./api
+        run: genezio deploy
+        env:
+          CI: false
+
+  # Build mobile for production
+  build-mobile:
+    needs: [changes, mobile-quality]
+    if: ${{ needs.changes.outputs.mobile == 'true' && github.ref == 'refs/heads/main' && github.event_name == 'push' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
+      - name: Setup Expo and EAS
+        uses: expo/expo-github-action@v8
+        with:
+          expo-version: latest
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
+        working-directory: ./moovSafe-mobile
+        run: pnpm install
+
+      - name: Build production mobile app
+        working-directory: ./moovSafe-mobile
+        run: eas build --platform all --profile production --non-interactive
+
+  # Preview builds for PRs
+  preview-builds:
+    needs: [changes, api-quality, mobile-quality]
+    if: ${{ github.event_name == 'pull_request' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
+      # Deploy API to staging if changed
+      - name: Setup Genezio
+        if: ${{ needs.changes.outputs.api == 'true' }}
+        uses: Genez-io/genezio-github-action@v3
+        with:
+          token: ${{ secrets.GENEZIO_TOKEN }}
+
+      - name: Deploy API to staging
+        if: ${{ needs.changes.outputs.api == 'true' }}
+        working-directory: ./api
+        run: |
+          npm install
+          npm run build
+          genezio deploy --stage staging || genezio deploy
+        env:
+          CI: false
+
+      # Build mobile preview if changed
+      - name: Setup Expo and EAS
+        if: ${{ needs.changes.outputs.mobile == 'true' }}
+        uses: expo/expo-github-action@v8
+        with:
+          expo-version: latest
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Build mobile preview
+        if: ${{ needs.changes.outputs.mobile == 'true' }}
+        working-directory: ./moovSafe-mobile
+        run: |
+          pnpm install
+          eas build --platform all --profile preview --non-interactive --no-wait
