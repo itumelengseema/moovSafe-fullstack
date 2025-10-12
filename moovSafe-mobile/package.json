@@ -9,12 +9,21 @@
     "web": "expo start --web",
     "build": "expo prebuild",
     "android": "expo run:android",
-    "format": "biome check --write"
+    "format": "biome format --write .",
+    "lint": "biome lint .",
+    "lint:fix": "biome lint --write .",
+    "check": "biome check .",
+    "check:fix": "biome check --write .",
+    "check:unsafe": "biome check --write --unsafe",
+    "type-check": "tsc --noEmit",
+    "quality": "pnpm run check && pnpm run type-check",
+    "quality:fix": "pnpm run check:fix && pnpm run type-check"
   },
   "dependencies": {
     "@expo/html-elements": "^0.10.1",
     "@expo/vector-icons": "^15.0.2",
     "@gluestack-ui/core": "^3.0.10",
+    "@gluestack-ui/themed": "^1.1.73",
     "@gluestack-ui/utils": "^3.0.7",
     "@legendapp/motion": "^2.4.0",
     "@react-native-masked-view/masked-view": "0.3.2",
@@ -49,7 +58,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.5",
-    "@tanstack/eslint-plugin-query": "^5.91.0",
+    "@types/node": "^24.7.2",
     "@types/react": "~19.1.0",
     "prettier": "^3.6.2",
     "react-native-svg-transformer": "^1.5.1",

@@ -1,45 +1,126 @@
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
 export async function vehiclesList() {
-    try {
+  if (!API_URL) {
+    throw new Error('API URL is not configured');
+  }
 
-        if (!API_URL) {
-            throw new Error("API URL is not configured");
-        }
+  const res = await fetch(`${API_URL}/api/vehicles`);
 
-        const res = await fetch(`${API_URL}/api/vehicles`);
+  if (!res.ok) {
+    throw new Error(`HTTP error! status: ${res.status}`);
+  }
 
-        if (!res.ok) {
-            throw new Error(`HTTP error! status: ${res.status}`);
-        }
+  const data = await res.json();
 
-        const data = await res.json();
-
-        return data;
-    } catch (error) {
-        console.error("Error in vehiclesList:", error);
-        throw error;
-    }
+  return data;
 }
 
-
 export async function fetchVehicleById(id: string) {
-    try {
-        if (!API_URL) {
-            throw new Error("API URL is not configured");
-        }
+  if (!API_URL) {
+    throw new Error('API URL is not configured');
+  }
 
-        const res = await fetch(`${API_URL}/api/vehicles/${id}`);
+  const res = await fetch(`${API_URL}/api/vehicles/${id}`);
 
-        if (!res.ok) {
-            throw new Error(`HTTP error! status: ${res.status}`);
-        }
+  if (!res.ok) {
+    throw new Error(`HTTP error! status: ${res.status}`);
+  }
 
-        const data = await res.json();
+  const data = await res.json();
 
-        return data;
-    } catch (error) {
-        console.error("Error in fetchVehicleById:", error);
-        throw error;
-    }
+  return data;
+}
+
+export async function createVehicle(vehicleData: {
+  make: string;
+  model: string;
+  year: string;
+  vin: string;
+  engineNumber: string;
+  licensePlate: string;
+  fuelType: string;
+  transmission: string;
+  currentMileage: string;
+  colour: string;
+  vehicleType: string;
+}) {
+  if (!API_URL) {
+    throw new Error('API URL is not configured');
+  }
+
+  const response = await fetch(`${API_URL}/api/vehicles`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      ...vehicleData,
+      year: parseInt(vehicleData.year, 10),
+      currentMileage: parseInt(vehicleData.currentMileage, 10),
+      status: 'active', // Default status
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}: ${await response.text()}`);
+  }
+
+  return response.json();
+}
+
+export async function updateVehicle(
+  id: string,
+  vehicleData: {
+    make: string;
+    model: string;
+    year: string;
+    vin: string;
+    engineNumber: string;
+    licensePlate: string;
+    fuelType: string;
+    transmission: string;
+    currentMileage: string;
+    colour: string;
+    vehicleType: string;
+    status: string;
+  }
+) {
+  if (!API_URL) {
+    throw new Error('API URL is not configured');
+  }
+
+  const response = await fetch(`${API_URL}/api/vehicles/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      ...vehicleData,
+      year: parseInt(vehicleData.year, 10),
+      currentMileage: parseInt(vehicleData.currentMileage, 10),
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}: ${await response.text()}`);
+  }
+
+  return response.json();
+}
+
+export async function deleteVehicle(id: string) {
+  if (!API_URL) {
+    throw new Error('API URL is not configured');
+  }
+
+  const response = await fetch(`${API_URL}/api/vehicles/${id}`, {
+    method: 'DELETE',
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}: ${await response.text()}`);
+  }
+
+  return response.json();
 }

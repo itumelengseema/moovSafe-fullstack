@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+pnpm-lock.yaml
+
+# Build outputs
+android/
+ios/
+.expo/
+dist/
+build/
+
+# Configuration files
+metro.config.js
+babel.config.js
+tailwind.config.js
+
+# Type definitions
+*.d.ts
+types.d.ts
+nativewind-env.d.ts
+declarations.d.ts
+
+# Assets
+assets/
