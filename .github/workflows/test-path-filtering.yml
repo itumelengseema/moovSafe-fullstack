@@ -42,7 +42,7 @@ jobs:
         run: |
           echo "API Changed: ${{ steps.api-changes.outputs.api_changed }}"
           echo "Mobile Changed: ${{ steps.mobile-changes.outputs.mobile_changed }}"
-          
+
           echo "Changed files:"
           git diff --name-only HEAD~1 HEAD
 
@@ -54,7 +54,7 @@ jobs:
         run: echo "This simulates the API workflow running"
 
   should-run-mobile:
-    runs-on: ubuntu-latest  
+    runs-on: ubuntu-latest
     if: contains(github.event.head_commit.message, 'mobile') || contains(github.event.head_commit.message, 'app')
     steps:
       - name: Mobile workflow would run

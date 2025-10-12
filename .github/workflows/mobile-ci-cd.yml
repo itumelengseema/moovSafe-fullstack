@@ -6,19 +6,19 @@ on:
       - main
       - develop
     paths:
-      - 'moovSafe-mobile/**'
-      - '!moovSafe-mobile/README.md'
-      - '!moovSafe-mobile/*.md'
-      - '!moovSafe-mobile/.gitignore'
+      - "moovSafe-mobile/**"
+      - "!moovSafe-mobile/README.md"
+      - "!moovSafe-mobile/*.md"
+      - "!moovSafe-mobile/.gitignore"
   pull_request:
     branches:
       - main
       - develop
     paths:
-      - 'moovSafe-mobile/**'
-      - '!moovSafe-mobile/README.md'
-      - '!moovSafe-mobile/*.md'
-      - '!moovSafe-mobile/.gitignore'
+      - "moovSafe-mobile/**"
+      - "!moovSafe-mobile/README.md"
+      - "!moovSafe-mobile/*.md"
+      - "!moovSafe-mobile/.gitignore"
 
 jobs:
   # Quality checks (linting, type checking, testing)
@@ -155,8 +155,8 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
-          distribution: 'temurin'
+          java-version: "17"
+          distribution: "temurin"
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3

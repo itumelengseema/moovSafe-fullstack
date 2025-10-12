@@ -5,6 +5,7 @@ This repository now includes comprehensive CI/CD pipelines for both the backend 
 ## 🚀 Available Workflows
 
 ### 1. Backend API CI/CD (`genezio-deploy.yml`)
+
 - **Triggers**: Push/PR to `main` or `develop` branches when `api/**` files change
 - **Ignores**: README files, documentation, .gitignore
 - **Features**:
@@ -13,6 +14,7 @@ This repository now includes comprehensive CI/CD pipelines for both the backend 
   - Production deployment for main branch
 
 ### 2. Mobile App CI/CD (`mobile-ci-cd.yml`)
+
 - **Triggers**: Push/PR to `main` or `develop` branches when `moovSafe-mobile/**` files change
 - **Ignores**: README files, documentation, .gitignore
 - **Features**:
@@ -22,6 +24,7 @@ This repository now includes comprehensive CI/CD pipelines for both the backend 
   - Artifact uploads
 
 ### 3. Test Path Filtering (`test-path-filtering.yml`)
+
 - **Triggers**: Any push to help debug which workflows should run
 - **Features**:
   - Shows which files changed
@@ -35,16 +38,19 @@ This repository now includes comprehensive CI/CD pipelines for both the backend 
 Add these secrets to your GitHub repository (`Settings > Secrets and variables > Actions`):
 
 #### For Backend API:
+
 ```
 GENEZIO_TOKEN=your_genezio_token_here
 ```
 
 #### For Mobile App:
+
 ```
 EXPO_TOKEN=your_expo_access_token_here
 ```
 
 #### Optional (for app store submissions):
+
 ```
 APPLE_ID=your_apple_id
 APPLE_ID_PASSWORD=your_app_specific_password
@@ -54,12 +60,14 @@ GOOGLE_SERVICE_ACCOUNT_KEY=your_google_play_service_account_json
 ### 2. Get Required Tokens
 
 #### Genezio Token:
+
 1. Log in to [Genezio Dashboard](https://genez.io)
 2. Go to Settings > Access Tokens
 3. Generate a new token
 4. Add it as `GENEZIO_TOKEN` in GitHub secrets
 
 #### Expo Token:
+
 1. Install Expo CLI: `npm install -g @expo/cli`
 2. Login: `expo login`
 3. Generate token: `expo whoami --access-token`
@@ -95,12 +103,14 @@ Your `eas.json` is already configured, but you can customize build profiles:
 ## 🔄 Workflow Behavior
 
 ### For Pull Requests:
+
 1. **Quality checks** run for changed components (API/Mobile)
 2. **Preview builds** are created:
    - API: Deployed to staging environment
    - Mobile: EAS preview build + APK artifact
 
 ### For Main Branch:
+
 1. **Quality checks** run for changed components
 2. **Production deployments**:
    - API: Deployed to production via Genezio
@@ -109,17 +119,20 @@ Your `eas.json` is already configured, but you can customize build profiles:
 ## 📱 Mobile App Deployment Options
 
 ### Option 1: EAS Build (Recommended)
+
 - Cloud-based building
 - Handles iOS and Android
 - Automatic signing and provisioning
 - Built-in distribution
 
 ### Option 2: Self-hosted APK Build
+
 - Builds APK directly in GitHub Actions
 - Good for testing and internal distribution
 - Faster for Android-only deployments
 
 ### Option 3: App Store Auto-submission
+
 Uncomment the submission steps in the workflow to automatically submit to app stores:
 
 ```yaml
@@ -137,6 +150,7 @@ Uncomment the submission steps in the workflow to automatically submit to app st
 ## 🛠 Customization
 
 ### Adding Tests
+
 Add test steps to quality checks:
 
 ```yaml
@@ -146,6 +160,7 @@ Add test steps to quality checks:
 ```
 
 ### Environment Variables
+
 Add environment-specific variables:
 
 ```yaml
@@ -158,6 +173,7 @@ Add environment-specific variables:
 ```
 
 ### Notifications
+
 Add Slack/Discord notifications:
 
 ```yaml
@@ -172,11 +188,13 @@ Add Slack/Discord notifications:
 ## 📊 Monitoring Builds
 
 ### EAS Dashboard
+
 - View build progress: [EAS Dashboard](https://expo.dev/builds)
 - Download builds directly from dashboard
 - Monitor build logs and errors
 
 ### GitHub Actions
+
 - View workflow runs in `Actions` tab
 - Download APK artifacts from successful runs
 - Monitor deployment status and logs
@@ -191,12 +209,13 @@ Add Slack/Discord notifications:
 4. **Path issues**: Ensure working directories match your project structure
 
 ### Debug Commands:
+
 ```bash
 # Test EAS build locally
 cd moovSafe-mobile
 eas build --platform android --profile preview --local
 
-# Test Genezio deployment locally  
+# Test Genezio deployment locally
 cd api
 genezio deploy --stage staging
 ```
@@ -212,6 +231,7 @@ genezio deploy --stage staging
 ## 🔄 Migration from Single Workflow
 
 The new setup provides better:
+
 - **Parallel processing**: API and mobile builds run simultaneously
 - **Smart triggers**: Only builds what changed
 - **Better isolation**: Separate concerns for different components

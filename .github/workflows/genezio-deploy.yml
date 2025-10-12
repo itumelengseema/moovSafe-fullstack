@@ -6,19 +6,19 @@ on:
       - main
       - develop
     paths:
-      - 'api/**'
-      - '!api/README.md'
-      - '!api/*.md'
-      - '!api/.gitignore'
+      - "api/**"
+      - "!api/README.md"
+      - "!api/*.md"
+      - "!api/.gitignore"
   pull_request:
     branches:
       - main
       - develop
     paths:
-      - 'api/**'
-      - '!api/README.md'
-      - '!api/*.md'
-      - '!api/.gitignore'
+      - "api/**"
+      - "!api/README.md"
+      - "!api/*.md"
+      - "!api/.gitignore"
 
 jobs:
   # Quality checks and testing
@@ -121,4 +121,3 @@ jobs:
         run: genezio deploy --stage production || genezio deploy
         env:
           CI: false
-
