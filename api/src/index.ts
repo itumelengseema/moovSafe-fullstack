@@ -24,7 +24,7 @@ app.use((req, res, next) => {
 app.use(json());
 app.use(urlencoded({ extended: true }));
 
-// Setup Swagger documentation
+// Setup Swagger documentation with custom theme
 setupSwagger(app);
 
 /**
@@ -79,7 +79,7 @@ app.get('/', (req, res) => {
 
     <!-- Buttons -->
     <div class="mb-5">
-      <a href="/api-docs" class="btn btn-primary btn-sm me-2">View API Docs</a>
+      <a href="/api-docs" class="btn btn-primary btn-sm">View API Docs</a>
       <a href="/api/vehicles" class="btn btn-outline-secondary btn-sm"> Explore Vehicles</a>
     </div>
 
@@ -109,5 +109,5 @@ app.use((req, res, next) => {
 app.listen(port, () => {
   console.log(`🚀 Server is running on http://localhost:${port}`);
   console.log(`📚 API Documentation: http://localhost:${port}/api-docs`);
-  console.log(`🔗 Available endpoints: /api/vehicles, /api/inspections, /api/maintenance`);
+  console.log(` Available endpoints: /api/vehicles, /api/inspections, /api/maintenance`);
 });

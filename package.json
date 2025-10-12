@@ -28,7 +28,8 @@
     "quality:all": "npm run lint:api && npm run check:mobile && npm run type-check:api && npm run type-check:mobile"
   },
   "devDependencies": {
-    "@types/node": "^20.0.0"
+    "@types/node": "^20.0.0",
+    "zudoku": "^0.61.5"
   },
   "engines": {
     "node": ">=18.0.0"

@@ -20,9 +20,9 @@ importers:
       express:
         specifier: ^5.1.0
         version: 5.1.0
-      loadash:
-        specifier: ^1.0.0
-        version: 1.0.0
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
       multer:
         specifier: ^2.0.2
         version: 2.0.2
@@ -2094,10 +2094,6 @@ packages:
 
   lines-and-columns@1.2.4:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
-
-  loadash@1.0.0:
-    resolution: {integrity: sha512-xlX5HBsXB3KG0FJbJJG/3kYWCfsCyCSus3T+uHVu6QL6YxAdggmm3QeyLgn54N2yi5/UE6xxL5ZWJAAiHzHYEg==}
-    deprecated: Package is unsupport. Please use the lodash package instead.
 
   locate-path@5.0.0:
     resolution: {integrity: sha512-t7hw9pI+WvuwNJXwk5zVHpyhIqzg2qTlklJOf0mVxGSbe3Fp2VieZcduNYjaLDoy6p9uGpQEGWG87WpMKlNq8g==}
@@ -5086,8 +5082,6 @@ snapshots:
       type-check: 0.4.0
 
   lines-and-columns@1.2.4: {}
-
-  loadash@1.0.0: {}
 
   locate-path@5.0.0:
     dependencies:
