@@ -50,15 +50,15 @@ jobs:
 
       - name: Install API dependencies
         working-directory: ./api
-        run: npm install
+        run: pnpm install
 
       - name: Type check API
         working-directory: ./api
-        run: npx tsc --noEmit
+        run: pnpm exec tsc --noEmit
 
       - name: Build API
         working-directory: ./api
-        run: npm run build
+        run: pnpm run build
         env:
           CI: false
 
@@ -113,11 +113,11 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./api
-        run: npm install
+        run: pnpm install
 
       - name: Build API
         working-directory: ./api
-        run: npm run build
+        run: pnpm run build
         env:
           CI: false
 
@@ -191,8 +191,8 @@ jobs:
         if: ${{ needs.changes.outputs.api == 'true' }}
         working-directory: ./api
         run: |
-          npm install
-          npm run build
+          pnpm install
+          pnpm run build
           genezio deploy --stage staging || genezio deploy
         env:
           CI: false

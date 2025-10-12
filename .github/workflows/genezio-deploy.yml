@@ -40,7 +40,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./api
-        run: pnpm install
+        run: ppnpm install
 
       - name: Run unit tests
         working-directory: ./api
@@ -56,7 +56,7 @@ jobs:
 
       - name: Type check
         working-directory: ./api
-        run: npx tsc --noEmit
+        run: pnpm exec tsc --noEmit
 
       - name: Lint check
         working-directory: ./api
@@ -65,7 +65,7 @@ jobs:
 
       - name: Build backend
         working-directory: ./api
-        run: npm run build
+        run: ppnpm run build
         env:
           CI: false
 
@@ -90,11 +90,11 @@ jobs:
 
       - name: Install backend dependencies
         working-directory: ./api
-        run: npm install
+        run: pnpm install
 
       - name: Build backend
         working-directory: ./api
-        run: npm run build
+        run: pnpm run build
         env:
           CI: false
 
@@ -125,11 +125,11 @@ jobs:
 
       - name: Install backend dependencies
         working-directory: ./api
-        run: npm install
+        run: pnpm install
 
       - name: Build backend
         working-directory: ./api
-        run: npm run build
+        run: pnpm run build
         env:
           CI: false
 
