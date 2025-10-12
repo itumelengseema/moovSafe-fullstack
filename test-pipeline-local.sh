@@ -46,4 +46,4 @@ fi
 cd ..
 echo ""
 echo "🎉 All pipeline tests completed successfully!"
-echo "   Your CI/CD pipelines should work perfectly!"
+echo "   CI/CD pipelines should work perfectly!"

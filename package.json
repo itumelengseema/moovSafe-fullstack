@@ -1,0 +1,45 @@
+{
+  "name": "moovsafe-fullstack",
+  "version": "1.0.0",
+  "description": "Full-stack moovSafe application with API and mobile components",
+  "private": true,
+  "workspaces": [
+    "api",
+    "moovSafe-mobile"
+  ],
+  "scripts": {
+    "test:pipeline": "./test-pipelines-locally.sh",
+    "test:pipeline:api": "./test-pipelines-locally.sh --api-only",
+    "test:pipeline:mobile": "./test-pipelines-locally.sh --mobile-only",
+    "test:pipeline:verbose": "./test-pipelines-locally.sh --verbose",
+    "test:pipeline:quick": "./test-pipelines-locally.sh --skip-deps",
+    "install:all": "npm install && npm run install:api && npm run install:mobile",
+    "install:api": "cd api && pnpm install",
+    "install:mobile": "cd moovSafe-mobile && pnpm install",
+    "test:api": "cd api && pnpm test",
+    "test:api:ci": "cd api && pnpm run test:ci",
+    "build:api": "cd api && pnpm run build",
+    "lint:api": "cd api && pnpm run lint",
+    "type-check:api": "cd api && npx tsc --noEmit",
+    "check:mobile": "cd moovSafe-mobile && pnpm run check",
+    "lint:mobile": "cd moovSafe-mobile && pnpm run lint",
+    "type-check:mobile": "cd moovSafe-mobile && npx tsc --noEmit",
+    "ci:simulate": "npm run type-check:api && npm run test:api:ci && npm run build:api && npm run check:mobile",
+    "quality:all": "npm run lint:api && npm run check:mobile && npm run type-check:api && npm run type-check:mobile"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "react-native",
+    "express",
+    "typescript",
+    "mobile",
+    "api"
+  ],
+  "author": "moovSafe Team",
+  "license": "MIT"
+}
