@@ -53,8 +53,9 @@ app.get('/', (req, res) => {
   <title>MoovSafe API</title>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.8/dist/lux/bootstrap.min.css">
+   <link rel="icon" type="image/x-icon" href="https://res.cloudinary.com/dm5v9praz/image/upload/v1760305362/logo4_aspc5f.png">
   <style>
-    /* Optional: animated background grid */
+  
     body {
       background: radial-gradient(circle at center, rgba(50,50,50,0.4), transparent 60%);
       min-height: 100vh;

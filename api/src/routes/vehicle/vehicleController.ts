@@ -9,7 +9,23 @@ import { HTTP_STATUS } from '../../utils/constants.js';
 // Get all vehicles
 export async function getVehicles(req: Request, res: Response) {
   try {
-    const vehicles = await db.select().from(vehiclesTable);
+    const vehicles = await db.select({
+      id: vehiclesTable.id,
+      make: vehiclesTable.make,
+      model: vehiclesTable.model,
+      year: vehiclesTable.year,
+      vin: vehiclesTable.vin,
+      engineNumber: vehiclesTable.engineNumber,
+      licensePlate: vehiclesTable.licensePlate,
+      fuelType: vehiclesTable.fuelType,
+      transmission: vehiclesTable.transmission,
+      currentMileage: vehiclesTable.currentMileage,
+      colour: vehiclesTable.colour,
+      imageUrl: vehiclesTable.imageUrl,
+      vehicleType: vehiclesTable.vehicleType,
+      // status: vehiclesTable.status, // Commented out until database is migrated
+      // lastInspectionDate: vehiclesTable.lastInspectionDate, // Commented out until database is migrated
+    }).from(vehiclesTable);
     res.status(HTTP_STATUS.OK).json(vehicles);
   } catch (error) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: (error as Error).message });
@@ -26,7 +42,23 @@ export async function getVehicleById(req: Request, res: Response) {
 
     // Fetch vehicle by ID
     const [vehicle] = await db
-      .select()
+      .select({
+        id: vehiclesTable.id,
+        make: vehiclesTable.make,
+        model: vehiclesTable.model,
+        year: vehiclesTable.year,
+        vin: vehiclesTable.vin,
+        engineNumber: vehiclesTable.engineNumber,
+        licensePlate: vehiclesTable.licensePlate,
+        fuelType: vehiclesTable.fuelType,
+        transmission: vehiclesTable.transmission,
+        currentMileage: vehiclesTable.currentMileage,
+        colour: vehiclesTable.colour,
+        imageUrl: vehiclesTable.imageUrl,
+        vehicleType: vehiclesTable.vehicleType,
+        // status: vehiclesTable.status, // Commented out until database is migrated
+        // lastInspectionDate: vehiclesTable.lastInspectionDate, // Commented out until database is migrated
+      })
       .from(vehiclesTable)
       .where(eq(vehiclesTable.id, id));
     if (!vehicle) {
@@ -70,7 +102,12 @@ export async function addVehicle(req: Request, res: Response) {
 
     // Check for existing vehicle with same unique fields
     const conflicts = await db
-      .select()
+      .select({
+        id: vehiclesTable.id,
+        licensePlate: vehiclesTable.licensePlate,
+        vin: vehiclesTable.vin,
+        engineNumber: vehiclesTable.engineNumber
+      })
       .from(vehiclesTable)
       .where(
         or(
@@ -204,7 +241,23 @@ export async function getVehicleByLicense(req: Request, res: Response) {
 
     // Query the vehicle
     const [vehicle] = await db
-      .select()
+      .select({
+        id: vehiclesTable.id,
+        make: vehiclesTable.make,
+        model: vehiclesTable.model,
+        year: vehiclesTable.year,
+        vin: vehiclesTable.vin,
+        engineNumber: vehiclesTable.engineNumber,
+        licensePlate: vehiclesTable.licensePlate,
+        fuelType: vehiclesTable.fuelType,
+        transmission: vehiclesTable.transmission,
+        currentMileage: vehiclesTable.currentMileage,
+        colour: vehiclesTable.colour,
+        imageUrl: vehiclesTable.imageUrl,
+        vehicleType: vehiclesTable.vehicleType,
+        // status: vehiclesTable.status, // Commented out until database is migrated
+        // lastInspectionDate: vehiclesTable.lastInspectionDate, // Commented out until database is migrated
+      })
       .from(vehiclesTable)
       .where(eq(vehiclesTable.licensePlate, licensePlate));
 
