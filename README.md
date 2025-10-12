@@ -269,17 +269,21 @@ pnpm run type-check     # TypeScript validation
 ### **API Documentation**
 
 #### **🌐 Live Production API:**
+
 - **📚 Interactive Swagger UI**: https://9c538d0e-70fa-437a-806a-e3ccbe1fcc92.us-east-1.cloud.genez.io/api-docs
 - **🏠 API Homepage**: https://9c538d0e-70fa-437a-806a-e3ccbe1fcc92.us-east-1.cloud.genez.io
 
 #### **🔧 Local Development:**
+
 - **📚 Local Swagger UI**: `http://localhost:3000/api-docs`
 - **🏠 Local API**: `http://localhost:3000`
 - **🗄️ Database Studio**: `http://localhost:4983`
 - **📱 Mobile Development**: Expo DevTools
 
 #### **Complete API Reference**
+
 The MoovSafe API includes full OpenAPI 3.0 documentation with:
+
 - **Interactive Testing** - Try all endpoints directly from the browser
 - **Complete Schemas** - Detailed request/response models for all data types
 - **File Upload Support** - Test image uploads for inspections and maintenance
@@ -287,12 +291,14 @@ The MoovSafe API includes full OpenAPI 3.0 documentation with:
 - **Example Requests** - Copy-paste ready code samples
 
 **Quick Start (Local):**
+
 ```bash
 cd api && pnpm run dev
 # Visit http://localhost:3000/api-docs
 ```
 
 **Live Production API:**
+
 - **Try it now**: https://9c538d0e-70fa-437a-806a-e3ccbe1fcc92.us-east-1.cloud.genez.io/api-docs
 - **Test endpoints** directly in production environment
 - **No setup required** - fully deployed and accessible

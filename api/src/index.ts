@@ -45,24 +45,49 @@ setupSwagger(app);
  */
 app.get('/', (req, res) => {
   res.send(`
-    <div style="font-family: Arial, sans-serif; text-align: center; padding: 50px;">
-      <img src="./assets/logoBurna.png" alt="MoovSafe Logo" width="1584" ><h1>MoovSafe API</h1>
-      <p>Vehicle Fleet Management & Inspection System</p>
-      <p><strong>API is running successfully!</strong></p>
-      <p><a href="/api-docs" style="color: #007bff; text-decoration: none; font-size: 18px;">📚 View API Documentation</a></p>
-      <hr style="margin: 30px 0;">
-      <div style="text-align: left; max-width: 600px; margin: 0 auto;">
-        <h3>Available Endpoints:</h3>
-        <ul style="line-height: 1.6;">
-          <li><strong>GET</strong> <code>/api/vehicles</code> - Get all vehicles</li>
-          <li><strong>POST</strong> <code>/api/vehicles</code> - Create new vehicle</li>
-          <li><strong>GET</strong> <code>/api/inspections</code> - Get all inspections</li>
-          <li><strong>POST</strong> <code>/api/inspections</code> - Create new inspection</li>
-          <li><strong>GET</strong> <code>/api/maintenance</code> - Get maintenance history</li>
-          <li><strong>POST</strong> <code>/api/maintenance</code> - Create maintenance record</li>
-        </ul>
-      </div>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MoovSafe API</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.8/dist/lux/bootstrap.min.css">
+  <style>
+    /* Optional: animated background grid */
+    body {
+      background: radial-gradient(circle at center, rgba(50,50,50,0.4), transparent 60%);
+      min-height: 100vh;
+    }
+    .hero-logo {
+      width: 200px;
+      margin-bottom: 1rem;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container text-center d-flex flex-column justify-content-center align-items-center min-vh-100">
+    
+    <!-- Logo -->
+    <img src="https://res.cloudinary.com/dm5v9praz/image/upload/v1760298688/_Logo_2_xmxymy.png" alt="MoovSafe Logo" class="hero-logo">
+
+    <!-- Hero Title -->
+    <h1 class="display-4 fw-bold">MoovSafe API</h1>
+    <p class="lead mb-4">Vehicle Fleet Management & Inspection System</p>
+
+    <!-- Buttons -->
+    <div class="mb-5">
+      <a href="/api-docs" class="btn btn-primary btn-sm me-2">View API Docs</a>
+      <a href="/api/vehicles" class="btn btn-outline-secondary btn-sm"> Explore Vehicles</a>
     </div>
+
+    </div>
+
+</body>
+</html>
+
   `);
 });
 

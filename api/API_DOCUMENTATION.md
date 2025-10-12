@@ -5,6 +5,7 @@ This document describes how to use the automatically generated Swagger/OpenAPI d
 ## 🚀 Quick Start
 
 ### Start the API Server
+
 ```bash
 cd api
 pnpm install
@@ -12,6 +13,7 @@ pnpm run dev
 ```
 
 ### Access Documentation
+
 - **Swagger UI**: http://localhost:3000/api-docs
 - **API Homepage**: http://localhost:3000
 
@@ -20,6 +22,7 @@ pnpm run dev
 The MoovSafe API provides comprehensive endpoints for vehicle fleet management and inspection system:
 
 ### 🚗 **Vehicles** (`/api/vehicles`)
+
 - `GET /` - List all vehicles
 - `GET /{id}` - Get vehicle by ID
 - `GET /license/{licensePlate}` - Get vehicle by license plate
@@ -28,6 +31,7 @@ The MoovSafe API provides comprehensive endpoints for vehicle fleet management a
 - `DELETE /{id}` - Delete vehicle
 
 ### 🔍 **Inspections** (`/api/inspections`)
+
 - `GET /` - List all inspections
 - `GET /date` - Get inspections by date range
 - `GET /{id}` - Get inspection by ID
@@ -35,6 +39,7 @@ The MoovSafe API provides comprehensive endpoints for vehicle fleet management a
 - `DELETE /{id}` - Delete inspection
 
 ### 🔧 **Maintenance** (`/api/maintenance`)
+
 - `GET /` - List all maintenance records
 - `GET /vehicle/{licensePlate}` - Get maintenance by vehicle
 - `GET /{id}` - Get maintenance record by ID
@@ -47,16 +52,19 @@ The MoovSafe API provides comprehensive endpoints for vehicle fleet management a
 The Swagger UI provides:
 
 ### ✅ **Try It Out**
+
 - Test endpoints directly from the documentation
 - See real request/response examples
 - Upload files for inspection and maintenance endpoints
 
 ### 📊 **Schema Validation**
+
 - Complete request/response schemas
 - Field descriptions and constraints
 - Enum values for standardized fields
 
 ### 🔒 **Error Handling**
+
 - Standard HTTP status codes
 - Detailed error response schemas
 - Common error scenarios documented
@@ -64,12 +72,15 @@ The Swagger UI provides:
 ## 🛠️ Development Features
 
 ### **Auto-Generated from Code**
+
 The documentation is automatically generated from:
+
 - TypeScript interfaces and schemas
 - Route definitions and middleware
 - JSDoc comments in route files
 
 ### **Always Up-to-Date**
+
 - Documentation updates automatically with code changes
 - No manual documentation maintenance required
 - Synchronized with actual API behavior
@@ -77,16 +88,19 @@ The documentation is automatically generated from:
 ## 📚 Using the Documentation
 
 ### **1. Explore Endpoints**
+
 - Browse all available endpoints by category
 - View detailed parameter and response information
 - See example requests and responses
 
 ### **2. Test API Calls**
+
 - Use "Try it out" button on any endpoint
 - Fill in parameters and request body
 - Execute requests and see live responses
 
 ### **3. Understand Data Models**
+
 - View complete schemas for Vehicle, Inspection, and Maintenance
 - See all available fields and their types
 - Understand required vs optional fields
@@ -94,20 +108,26 @@ The documentation is automatically generated from:
 ## 🔧 Technical Details
 
 ### **File Upload Support**
+
 Endpoints that support file uploads (inspections and maintenance):
+
 - `multipart/form-data` content type
 - Multiple file fields (images, invoices, photos)
 - Maximum file limits documented
 
 ### **Query Parameters**
+
 Advanced filtering options:
+
 - Date ranges for inspections
 - Vehicle-specific filtering
 - Pagination with limit/offset
 - Maintenance type filtering
 
 ### **Response Format**
+
 All endpoints return consistent JSON responses:
+
 - Success responses with data
 - Error responses with detailed messages
 - Standard HTTP status codes
@@ -115,6 +135,7 @@ All endpoints return consistent JSON responses:
 ## 🎯 Example Usage
 
 ### Create a Vehicle
+
 ```json
 POST /api/vehicles
 {
@@ -133,6 +154,7 @@ POST /api/vehicles
 ```
 
 ### Create an Inspection
+
 ```bash
 POST /api/inspections
 Content-Type: multipart/form-data
@@ -149,6 +171,7 @@ odometerImage: odometer.jpg
 ## 🚀 Production Ready
 
 The API documentation includes:
+
 - Complete OpenAPI 3.0 specification
 - Production and development server configurations
 - Comprehensive error handling
