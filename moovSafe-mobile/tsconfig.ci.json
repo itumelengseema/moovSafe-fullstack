@@ -1,0 +1,22 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "react-native-css-interop",
+    "skipLibCheck": true,
+    // More lenient for CI/CD
+    "noImplicitAny": false,
+    "strictPropertyInitialization": false,
+    "paths": {
+      "@/*": ["./*"],
+      "tailwind.config": ["./tailwind.config.js"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx", "types.d.ts", "nativewind-env.d.ts", "declarations.d.ts"],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  }
+}

@@ -79,8 +79,8 @@ export default function InspectionListItem({ inspection, onPress }: InspectionLi
             {hasFaults && (
               <Badge className="bg-orange-100">
                 <Text className="text-orange-800 text-xs">
-                  ⚠️ {inspection.faultsImagesUrl?.length} Fault
-                  {inspection.faultsImagesUrl?.length > 1 ? 's' : ''}
+                  ⚠️ {inspection.faultsImagesUrl?.length || 0} Fault
+                  {(inspection.faultsImagesUrl?.length || 0) > 1 ? 's' : ''}
                 </Text>
               </Badge>
             )}
