@@ -5,6 +5,7 @@
     "jsx": "react-jsx",
     "jsxImportSource": "react-native-css-interop",
     "skipLibCheck": true,
+    "types": ["react", "react-native"],
     "paths": {
       "@/*": ["./*"],
       "tailwind.config": ["./tailwind.config.js"]

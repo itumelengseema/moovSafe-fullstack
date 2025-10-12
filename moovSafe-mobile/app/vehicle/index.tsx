@@ -1,16 +1,16 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "expo-router";
-import { Alert, ScrollView } from "react-native";
-import { deleteVehicle, vehiclesList } from "@/api/vehicles";
-import { VStack } from "@/components/ui/vstack";
-import type { Vehicle } from "@/types/index";
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'expo-router';
+import { Alert, ScrollView } from 'react-native';
+import { deleteVehicle, vehiclesList } from '@/api/vehicles';
+import { VStack } from '@/components/ui/vstack';
+import type { Vehicle } from '@/types/index';
 import {
   AddVehicleButton,
   VehicleCard,
   VehicleEmptyState,
   VehicleLoadingState,
   VehicleStats,
-} from "./components";
+} from './components';
 
 const MAX_VEHICLES = 5;
 
@@ -23,7 +23,7 @@ export default function VehicleManagementPage() {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["vehicles"],
+    queryKey: ['vehicles'],
     queryFn: vehiclesList,
   });
 
@@ -33,11 +33,11 @@ export default function VehicleManagementPage() {
   const deleteVehicleMutation = useMutation({
     mutationFn: deleteVehicle,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["vehicles"] });
-      Alert.alert("Success", "Vehicle deleted successfully!");
+      queryClient.invalidateQueries({ queryKey: ['vehicles'] });
+      Alert.alert('Success', 'Vehicle deleted successfully!');
     },
     onError: (error: Error) => {
-      Alert.alert("Error", `Failed to delete vehicle: ${error.message}`);
+      Alert.alert('Error', `Failed to delete vehicle: ${error.message}`);
     },
   });
 
@@ -47,13 +47,13 @@ export default function VehicleManagementPage() {
 
   const handleDeleteVehicle = (vehicle: Vehicle) => {
     Alert.alert(
-      "Delete Vehicle",
+      'Delete Vehicle',
       `Are you sure you want to delete ${vehicle.make} ${vehicle.model}?`,
       [
-        { text: "Cancel", style: "cancel" },
+        { text: 'Cancel', style: 'cancel' },
         {
-          text: "Delete",
-          style: "destructive",
+          text: 'Delete',
+          style: 'destructive',
           onPress: () => deleteVehicleMutation.mutate(vehicle.id),
         },
       ]
@@ -62,13 +62,10 @@ export default function VehicleManagementPage() {
 
   const handleAddVehicle = () => {
     if (!canAddMoreVehicles) {
-      Alert.alert(
-        "Limit Reached",
-        `You can only add up to ${MAX_VEHICLES} vehicles.`
-      );
+      Alert.alert('Limit Reached', `You can only add up to ${MAX_VEHICLES} vehicles.`);
       return;
     }
-    router.push("/vehicle/add");
+    router.push('/vehicle/add');
   };
 
   if (isLoading) {
@@ -79,10 +76,7 @@ export default function VehicleManagementPage() {
     <VStack className="flex-1 bg-background-0">
       <ScrollView className="flex-1">
         <VStack space="lg" className="p-5">
-          <VehicleStats
-            vehicleCount={vehicleCount}
-            maxVehicles={MAX_VEHICLES}
-          />
+          <VehicleStats vehicleCount={vehicleCount} maxVehicles={MAX_VEHICLES} />
 
           {/* Vehicle List */}
           {vehicles && vehicles.length > 0 ? (

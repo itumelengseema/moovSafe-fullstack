@@ -42,7 +42,7 @@ export default function HomeScreen() {
   }
 
   if (error) {
-    return <ErrorState error={error} />;
+    return <ErrorState error={error} onRetry={refetch} />;
   }
 
   return (
