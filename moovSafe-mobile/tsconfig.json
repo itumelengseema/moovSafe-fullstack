@@ -11,5 +11,11 @@
       "tailwind.config": ["./tailwind.config.js"]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx", "types.d.ts", "nativewind-env.d.ts", "declarations.d.ts"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "types.d.ts",
+    "nativewind-env.d.ts",
+    "declarations.d.ts"
+  ]
 }
