@@ -3,15 +3,16 @@ import { db } from '../../db/index.js';
 import { vehicles as vehiclesTable } from '../../db/vehicleSchema.js';
 import { eq, and, or } from 'drizzle-orm';
 import _ from 'lodash';
-import { vehicleImages } from './vehicleImages.js'
+import { vehicleImages } from './vehicleImages.js';
+import { HTTP_STATUS } from '../../utils/constants.js';
 
 // Get all vehicles
 export async function getVehicles(req: Request, res: Response) {
   try {
     const vehicles = await db.select().from(vehiclesTable);
-    res.status(200).json(vehicles);
+    res.status(HTTP_STATUS.OK).json(vehicles);
   } catch (error) {
-    res.status(500).json({ error: (error as Error).message || 'Internal Server Error' });
+    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: (error as Error).message });
   }
 }
 
@@ -20,7 +21,7 @@ export async function getVehicleById(req: Request, res: Response) {
   try {
     const { id } = req.params;
     if (!id) {
-      return res.status(400).json({ error: 'Vehicle ID is required' });
+      return res.status(HTTP_STATUS.BAD_REQUEST).json({ error: 'Vehicle ID is required' });
     }
 
     // Fetch vehicle by ID
@@ -29,13 +30,13 @@ export async function getVehicleById(req: Request, res: Response) {
       .from(vehiclesTable)
       .where(eq(vehiclesTable.id, id));
     if (!vehicle) {
-      return res.status(404).json({ error: 'Vehicle not found' });
+      return res.status(HTTP_STATUS.NOT_FOUND).json({ error: 'Vehicle not found' });
     }
 
-    res.status(200).json(vehicle);
+    res.status(HTTP_STATUS.OK).json(vehicle);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: (error as Error).message });
   }
 }
 // Add a new vehicle
@@ -61,7 +62,7 @@ export async function addVehicle(req: Request, res: Response) {
       .map(([key]) => key);
 
     if (missingFields.length > 0) {
-      return res.status(400).json({
+      return res.status(HTTP_STATUS.BAD_REQUEST).json({
         error: `Missing required fields: ${missingFields.join(', ')}`,
         receivedData: req.cleanBody
       });
@@ -92,7 +93,7 @@ export async function addVehicle(req: Request, res: Response) {
           errors.push('Engine number already exists');
         }
       });
-      return res.status(409).json({ error: errors.join(', ') });
+      return res.status(HTTP_STATUS.CONFLICT).json({ error: errors.join(', ') });
     }
 
     const typeKey = vehicleType ? vehicleType.toLowerCase() : 'default';
@@ -104,12 +105,12 @@ export async function addVehicle(req: Request, res: Response) {
       .values({ ...req.cleanBody, imageUrl })
       .returning();
     console.log('✅ New vehicle added:', JSON.stringify(newVehicle, null, 2));
-    res.status(201).json(newVehicle);
+    res.status(HTTP_STATUS.CREATED).json(newVehicle);
 
   } catch (error) {
     console.error('❌ Error adding vehicle:', error);
     console.error('❌ Request body was:', req.cleanBody);
-    res.status(500).json({ error: (error as Error).message || 'Internal Server Error' });
+    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: (error as Error).message });
   }
 }
 
@@ -120,10 +121,14 @@ export async function updateVehicle(req: Request, res: Response) {
     const { id } = req.params; // UUID of the vehicle to update
     const vehicleData = req.cleanBody;
 
+    if (!id) {
+      return res.status(HTTP_STATUS.BAD_REQUEST).json({ error: 'Vehicle ID is required' });
+    }
+
     // Check if at least one field is provided to update
     if (!Object.keys(vehicleData).length) {
       return res
-        .status(400)
+        .status(HTTP_STATUS.BAD_REQUEST)
         .json({ error: 'At least one field must be provided to update' });
     }
 
@@ -151,37 +156,51 @@ export async function updateVehicle(req: Request, res: Response) {
       .returning();
 
     if (!updatedVehicle) {
-      return res.status(404).json({ error: 'Vehicle not found' });
+      return res.status(HTTP_STATUS.NOT_FOUND).json({ error: 'Vehicle not found' });
     }
 
-    res.status(200).json(updatedVehicle);
+    res.status(HTTP_STATUS.OK).json(updatedVehicle);
   } catch (error) {
     console.error('Error updating vehicle:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: (error as Error).message });
   }
 }
 
 // Delete a vehicle
-export function deleteVehicle(req: Request, res: Response) {
-  const { id } = req.params;
+export async function deleteVehicle(req: Request, res: Response) {
+  try {
+    const { id } = req.params;
 
-  db.delete(vehiclesTable)
-    .where(eq(vehiclesTable.id, id))
-    .then((result) => {
-      if (result.rowCount === 0) {
-        return res.status(404).json({ error: 'Vehicle not found' });
-      }
-      res.status(200).json({ message: `Vehicle deleted successfully ${id}` });
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
+    if (!id) {
+      return res.status(HTTP_STATUS.BAD_REQUEST).json({ error: 'Vehicle ID is required' });
+    }
+
+    const [deletedVehicle] = await db
+      .delete(vehiclesTable)
+      .where(eq(vehiclesTable.id, id))
+      .returning();
+
+    if (!deletedVehicle) {
+      return res.status(HTTP_STATUS.NOT_FOUND).json({ error: 'Vehicle not found' });
+    }
+
+    res.status(HTTP_STATUS.OK).json({
+      message: 'Vehicle deleted successfully',
+      vehicle: deletedVehicle
     });
+  } catch (error) {
+    console.error(error);
+    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: (error as Error).message });
+  }
 }
 // Get vehicle by license plate
 export async function getVehicleByLicense(req: Request, res: Response) {
   try {
     const { licensePlate } = req.params;
+
+    if (!licensePlate) {
+      return res.status(HTTP_STATUS.BAD_REQUEST).json({ error: 'License plate is required' });
+    }
 
     // Query the vehicle
     const [vehicle] = await db
@@ -190,12 +209,12 @@ export async function getVehicleByLicense(req: Request, res: Response) {
       .where(eq(vehiclesTable.licensePlate, licensePlate));
 
     if (!vehicle) {
-      return res.status(404).json({ error: 'Vehicle not found' });
+      return res.status(HTTP_STATUS.NOT_FOUND).json({ error: 'Vehicle not found' });
     }
 
-    res.status(200).json(vehicle);
+    res.status(HTTP_STATUS.OK).json(vehicle);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: (error as Error).message });
   }
 }

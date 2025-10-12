@@ -48,17 +48,22 @@ jobs:
         with:
           node-version: 20
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
       - name: Install API dependencies
         working-directory: ./api
-        run: npm install
+        run: pnpm install --silent
 
       - name: Type check API
         working-directory: ./api
-        run: npx tsc --noEmit
+        run: pnpm exec tsc --noEmit
 
       - name: Build API
         working-directory: ./api
-        run: npm run build
+        run: pnpm run build
         env:
           CI: false
 
@@ -83,7 +88,7 @@ jobs:
 
       - name: Install mobile dependencies
         working-directory: ./moovSafe-mobile
-        run: pnpm install
+        run: pnpm install --silent
 
       - name: Lint and format check mobile (informational)
         working-directory: ./moovSafe-mobile
@@ -106,6 +111,11 @@ jobs:
         with:
           node-version: 20
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
       - name: Setup Genezio
         uses: Genez-io/genezio-github-action@v3
         with:
@@ -113,11 +123,11 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./api
-        run: npm install
+        run: pnpm install --silent
 
       - name: Build API
         working-directory: ./api
-        run: npm run build
+        run: pnpm run build
         env:
           CI: false
 
@@ -155,7 +165,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./moovSafe-mobile
-        run: pnpm install
+        run: pnpm install --silent
 
       - name: Build production mobile app
         working-directory: ./moovSafe-mobile
@@ -191,8 +201,11 @@ jobs:
         if: ${{ needs.changes.outputs.api == 'true' }}
         working-directory: ./api
         run: |
-          npm install
-          npm run build
+          echo "📦 Installing API dependencies..."
+          pnpm install --silent
+          echo "🔨 Building API..."
+          pnpm run build
+          echo "🚀 Deploying to staging..."
           genezio deploy --stage staging || genezio deploy
         env:
           CI: false
@@ -210,5 +223,7 @@ jobs:
         if: ${{ needs.changes.outputs.mobile == 'true' }}
         working-directory: ./moovSafe-mobile
         run: |
-          pnpm install
-          eas build --platform all --profile preview --non-interactive --no-wait
+          echo "📦 Installing mobile dependencies..."
+          pnpm install --silent
+          echo "📱 Starting mobile build (non-blocking)..."
+          eas build --platform android --profile preview --non-interactive --no-wait || echo "⚠️ Mobile build queued/failed - continuing..."

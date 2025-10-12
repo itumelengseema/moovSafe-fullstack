@@ -3,24 +3,23 @@ description: Backend for moovSafe app
 region: us-east-1
 yamlVersion: 2
 services:
-    databases:
-        - name: my-postgres-db
-          type: postgres-neon
+  databases:
+    - name: my-postgres-db
+      type: postgres-neon
 backend:
-    path: .
-    language:
-        name: js
-        runtime: nodejs20.x
-    functions:
-        - name: moovSafe-api-express-api-function
-          path: ./
-          entry: dist/src/index.js
-          handler: handler
-          type: httpServer
-    scripts:
-        deploy:
-            - npm install
-            - npm run build
-        local:
-            - npm install
-            - npm run build
+  path: .
+  language:
+    name: js
+    runtime: nodejs20.x
+  functions:
+    - name: moovSafe-api-express-api-function
+      path: ./
+      entry: dist/src/index.js
+      handler: handler
+      type: httpServer
+  scripts:
+    deploy:
+      - npm run build
+    local:
+      - npm install
+      - npm run build
