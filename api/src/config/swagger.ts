@@ -8,7 +8,7 @@ const options = {
         info: {
             title: 'MoovSafe API',
             version: '1.0.0',
-            description: 'Complete Vehicle Fleet Management & Inspection System API',
+            description: 'Complete Vehicle Fleet Management & Inspection System API.Designed to streamline vehicle inspections, maintenance tracking, and safety compliance. Built for modern fleet operators, individual vehicle owners, and maintenance professionals, MoovSafe combines powerful backend APIs with an intuitive mobile interface to deliver a complete vehicle management ecosystem.',
             contact: {
                 name: 'Itumeleng Seema',
                 email: 'itumelengseema@outlook.com',
@@ -559,7 +559,7 @@ export const setupSwagger = (app: Application): void => {
         
         .swagger-ui .topbar::before {
             content: '';
-            background-image: url('https://res.cloudinary.com/dm5v9praz/image/upload/v1760298688/_Logo_2_xmxymy.png');
+            background-image: url('https://res.cloudinary.com/dm5v9praz/image/upload/v1760537979/logoWhite_kfp8tb.svg');
             background-size: 140px auto;
             background-repeat: no-repeat;
             background-position: left center;
@@ -576,7 +576,7 @@ export const setupSwagger = (app: Application): void => {
         
         .swagger-ui .info .title {
             color: oklch(21% 0.006 286);
-            text-align: center;
+         
             margin-bottom: 20px;
         }
         
