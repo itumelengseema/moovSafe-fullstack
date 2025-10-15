@@ -576,7 +576,7 @@ export const setupSwagger = (app: Application): void => {
         
         .swagger-ui .info .title {
             color: oklch(21% 0.006 286);
-            text-align: left;
+            text-align: center;
             margin-bottom: 20px;
         }
         
