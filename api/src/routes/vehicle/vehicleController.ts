@@ -46,7 +46,7 @@ export async function getVehicleById(req: Request, res: Response) {
 export async function addVehicle(req: Request, res: Response) {
   try {
     console.log('🚗 Adding new vehicle to database...', req.cleanBody);
-    
+
     const { licensePlate, vin, engineNumber, vehicleType, make, model, year, fuelType, transmission, currentMileage, colour } = req.cleanBody;
 
     // Validate required fields before DB call
