@@ -9,9 +9,12 @@ import { HTTP_STATUS } from '../../utils/constants.js';
 // Get all vehicles
 export async function getVehicles(req: Request, res: Response) {
   try {
+    console.log('Fetching vehicles from database...');
     const vehicles = await db.select().from(vehiclesTable);
+    console.log(`✅ Found ${vehicles.length} vehicles in database`);
     res.status(HTTP_STATUS.OK).json(vehicles);
   } catch (error) {
+    console.error('❌ Database error:', error);
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: (error as Error).message });
   }
 }
@@ -42,17 +45,8 @@ export async function getVehicleById(req: Request, res: Response) {
 // Add a new vehicle
 export async function addVehicle(req: Request, res: Response) {
   try {
-    //check if unique fields already exist
-    /**
-     * Expected structure of req.cleanBody:
-     * {
-     *   licensePlate: string,
-     *   vin: string,
-     *   engineNumber: string,
-     *   vehicleType?: string,
-     *   [otherFields]: any
-     * }
-     */
+    console.log('🚗 Adding new vehicle to database...', req.cleanBody);
+
     const { licensePlate, vin, engineNumber, vehicleType, make, model, year, fuelType, transmission, currentMileage, colour } = req.cleanBody;
 
     // Validate required fields before DB call
@@ -104,7 +98,7 @@ export async function addVehicle(req: Request, res: Response) {
       .insert(vehiclesTable)
       .values({ ...req.cleanBody, imageUrl })
       .returning();
-    console.log('✅ New vehicle added:', JSON.stringify(newVehicle, null, 2));
+    console.log('✅ New vehicle added to database:', JSON.stringify(newVehicle, null, 2));
     res.status(HTTP_STATUS.CREATED).json(newVehicle);
 
   } catch (error) {

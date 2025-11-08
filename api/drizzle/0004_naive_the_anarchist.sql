@@ -1,1 +1,0 @@
-ALTER TABLE "vehiclesTable" RENAME COLUMN "current_mileage" TO "currentMileage";

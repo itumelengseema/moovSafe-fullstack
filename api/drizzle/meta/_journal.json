@@ -5,64 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1758925696521,
-      "tag": "0000_dizzy_stick",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1758925893986,
-      "tag": "0001_puzzling_agent_zero",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1758932016193,
-      "tag": "0002_supreme_morbius",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1758967829428,
-      "tag": "0003_known_terror",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1759048979300,
-      "tag": "0004_naive_the_anarchist",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "7",
-      "when": 1759049859507,
-      "tag": "0005_material_triton",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "7",
-      "when": 1759063307928,
-      "tag": "0006_chief_valeria_richards",
-      "breakpoints": true
-    },
-    {
-      "idx": 7,
-      "version": "7",
-      "when": 1760047652596,
-      "tag": "0007_majestic_frightful_four",
-      "breakpoints": true
-    },
-    {
-      "idx": 8,
-      "version": "7",
-      "when": 1760181644077,
-      "tag": "0008_messy_bloodstorm",
+      "when": 1760559918245,
+      "tag": "0000_shallow_bloodstorm",
       "breakpoints": true
     }
   ]

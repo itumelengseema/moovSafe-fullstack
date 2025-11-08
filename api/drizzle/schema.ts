@@ -1,0 +1,75 @@
+import { pgTable, uuid, timestamp, integer, varchar, text, unique } from "drizzle-orm/pg-core"
+import { sql } from "drizzle-orm"
+
+
+
+export const inspectionTable = pgTable("inspectionTable", {
+	id: uuid().defaultRandom().primaryKey().notNull(),
+	vehicleId: uuid("vehicle_id").notNull(),
+	date: timestamp({ mode: 'string' }).defaultNow().notNull(),
+	mileage: integer().notNull(),
+	overallCondition: varchar("overall_condition", { length: 100 }).notNull(),
+	exteriorWindshield: varchar("exterior_windshield", { length: 50 }),
+	exteriorMirrors: varchar("exterior_mirrors", { length: 50 }),
+	exteriorLights: varchar("exterior_lights", { length: 50 }),
+	exteriorTires: varchar("exterior_tires", { length: 50 }),
+	engineOil: varchar("engine_oil", { length: 50 }),
+	engineCoolant: varchar("engine_coolant", { length: 50 }),
+	engineBrakeFluid: varchar("engine_brake_fluid", { length: 50 }),
+	engineTransmissionFluid: varchar("engine_transmission_fluid", { length: 50 }),
+	enginePowerSteering: varchar("engine_power_steering", { length: 50 }),
+	engineBattery: varchar("engine_battery", { length: 50 }),
+	interiorSeats: varchar("interior_seats", { length: 50 }),
+	interiorSeatbelts: varchar("interior_seatbelts", { length: 50 }),
+	interiorHorn: varchar("interior_horn", { length: 50 }),
+	interiorAc: varchar("interior_ac", { length: 50 }),
+	windows: varchar({ length: 50 }),
+	brakes: varchar({ length: 50 }),
+	exhaust: varchar({ length: 50 }),
+	lightsIndicators: varchar("lights_indicators", { length: 50 }),
+	spareTire: varchar("spare_tire", { length: 50 }),
+	jack: varchar({ length: 50 }),
+	wheelSpanner: varchar("wheel_spanner", { length: 50 }),
+	wheelLockNutTool: varchar("wheel_lock_nut_tool", { length: 50 }),
+	fireExtinguisher: varchar("fire_extinguisher", { length: 50 }),
+	notes: text(),
+	faultsImagesUrl: text("faults_images_url").array(),
+	odometerImageUrl: varchar("odometer_image_url", { length: 255 }),
+});
+
+export const maintenanceHistoryTable = pgTable("maintenance_historyTable", {
+	id: uuid().defaultRandom().primaryKey().notNull(),
+	vehicleId: uuid("vehicle_id").notNull(),
+	date: timestamp({ mode: 'string' }).defaultNow(),
+	mileage: integer().notNull(),
+	odometerImageUrl: varchar("odometer_image_url", { length: 255 }),
+	maintenanceType: varchar("maintenance_type", { length: 100 }).notNull(),
+	description: text(),
+	performedBy: varchar("performed_by", { length: 50 }).notNull(),
+	serviceCenter: varchar("service_center", { length: 255 }),
+	cost: integer(),
+	parts: text().array(),
+	invoicesUrl: text("invoices_url").array(),
+	photosUrl: text("photos_url").array(),
+	nextServiceDate: timestamp("next_service_date", { mode: 'string' }),
+	nextServiceMileage: integer("next_service_mileage"),
+});
+
+export const vehiclesTable = pgTable("vehiclesTable", {
+	id: uuid().defaultRandom().primaryKey().notNull(),
+	make: varchar({ length: 255 }).notNull(),
+	model: varchar({ length: 255 }).notNull(),
+	year: integer().notNull(),
+	vin: varchar({ length: 50 }).notNull(),
+	engineNumber: varchar({ length: 50 }).notNull(),
+	licensePlate: varchar({ length: 20 }).notNull(),
+	fuelType: varchar({ length: 100 }).notNull(),
+	transmission: varchar({ length: 50 }).notNull(),
+	currentMileage: integer().notNull(),
+	colour: varchar({ length: 50 }).notNull(),
+	imageUrl: varchar({ length: 500 }),
+	vehicleType: varchar({ length: 50 }).notNull(),
+}, (table) => [
+	unique("vehiclesTable_vin_unique").on(table.vin),
+	unique("vehiclesTable_licensePlate_unique").on(table.licensePlate),
+]);

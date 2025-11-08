@@ -36,6 +36,52 @@ const vehicleRouter = Router();
  */
 vehicleRouter.get('/', getVehicles);
 
+// Test endpoint to verify changes are taking effect
+vehicleRouter.get('/test', (req, res) => {
+  res.json({ message: 'Test endpoint working!', timestamp: new Date().toISOString() });
+});
+
+// Mock vehicles endpoint for development
+vehicleRouter.get('/mock', (req, res) => {
+  const mockVehicles = [
+    {
+      id: 'mock-1',
+      make: 'Toyota',
+      model: 'Camry',
+      year: 2021,
+      vin: '1234567890ABCDEFG',
+      engineNumber: 'ENG123456',
+      licensePlate: 'ABC-123',
+      fuelType: 'Petrol',
+      transmission: 'Automatic',
+      currentMileage: 45000,
+      colour: 'Silver',
+      imageUrl: 'https://res.cloudinary.com/dm5v9praz/image/upload/v1728741234/moovsafe/vehicles/car.png',
+      vehicleType: 'Car',
+      status: 'active',
+      lastInspectionDate: '2024-01-15'
+    },
+    {
+      id: 'mock-2',
+      make: 'Ford',
+      model: 'F-150',
+      year: 2020,
+      vin: 'ABCDEFG1234567890',
+      engineNumber: 'ENG789012',
+      licensePlate: 'XYZ-789',
+      fuelType: 'Petrol',
+      transmission: 'Manual',
+      currentMileage: 62000,
+      colour: 'Blue',
+      imageUrl: 'https://res.cloudinary.com/dm5v9praz/image/upload/v1728741234/moovsafe/vehicles/truck.png',
+      vehicleType: 'Truck',
+      status: 'active',
+      lastInspectionDate: '2024-02-10'
+    }
+  ];
+  res.json(mockVehicles);
+});
+
 /**
  * @swagger
  * /api/vehicles/{id}:
