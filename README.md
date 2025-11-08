@@ -19,7 +19,7 @@
 ## 📱 App Preview
 
 <div align="center">
-  <img src="/assets/dashboard-preview.png" alt="Dashboard Preview" width="300" style="margin: 10px;">
+  <img src="https://res.cloudinary.com/dm5v9praz/image/upload/v1760537979/logoWhite_kfp8tb.svg" alt="Dashboard Preview" width="300" style="margin: 10px;">
   <img src="/assets/mobile-preview.png" alt="Mobile App View" width="300" style="margin: 10px;">
   
   *Dashboard Overview & Mobile Interface*
@@ -308,7 +308,7 @@ cd api && pnpm run dev
 ## 📸 App Screenshots
 
 <div align="center">
-  <img src="/assets/screenshots/dashboard.png" alt="Fleet Dashboard" width="250" style="margin: 5px;">
+  <img src="https://res.cloudinary.com/dm5v9praz/image/upload/v1760537979/logoWhite_kfp8tb.svg" alt="Fleet Dashboard" width="250" style="margin: 5px;">
   <img src="/assets/screenshots/inspection-form.png" alt="Inspection Form" width="250" style="margin: 5px;">
   <img src="/assets/screenshots/maintenance-log.png" alt="Maintenance Log" width="250" style="margin: 5px;">
   
