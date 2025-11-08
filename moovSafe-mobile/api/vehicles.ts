@@ -7,9 +7,9 @@ export async function vehiclesList() {
       throw new Error('API URL is not configured. Please check your environment variables.');
     }
 
-    console.log('Fetching vehicles from:', `${API_URL}/api/vehicles`);
+    console.log('Fetching vehicles from:', `${API_URL}/api/vehicles/mock`);
 
-    const res = await fetch(`${API_URL}/api/vehicles`);
+    const res = await fetch(`${API_URL}/api/vehicles/mock`);
 
     if (!res.ok) {
       const errorText = await res.text().catch(() => 'Unknown error');

@@ -1,7 +1,7 @@
-import { Ionicons } from '@expo/vector-icons';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import { Ionicons } from "@expo/vector-icons";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "expo-router";
+import { useState } from "react";
 import {
   Alert,
   KeyboardAvoidingView,
@@ -10,16 +10,16 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
-} from 'react-native';
-import { createVehicle } from '@/api/vehicles';
+} from "react-native";
+import { createVehicle } from "@/api/vehicles";
 
-import { Box } from '@/components/ui/box';
-import { Button, ButtonText } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Heading } from '@/components/ui/heading';
-import { HStack } from '@/components/ui/hstack';
-import { Text } from '@/components/ui/text';
-import { VStack } from '@/components/ui/vstack';
+import { Box } from "@/components/ui/box";
+import { Button, ButtonText } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Heading } from "@/components/ui/heading";
+import { HStack } from "@/components/ui/hstack";
+import { Text } from "@/components/ui/text";
+import { VStack } from "@/components/ui/vstack";
 
 interface VehicleFormData {
   make: string;
@@ -35,22 +35,29 @@ interface VehicleFormData {
   vehicleType: string;
 }
 
-const fuelTypeOptions = ['Petrol', 'Diesel', 'Electric', 'Hybrid', 'LPG', 'CNG'];
-const transmissionOptions = ['Manual', 'Automatic', 'CVT', 'Semi-Automatic'];
-const vehicleTypeOptions = ['Car', 'SUV', 'Truck', 'Van', 'Motorcycle', 'Bus'];
+const fuelTypeOptions = [
+  "Petrol",
+  "Diesel",
+  "Electric",
+  "Hybrid",
+  "LPG",
+  "CNG",
+];
+const transmissionOptions = ["Manual", "Automatic", "CVT", "Semi-Automatic"];
+const vehicleTypeOptions = ["Car", "SUV", "Truck", "Van", "Motorcycle", "Bus"];
 
 const initialFormData: VehicleFormData = {
-  make: '',
-  model: '',
-  year: '',
-  vin: '',
-  engineNumber: '',
-  licensePlate: '',
-  fuelType: 'Petrol',
-  transmission: 'Manual',
-  currentMileage: '',
-  colour: '',
-  vehicleType: 'Car',
+  make: "",
+  model: "",
+  year: "",
+  vin: "",
+  engineNumber: "",
+  licensePlate: "",
+  fuelType: "Petrol",
+  transmission: "Manual",
+  currentMileage: "",
+  colour: "",
+  vehicleType: "Car",
 };
 
 export default function AddVehicleFormPage() {
@@ -62,12 +69,12 @@ export default function AddVehicleFormPage() {
   const addVehicleMutation = useMutation({
     mutationFn: createVehicle,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['vehicles'] });
-      Alert.alert('Success', 'Vehicle added successfully!');
+      queryClient.invalidateQueries({ queryKey: ["vehicles"] });
+      Alert.alert("Success", "Vehicle added successfully!");
       router.back();
     },
     onError: (error: Error) => {
-      Alert.alert('Error', `Failed to add vehicle: ${error.message}`);
+      Alert.alert("Error", `Failed to add vehicle: ${error.message}`);
     },
   });
 
@@ -78,7 +85,10 @@ export default function AddVehicleFormPage() {
     }));
   };
 
-  const handleDropdownSelect = (field: keyof VehicleFormData, value: string) => {
+  const handleDropdownSelect = (
+    field: keyof VehicleFormData,
+    value: string
+  ) => {
     handleInputChange(field, value);
     setDropdownVisible(null);
   };
@@ -91,7 +101,7 @@ export default function AddVehicleFormPage() {
         paddingHorizontal: 16,
         paddingVertical: 12,
         borderBottomWidth: 1,
-        borderColor: '#E5E7EB',
+        borderColor: "#E5E7EB",
       }}
     >
       <Text size="md" className="text-typography-900">
@@ -103,19 +113,22 @@ export default function AddVehicleFormPage() {
   const handleSubmit = async () => {
     // Basic validation
     const requiredFields = [
-      'make',
-      'model',
-      'year',
-      'vin',
-      'engineNumber',
-      'licensePlate',
-      'currentMileage',
-      'colour',
+      "make",
+      "model",
+      "year",
+      "vin",
+      "engineNumber",
+      "licensePlate",
+      "currentMileage",
+      "colour",
     ];
 
     for (const field of requiredFields) {
       if (!formData[field as keyof VehicleFormData]) {
-        Alert.alert('Error', `${field.charAt(0).toUpperCase() + field.slice(1)} is required`);
+        Alert.alert(
+          "Error",
+          `${field.charAt(0).toUpperCase() + field.slice(1)} is required`
+        );
         return;
       }
     }
@@ -125,9 +138,9 @@ export default function AddVehicleFormPage() {
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1, backgroundColor: '#F9FAFB' }}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}
+      style={{ flex: 1, backgroundColor: "#F9FAFB" }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0}
     >
       <ScrollView
         style={{ flex: 1 }}
@@ -136,19 +149,20 @@ export default function AddVehicleFormPage() {
       >
         <VStack space="lg" className="p-5">
           {/* Header */}
-          <HStack className="items-center justify-between">
-            <HStack space="md" className="items-center">
-              <Box className="bg-neutral-950 p-2 rounded">
-                <Ionicons name="car" size={24} color="white" />
-              </Box>
-              <Heading size="xl" className="font-bold text-typography-900">
-                Add New Vehicle
-              </Heading>
-            </HStack>
-          </HStack>
 
           {/* Vehicle Form */}
           <Card variant="elevated" className="bg-white">
+            <HStack className="items-center justify-between">
+              <HStack space="md" className="items-center">
+                <Box className="bg-neutral-950 p-2 rounded">
+                  <Ionicons name="car" size={24} color="white" />
+                </Box>
+                <Heading size="xl" className="font-bold text-typography-900">
+                  Add New Vehicle
+                </Heading>
+              </HStack>
+            </HStack>
+
             <VStack space="xl" className="p-6">
               {/* Header Section */}
               <VStack space="sm">
@@ -169,16 +183,21 @@ export default function AddVehicleFormPage() {
 
                   <VStack space="md">
                     <VStack space="xs">
-                      <Text size="sm" className="text-typography-700 font-medium">
+                      <Text
+                        size="sm"
+                        className="text-typography-700 font-medium"
+                      >
                         Make *
                       </Text>
                       <Box className="border border-outline-200 rounded-lg px-4 py-3 bg-background-50">
                         <TextInput
                           value={formData.make}
-                          onChangeText={(text) => handleInputChange('make', text)}
+                          onChangeText={(text) =>
+                            handleInputChange("make", text)
+                          }
                           placeholder="e.g., Toyota, Honda, BMW"
                           placeholderTextColor="#9CA3AF"
-                          style={{ color: '#111827', fontSize: 16 }}
+                          style={{ color: "#111827", fontSize: 16 }}
                           returnKeyType="next"
                           blurOnSubmit={false}
                           autoCapitalize="words"
@@ -188,16 +207,21 @@ export default function AddVehicleFormPage() {
                     </VStack>
 
                     <VStack space="xs">
-                      <Text size="sm" className="text-typography-700 font-medium">
+                      <Text
+                        size="sm"
+                        className="text-typography-700 font-medium"
+                      >
                         Model *
                       </Text>
                       <Box className="border border-outline-200 rounded-lg px-4 py-3 bg-background-50">
                         <TextInput
                           value={formData.model}
-                          onChangeText={(text) => handleInputChange('model', text)}
+                          onChangeText={(text) =>
+                            handleInputChange("model", text)
+                          }
                           placeholder="e.g., Camry, Civic, X3"
                           placeholderTextColor="#9CA3AF"
-                          style={{ color: '#111827', fontSize: 16 }}
+                          style={{ color: "#111827", fontSize: 16 }}
                           returnKeyType="next"
                           blurOnSubmit={false}
                           autoCapitalize="words"
@@ -216,14 +240,14 @@ export default function AddVehicleFormPage() {
                     <Box className="border border-outline-200 rounded-lg px-4 py-3 bg-background-50">
                       <TextInput
                         value={formData.year}
-                        onChangeText={(text) => handleInputChange('year', text)}
+                        onChangeText={(text) => handleInputChange("year", text)}
                         placeholder="2020"
                         placeholderTextColor="#9CA3AF"
                         keyboardType="numeric"
                         returnKeyType="next"
                         blurOnSubmit={false}
                         maxLength={4}
-                        style={{ color: '#111827', fontSize: 16 }}
+                        style={{ color: "#111827", fontSize: 16 }}
                       />
                     </Box>
                   </VStack>
@@ -235,13 +259,15 @@ export default function AddVehicleFormPage() {
                     <Box className="border border-outline-200 rounded-lg px-4 py-3 bg-background-50">
                       <TextInput
                         value={formData.colour}
-                        onChangeText={(text) => handleInputChange('colour', text)}
+                        onChangeText={(text) =>
+                          handleInputChange("colour", text)
+                        }
                         placeholder="White"
                         placeholderTextColor="#9CA3AF"
                         returnKeyType="next"
                         blurOnSubmit={false}
                         autoCapitalize="words"
-                        style={{ color: '#111827', fontSize: 16 }}
+                        style={{ color: "#111827", fontSize: 16 }}
                       />
                     </Box>
                   </VStack>
@@ -255,32 +281,42 @@ export default function AddVehicleFormPage() {
 
                   <VStack space="md">
                     <VStack space="xs">
-                      <Text size="sm" className="text-typography-700 font-medium">
+                      <Text
+                        size="sm"
+                        className="text-typography-700 font-medium"
+                      >
                         License Plate *
                       </Text>
                       <Box className="border border-outline-200 rounded-lg px-4 py-3 bg-background-50">
                         <TextInput
                           value={formData.licensePlate}
-                          onChangeText={(text) => handleInputChange('licensePlate', text)}
+                          onChangeText={(text) =>
+                            handleInputChange("licensePlate", text)
+                          }
                           placeholder="ABC-123-GP"
                           placeholderTextColor="#9CA3AF"
                           autoCapitalize="characters"
                           returnKeyType="next"
                           blurOnSubmit={false}
                           autoCorrect={false}
-                          style={{ color: '#111827', fontSize: 16 }}
+                          style={{ color: "#111827", fontSize: 16 }}
                         />
                       </Box>
                     </VStack>
 
                     <VStack space="xs">
-                      <Text size="sm" className="text-typography-700 font-medium">
+                      <Text
+                        size="sm"
+                        className="text-typography-700 font-medium"
+                      >
                         VIN Number *
                       </Text>
                       <Box className="border border-outline-200 rounded-lg px-4 py-3 bg-background-50">
                         <TextInput
                           value={formData.vin}
-                          onChangeText={(text) => handleInputChange('vin', text)}
+                          onChangeText={(text) =>
+                            handleInputChange("vin", text)
+                          }
                           placeholder="1HGCM82633A123456"
                           placeholderTextColor="#9CA3AF"
                           autoCapitalize="characters"
@@ -288,44 +324,54 @@ export default function AddVehicleFormPage() {
                           blurOnSubmit={false}
                           autoCorrect={false}
                           maxLength={17}
-                          style={{ color: '#111827', fontSize: 16 }}
+                          style={{ color: "#111827", fontSize: 16 }}
                         />
                       </Box>
                     </VStack>
 
                     <VStack space="xs">
-                      <Text size="sm" className="text-typography-700 font-medium">
+                      <Text
+                        size="sm"
+                        className="text-typography-700 font-medium"
+                      >
                         Engine Number *
                       </Text>
                       <Box className="border border-outline-200 rounded-lg px-4 py-3 bg-background-50">
                         <TextInput
                           value={formData.engineNumber}
-                          onChangeText={(text) => handleInputChange('engineNumber', text)}
+                          onChangeText={(text) =>
+                            handleInputChange("engineNumber", text)
+                          }
                           placeholder="123ABC456"
                           placeholderTextColor="#9CA3AF"
                           autoCapitalize="characters"
                           returnKeyType="next"
                           blurOnSubmit={false}
                           autoCorrect={false}
-                          style={{ color: '#111827', fontSize: 16 }}
+                          style={{ color: "#111827", fontSize: 16 }}
                         />
                       </Box>
                     </VStack>
 
                     <VStack space="xs">
-                      <Text size="sm" className="text-typography-700 font-medium">
+                      <Text
+                        size="sm"
+                        className="text-typography-700 font-medium"
+                      >
                         Current Mileage *
                       </Text>
                       <Box className="border border-outline-200 rounded-lg px-4 py-3 bg-background-50">
                         <TextInput
                           value={formData.currentMileage}
-                          onChangeText={(text) => handleInputChange('currentMileage', text)}
+                          onChangeText={(text) =>
+                            handleInputChange("currentMileage", text)
+                          }
                           placeholder="50000"
                           placeholderTextColor="#9CA3AF"
                           keyboardType="numeric"
                           returnKeyType="next"
                           blurOnSubmit={false}
-                          style={{ color: '#111827', fontSize: 16 }}
+                          style={{ color: "#111827", fontSize: 16 }}
                         />
                       </Box>
                     </VStack>
@@ -341,80 +387,101 @@ export default function AddVehicleFormPage() {
                   <VStack space="md">
                     <HStack space="md">
                       <VStack space="xs" className="flex-1">
-                        <Text size="sm" className="text-typography-700 font-medium">
+                        <Text
+                          size="sm"
+                          className="text-typography-700 font-medium"
+                        >
                           Fuel Type *
                         </Text>
                         <TouchableOpacity
-                          onPress={() => setDropdownVisible('fuelType')}
+                          onPress={() => setDropdownVisible("fuelType")}
                           style={{
                             borderWidth: 1,
-                            borderColor: '#E5E7EB',
+                            borderColor: "#E5E7EB",
                             borderRadius: 8,
                             paddingHorizontal: 16,
                             paddingVertical: 12,
-                            backgroundColor: '#F3F4F6',
+                            backgroundColor: "#F3F4F6",
                           }}
                         >
                           <HStack className="justify-between items-center">
                             <Text
-                              className={`text-base ${formData.fuelType ? 'text-typography-900' : 'text-gray-400'}`}
+                              className={`text-base ${formData.fuelType ? "text-typography-900" : "text-gray-400"}`}
                             >
-                              {formData.fuelType || 'Select fuel type'}
+                              {formData.fuelType || "Select fuel type"}
                             </Text>
-                            <Ionicons name="chevron-down" size={16} color="#6B7280" />
+                            <Ionicons
+                              name="chevron-down"
+                              size={16}
+                              color="#6B7280"
+                            />
                           </HStack>
                         </TouchableOpacity>
                       </VStack>
 
                       <VStack space="xs" className="flex-1">
-                        <Text size="sm" className="text-typography-700 font-medium">
+                        <Text
+                          size="sm"
+                          className="text-typography-700 font-medium"
+                        >
                           Transmission *
                         </Text>
                         <TouchableOpacity
-                          onPress={() => setDropdownVisible('transmission')}
+                          onPress={() => setDropdownVisible("transmission")}
                           style={{
                             borderWidth: 1,
-                            borderColor: '#E5E7EB',
+                            borderColor: "#E5E7EB",
                             borderRadius: 8,
                             paddingHorizontal: 16,
                             paddingVertical: 12,
-                            backgroundColor: '#F3F4F6',
+                            backgroundColor: "#F3F4F6",
                           }}
                         >
                           <HStack className="justify-between items-center">
                             <Text
-                              className={`text-base ${formData.transmission ? 'text-typography-900' : 'text-gray-400'}`}
+                              className={`text-base ${formData.transmission ? "text-typography-900" : "text-gray-400"}`}
                             >
-                              {formData.transmission || 'Select transmission'}
+                              {formData.transmission || "Select transmission"}
                             </Text>
-                            <Ionicons name="chevron-down" size={16} color="#6B7280" />
+                            <Ionicons
+                              name="chevron-down"
+                              size={16}
+                              color="#6B7280"
+                            />
                           </HStack>
                         </TouchableOpacity>
                       </VStack>
                     </HStack>
 
                     <VStack space="xs">
-                      <Text size="sm" className="text-typography-700 font-medium">
+                      <Text
+                        size="sm"
+                        className="text-typography-700 font-medium"
+                      >
                         Vehicle Type *
                       </Text>
                       <TouchableOpacity
-                        onPress={() => setDropdownVisible('vehicleType')}
+                        onPress={() => setDropdownVisible("vehicleType")}
                         style={{
                           borderWidth: 1,
-                          borderColor: '#E5E7EB',
+                          borderColor: "#E5E7EB",
                           borderRadius: 8,
                           paddingHorizontal: 16,
                           paddingVertical: 12,
-                          backgroundColor: '#F3F4F6',
+                          backgroundColor: "#F3F4F6",
                         }}
                       >
                         <HStack className="justify-between items-center">
                           <Text
-                            className={`text-base ${formData.vehicleType ? 'text-typography-900' : 'text-gray-400'}`}
+                            className={`text-base ${formData.vehicleType ? "text-typography-900" : "text-gray-400"}`}
                           >
-                            {formData.vehicleType || 'Select vehicle type'}
+                            {formData.vehicleType || "Select vehicle type"}
                           </Text>
-                          <Ionicons name="chevron-down" size={16} color="#6B7280" />
+                          <Ionicons
+                            name="chevron-down"
+                            size={16}
+                            color="#6B7280"
+                          />
                         </HStack>
                       </TouchableOpacity>
                     </VStack>
@@ -431,7 +498,9 @@ export default function AddVehicleFormPage() {
                   onPress={() => router.back()}
                   className="flex-1 border-outline-300"
                 >
-                  <ButtonText className="text-typography-600 font-medium">Cancel</ButtonText>
+                  <ButtonText className="text-typography-600 font-medium">
+                    Cancel
+                  </ButtonText>
                 </Button>
                 <Button
                   variant="solid"
@@ -442,7 +511,7 @@ export default function AddVehicleFormPage() {
                   className="flex-1"
                 >
                   <ButtonText className="text-white font-semibold">
-                    {addVehicleMutation.isPending ? 'Adding...' : 'Add Vehicle'}
+                    {addVehicleMutation.isPending ? "Adding..." : "Add Vehicle"}
                   </ButtonText>
                 </Button>
               </HStack>
@@ -460,33 +529,39 @@ export default function AddVehicleFormPage() {
       >
         <Box className="flex-1 bg-black/50 justify-center items-center px-4">
           <TouchableOpacity
-            style={{ flex: 1, width: '100%' }}
+            style={{ flex: 1, width: "100%" }}
             activeOpacity={1}
             onPress={() => setDropdownVisible(null)}
           />
           <Card variant="elevated" className="w-full max-w-sm bg-white">
             <VStack space="md" className="p-6">
               <Heading size="md" className="text-typography-900">
-                Select {dropdownVisible === 'fuelType' && 'Fuel Type'}
-                {dropdownVisible === 'transmission' && 'Transmission'}
-                {dropdownVisible === 'vehicleType' && 'Vehicle Type'}
+                Select {dropdownVisible === "fuelType" && "Fuel Type"}
+                {dropdownVisible === "transmission" && "Transmission"}
+                {dropdownVisible === "vehicleType" && "Vehicle Type"}
               </Heading>
               <Box className="max-h-60">
                 <ScrollView showsVerticalScrollIndicator={false}>
                   <VStack space="xs">
-                    {dropdownVisible === 'fuelType' &&
-                      fuelTypeOptions.map((item) => renderDropdownItem(item, 'fuelType'))}
-                    {dropdownVisible === 'transmission' &&
-                      transmissionOptions.map((item) => renderDropdownItem(item, 'transmission'))}
-                    {dropdownVisible === 'vehicleType' &&
-                      vehicleTypeOptions.map((item) => renderDropdownItem(item, 'vehicleType'))}
+                    {dropdownVisible === "fuelType" &&
+                      fuelTypeOptions.map((item) =>
+                        renderDropdownItem(item, "fuelType")
+                      )}
+                    {dropdownVisible === "transmission" &&
+                      transmissionOptions.map((item) =>
+                        renderDropdownItem(item, "transmission")
+                      )}
+                    {dropdownVisible === "vehicleType" &&
+                      vehicleTypeOptions.map((item) =>
+                        renderDropdownItem(item, "vehicleType")
+                      )}
                   </VStack>
                 </ScrollView>
               </Box>
             </VStack>
           </Card>
           <TouchableOpacity
-            style={{ flex: 1, width: '100%' }}
+            style={{ flex: 1, width: "100%" }}
             activeOpacity={1}
             onPress={() => setDropdownVisible(null)}
           />

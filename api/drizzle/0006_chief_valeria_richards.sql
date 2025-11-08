@@ -1,1 +1,0 @@
-ALTER TABLE "maintenance_historyTable" ALTER COLUMN "date" DROP NOT NULL;
